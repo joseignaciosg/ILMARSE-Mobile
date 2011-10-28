@@ -20,6 +20,7 @@ import android.sax.Element;
 public class CategoryProviderImpl extends AbtractCategoryProvider{
 	
 	List<Category> categories;
+	
 
 	public CategoryProviderImpl(String categoriesUrl) {
 		super(categoriesUrl);

@@ -17,9 +17,7 @@ public abstract class AbtractCategoryProvider implements CategoryProvider{
 	final URL categoriesUrl;
 	
 	protected AbtractCategoryProvider(){
-		
 		categoriesUrl= null;
-		
 	}
 	
 	protected AbtractCategoryProvider(String categoriesUrl){
