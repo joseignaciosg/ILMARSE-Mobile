@@ -1,0 +1,31 @@
+package ilmarse.mobile.model.api;
+
+
+import java.util.List;
+
+public interface Category {
+
+	public int getId();
+
+	public void setId(int id);
+
+	public String getCode();
+
+	public void setCode(String code);
+
+	public String getName();
+
+	public void setName(String name);
+
+	public List<Subcategory> getSubcategories();
+
+	public void setSubcategories(List<Subcategory> subcategories);
+
+	public int hashCode();
+
+	public boolean equals(Object obj);
+
+	public String toString();
+	
+
+}
