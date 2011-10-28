@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -31,7 +33,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-import android.sax.Element;
 import android.util.Log;
 
 public class CatalogService extends IntentService {
@@ -117,15 +118,26 @@ public class CatalogService extends IntentService {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         List<Category> retCategories = new ArrayList<Category>();
         try {
+        	
+//        	NodeList websiteList = fstElmnt.getElementsByTagName("website");
+//        	Element websiteElement = (Element) websiteList.item(0);
+//        	websiteList = websiteElement.getChildNodes();
+//        	website[i].setText("Website = "
+//        	+ ((Node) websiteList.item(0)).getNodeValue());
+//        	category[i].setText("Website Category = "
+//        	+ websiteElement.getAttribute("category"));
+        	
         	DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));
+            doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getElementsByTagName(CATEGORIES);
-            Node categoriesTag = nodeList.item(0);
+            Node categoriesTag =nodeList.item(0);
             for (int i=0;i<categoriesTag.getChildNodes().getLength(); i++) {
             	//TODO get the id and subcategories
-                Category category = new CategoryImpl();		
+            	Category category = new CategoryImpl();		
                 Node item = categoriesTag.getChildNodes().item(i);
-//                if (getAttribute("id"))
+//                category.setId( Integer.parseInt( item.getAttribute("id") ) );
+//                category.setId( 1 );
                 NodeList properties = item.getChildNodes();
                 for (int j=0;j<properties.getLength();j++){
                     Node property = properties.item(j);
@@ -135,8 +147,10 @@ public class CatalogService extends IntentService {
                     } else if (name.equalsIgnoreCase(NAME)){
                         category.setName(property.getFirstChild().getNodeValue());
                     }
-                    retCategories.add(category);
                 }
+                Log.d("TAG",category.toString());
+                if (category.getCode() != null && category.getName() != null )
+                	retCategories.add(category);
            }
         } catch (Exception e) {
 			Log.e(TAG, e.getMessage());
