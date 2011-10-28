@@ -14,6 +14,15 @@ public class SubcategoryImpl implements Subcategory {
 	private String name;
 	private List<Product> products;
 	
+	public SubcategoryImpl() {
+		super();
+		this.id = -1;
+		this.category_id = -1;
+		this.code = null;
+		this.name = null;
+		this.products = null;
+	}
+	
 	public SubcategoryImpl(int id, int category_id, String code, String name) {
 		super();
 		this.id = id;
