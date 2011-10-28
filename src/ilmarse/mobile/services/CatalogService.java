@@ -89,10 +89,13 @@ public class CatalogService extends IntentService {
 		CategoryProvider prov = new CategoryProviderImpl("http://eiffel.itba.edu.ar/hci/service/Catalog.groovy" +
 				"?method=GetCategoryList&language_id=1");
 		
-		Log.d(TAG, "OK in service CAtgory");
+		Log.d(TAG, "OK in getCategories ");
 
 		b.putSerializable("return", (Serializable) prov.getCategories() ) ;
+		receiver.send(STATUS_OK, b);
 	}
+	
+	
 ////
 ////		receiver.send(STATUS_OK, b);
 //	}

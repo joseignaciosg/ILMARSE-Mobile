@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class SplashScreenIlmarse extends Activity {
-	
+	private String TAG = getClass().getSimpleName();
+
 	public static final int MILLIS_TIME_TO_WAIT = 1000;
 	public static final int STOP = 0;
 	
@@ -22,6 +24,7 @@ public class SplashScreenIlmarse extends Activity {
 					Intent intent = new Intent(SplashScreenIlmarse.this, CategoriesActivity.class);
 					startActivity(intent);
 					SplashScreenIlmarse.this.finish();
+					Log.d(TAG, "DIYING");
 					break;
 			}
 			super.handleMessage(msg);
@@ -32,6 +35,7 @@ public class SplashScreenIlmarse extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "OK");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		Message message = new Message();

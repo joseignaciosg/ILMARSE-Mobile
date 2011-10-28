@@ -47,7 +47,7 @@ public class CategoriesActivity extends ListActivity {
 				super.onReceiveResult(resultCode, resultData);
 				if (resultCode == CatalogService.STATUS_OK) {
 
-					Log.d(TAG, "OK");
+					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
 					List<Category> list = (List<Category>) resultData

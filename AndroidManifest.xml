@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CategoriesActivity"></activity>
+        <service android:name="ilmarse.mobile.services.CatalogService"></service>
     </application>
 
 </manifest>
