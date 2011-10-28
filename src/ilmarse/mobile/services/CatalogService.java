@@ -6,6 +6,7 @@ import ilmarse.mobile.model.impl.CategoryProviderImpl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -95,6 +97,7 @@ public class CatalogService extends IntentService {
 	}
 
 	private void getCategories(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
+		Log.d(TAG, "OK in getCategories ");
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpResponse response = client.execute(new HttpGet("http://eiffel.itba.edu.ar/hci/service/Catalog.groovy" +
 				"?method=GetCategoryList&language_id=1"));
@@ -102,25 +105,27 @@ public class CatalogService extends IntentService {
 			throw new IllegalArgumentException(response.getStatusLine().toString());
 		}
 		
-		Log.d(TAG, "OK in getCategories ");
+//	     Document doc = db.parse(new InputSource(new StringReader(response)));
+		final String xmlToParse = EntityUtils.toString(response.getEntity());
 
-		b.putSerializable("reuturn", (Serializable)fromXMLtoCategories(response));
+		b.putSerializable("return", (Serializable)fromXMLtoCategories(xmlToParse));
 		receiver.send(STATUS_OK, b);
 	}
 	
 	
-	private List<Category> fromXMLtoCategories(HttpResponse response) throws Exception {
+	private List<Category> fromXMLtoCategories(String xmlToParse) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         List<Category> retCategories = new ArrayList<Category>();
         try {
         	DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(response.getEntity().getContent());
-            Element root = (Element) doc.getElementsByTagName(CATEGORIES);
-            NodeList categories = ((Document) root).getElementsByTagName(CATEGORY);
-            for (int i=0;i<categories.getLength();i++){
+            Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));
+            NodeList nodeList = doc.getElementsByTagName(CATEGORIES);
+            Node categoriesTag = nodeList.item(0);
+            for (int i=0;i<categoriesTag.getChildNodes().getLength(); i++) {
             	//TODO get the id and subcategories
                 Category category = new CategoryImpl();		
-                Node item = categories.item(i);
+                Node item = categoriesTag.getChildNodes().item(i);
+//                if (getAttribute("id"))
                 NodeList properties = item.getChildNodes();
                 for (int j=0;j<properties.getLength();j++){
                     Node property = properties.item(j);
@@ -135,31 +140,11 @@ public class CatalogService extends IntentService {
            }
         } catch (Exception e) {
 			Log.e(TAG, e.getMessage());
-//            throw new RuntimeException(e);
+			Log.e(TAG, "here!");
         } 
         Log.d(TAG, retCategories.toString());
         return retCategories;
 		
 	}
-	
-	
-//	private List<Tweet> fromJSONtoTweets(final String jsonToParse) throws JSONException {
-//		List<Tweet> tweets = new ArrayList<Tweet>();
-//		
-//		Log.d(TAG, "Json received: " + jsonToParse);
-//		
-//		JSONObject parsedJson = new JSONObject(jsonToParse);
-//		if ( !parsedJson.has("results")) {
-//			throw new JSONException("results not found");
-//		}
-//		
-//		JSONArray results = parsedJson.getJSONArray("results");
-//		for ( int i = 0; i < results.length(); i++ ) {
-//			JSONObject bornToBeTweet = results.getJSONObject(i);
-//			tweets.add(TweetImpl.fromJSON(bornToBeTweet));			
-//		}
-//		
-//		return tweets;
-//	}
-
 }
+	

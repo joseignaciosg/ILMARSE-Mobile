@@ -50,10 +50,9 @@ public class CategoriesActivity extends ListActivity {
 					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
-					List<Category> list = (List<Category>) resultData
-							.getSerializable("return");
-
-					populateList(new CategoryProviderImpl(list));
+					List<Category> list = (List<Category>) resultData.getSerializable("return");
+					Log.d(TAG,list.toString());
+					populateList( new CategoryProviderImpl(list) );
 					Log.d(TAG, "inside category receiver");
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
@@ -68,10 +67,10 @@ public class CategoriesActivity extends ListActivity {
 	}
 	
 	private void populateList(CategoryProvider prov) {
+		Log.d(TAG, "OK  populating category list");
 		ListAdapter adapter = new SimpleAdapter(this,
 				prov.getCategoriesAsMap(), R.layout.categories_item,
-				prov.getMapKeys(), new int[] { R.id.code,R.id.name });
-		
+				prov.getMapKeys(), new int[] {  R.id.code,R.id.name,R.id.id });
 		setListAdapter(adapter);	
 	}
 	

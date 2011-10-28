@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface Category {
 
-	public int getId();
+	public Integer getId();
 
 	public void setId(int id);
 

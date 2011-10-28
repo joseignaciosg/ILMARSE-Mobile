@@ -10,7 +10,7 @@ import ilmarse.mobile.model.api.Subcategory;
 public class CategoryImpl implements Category {
 	
 	//look how to implement internationalization TODO
-	private int id;
+	private Integer id;
 	private String code;
 	private String name;
 	private List<Subcategory> subcategories;
@@ -39,7 +39,7 @@ public class CategoryImpl implements Category {
 		this.subcategories = subcategories;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

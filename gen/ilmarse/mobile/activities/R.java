@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class id {
         public static final int code=0x7f050000;
+        public static final int id=0x7f050003;
         public static final int name=0x7f050001;
         public static final int title=0x7f050002;
     }

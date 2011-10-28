@@ -38,37 +38,11 @@ public class CategoryProviderImpl extends AbtractCategoryProvider{
 
 	@Override
 	public List<Category> getCategories() {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<Category> retCategories = new ArrayList<Category>();
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document dom = builder.parse(this.getInputStream());
-            Element root = (Element) dom.getDocumentElement();
-            NodeList categories = ((Document) root).getElementsByTagName(CATEGORY);
-            for (int i=0;i<categories.getLength();i++){
-            	//TODO get the id and subcategories
-                Category category = new CategoryImpl();		
-                Node item = categories.item(i);
-                NodeList properties = item.getChildNodes();
-                for (int j=0;j<properties.getLength();j++){
-                    Node property = properties.item(j);
-                    String name = property.getNodeName();
-                    if (name.equalsIgnoreCase(CODE)){
-                        category.setCode(property.getFirstChild().getNodeValue());
-                    } else if (name.equalsIgnoreCase(NAME)){
-                        category.setName(property.getFirstChild().getNodeValue());
-                    }
-                    retCategories.add(category);
-                }
-           }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } 
-        return retCategories;
+        return categories;
 	}
 	
 	//TODO add id and subcategories
-	public static final String[] fields = { "code", "name"};
+	public static final String[] fields = { "code", "name","id"};
 
 	@Override
 	public List<? extends Map<String, ?>> getCategoriesAsMap() {
@@ -78,6 +52,7 @@ public class CategoryProviderImpl extends AbtractCategoryProvider{
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(fields[0], t.getCode().toString());
 			map.put(fields[1], t.getName().toString());
+			map.put(fields[2], t.getId().toString());
 			transformedCats.add(map);
 		}
 		return transformedCats;
