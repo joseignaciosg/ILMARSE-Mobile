@@ -85,9 +85,9 @@ public class CatalogService extends IntentService {
 		try {
 			if (command.equals(GET_CAT_CMD)) { // command for receiving available categories
 				getCategories(receiver, b);
-			}/*else if ( command.equals(GET_SUBCAT_CMD)){
+			}else if ( command.equals(GET_SUBCAT_CMD)){
 				getSubCategories(receiver, b);
-			}*/
+			}
 		} catch (SocketTimeoutException e) {
 			Log.e(TAG, e.getMessage());
 			receiver.send(STATUS_CONNECTION_ERROR, b);
@@ -151,27 +151,24 @@ public class CatalogService extends IntentService {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         List<Category> retCategories = new ArrayList<Category>();
         try {
-        	
-//        	NodeList websiteList = fstElmnt.getElementsByTagName("website");
-//        	Element websiteElement = (Element) websiteList.item(0);
-//        	websiteList = websiteElement.getChildNodes();
-//        	website[i].setText("Website = "
-//        	+ ((Node) websiteList.item(0)).getNodeValue());
-//        	category[i].setText("Website Category = "
-//        	+ websiteElement.getAttribute("category"));
-        	
         	DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));
+            /*Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));*/
+    		InputSource inStream = new InputSource();
+    		inStream.setCharacterStream(new StringReader(xmlToParse));
+    		Document doc = builder.parse(inStream);
             doc.getDocumentElement().normalize();
-            NodeList nodeList = doc.getElementsByTagName(CATEGORIES);
-            Node categoriesTag =nodeList.item(0);
-            for (int i=0;i<categoriesTag.getChildNodes().getLength(); i++) {
+            
+            NodeList nodeList = doc.getElementsByTagName(CATEGORY);
+            for (int i=0;i<nodeList.getLength(); i++) {
             	//TODO get the id and subcategories
             	Category category = new CategoryImpl();		
-                Node item = categoriesTag.getChildNodes().item(i);
-//                category.setId( Integer.parseInt( item.getAttribute("id") ) );
-                category.setId( 1 );
-                NodeList properties = item.getChildNodes();
+                Node node = nodeList.item(i);
+                Element categoryE = (Element) node;
+                String id = categoryE.getAttribute("id");
+                System.out.println(id);
+                category.setId( Integer.parseInt( id ) );
+                Log.d("TAG","id=" + String.valueOf( category.getId() ));
+                NodeList properties = categoryE.getChildNodes();
                 for (int j=0;j<properties.getLength();j++){
                     Node property = properties.item(j);
                     String name = property.getNodeName();
@@ -197,41 +194,48 @@ public class CatalogService extends IntentService {
 	
 	private List<Subcategory> fromXMLtoSubCategories(String xmlToParse) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<Subcategory> retSubCategories = new ArrayList<Subcategory>();
+        List<Subcategory> retSubcategories = new ArrayList<Subcategory>();
         try {
         	DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));
+            /*Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));*/
+    		InputSource inStream = new InputSource();
+    		inStream.setCharacterStream(new StringReader(xmlToParse));
+    		Document doc = builder.parse(inStream);
             doc.getDocumentElement().normalize();
-            NodeList nodeList = doc.getElementsByTagName(SUBCATEGORIES);
-            Node categoriesTag =nodeList.item(0);
-            for (int i=0;i<categoriesTag.getChildNodes().getLength(); i++) {
-            	//TODO get the id and products
+            
+            NodeList nodeList = doc.getElementsByTagName(SUBCATEGORY);
+            for (int i=0;i<nodeList.getLength(); i++) {
+            	//TODO get the id and subcategories
             	Subcategory subcategory = new SubcategoryImpl();		
-                Node item = categoriesTag.getChildNodes().item(i);
-                subcategory.setId( 1 );
-                NodeList properties = item.getChildNodes();
+                Node node = nodeList.item(i);
+                Element subcategoryE = (Element) node;
+                String id = subcategoryE.getAttribute("id");
+                System.out.println(id);
+                subcategory.setId( Integer.parseInt( id ) );
+                Log.d("TAG","id=" + String.valueOf( subcategory.getId() ));
+                NodeList properties = subcategoryE.getChildNodes();
                 for (int j=0;j<properties.getLength();j++){
                     Node property = properties.item(j);
                     String name = property.getNodeName();
-                    if ( name.equalsIgnoreCase(CAT_ID)){
-                        subcategory.setCode(property.getFirstChild().getNodeValue());
-                    }else if (name.equalsIgnoreCase(CODE)){
-                        subcategory.setCode(property.getFirstChild().getNodeValue());
+                    if (name.equalsIgnoreCase(CODE)){
+                    	subcategory.setCode(property.getFirstChild().getNodeValue());
                     } else if (name.equalsIgnoreCase(NAME)){
-                        subcategory.setName(property.getFirstChild().getNodeValue());
+                    	subcategory.setName(property.getFirstChild().getNodeValue());
+                    }else if (name.equalsIgnoreCase("category_id")){
+                    	subcategory.setCategory_id(Integer.parseInt(property.getFirstChild().getNodeValue()));
                     }
                 }
                 Log.d("TAG",subcategory.toString());
                 if (subcategory.getCode() != null && subcategory.getName() != null )
-                	retSubCategories.add(subcategory);
+                	retSubcategories.add(subcategory);
            }
         } catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 			Log.e(TAG, "here!");
         } 
-        Log.d(TAG, retSubCategories.toString());
-        return retSubCategories;
+        Log.d(TAG, retSubcategories.toString());
+        return retSubcategories;
 	}
 }
 	

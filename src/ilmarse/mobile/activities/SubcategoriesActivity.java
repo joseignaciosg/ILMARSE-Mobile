@@ -20,7 +20,7 @@ import ilmarse.mobile.model.impl.CategoryProviderImpl;
 import ilmarse.mobile.services.CatalogService;
 
 
-public class CategoriesActivity extends ListActivity {
+public class SubcategoriesActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
 	
@@ -34,7 +34,7 @@ public class CategoriesActivity extends ListActivity {
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,
 				CatalogService.class);
 
-		intent.putExtra("command", CatalogService.GET_CAT_CMD);
+		intent.putExtra("command", CatalogService.GET_SUBCAT_CMD);
 		/* Se pasa un callback (ResultReceiver), con el cual se procesará la
 		 * respuesta del servicio. Si se le pasa null como parámetro del constructor
 		 * se usa uno de los threads disponibles del proceso. Dado que en el procesamiento
@@ -76,8 +76,11 @@ public class CategoriesActivity extends ListActivity {
 	}
 	
 	public void category_click(View view){
-		Intent intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class );
-		startActivity(intent);
+		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,
+				CatalogService.class);
+
+		intent.putExtra("command", CatalogService.GET_SUBCAT_CMD);
 	}
 	
 }
+
