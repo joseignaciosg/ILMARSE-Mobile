@@ -50,11 +50,11 @@ public class SubcategoryImpl implements Subcategory {
 		this.id = id;
 	}
 
-	public int getCategory_id() {
+	public int getSubCategory_id() {
 		return category_id;
 	}
 
-	public void setCategory_id(int category_id) {
+	public void setSubCategory_id(int category_id) {
 		this.category_id = category_id;
 	}
 

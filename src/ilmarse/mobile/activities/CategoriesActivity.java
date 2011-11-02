@@ -1,8 +1,12 @@
 package ilmarse.mobile.activities;
 
 
-import java.util.List;
+import ilmarse.mobile.model.api.Category;
+import ilmarse.mobile.model.api.CategoryProvider;
+import ilmarse.mobile.model.impl.CategoryProviderImpl;
+import ilmarse.mobile.services.CatalogService;
 
+import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -13,11 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
-
-import ilmarse.mobile.model.api.Category;
-import ilmarse.mobile.model.api.CategoryProvider;
-import ilmarse.mobile.model.impl.CategoryProviderImpl;
-import ilmarse.mobile.services.CatalogService;
 
 
 public class CategoriesActivity extends ListActivity {
@@ -75,9 +74,11 @@ public class CategoriesActivity extends ListActivity {
 		setListAdapter(adapter);	
 	}
 	
-	public void category_click(View view){
+	public void didclick(View v) {
+
+        Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
 		Intent intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class );
 		startActivity(intent);
-	}
-	
+    }
+
 }

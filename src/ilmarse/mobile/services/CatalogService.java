@@ -1,10 +1,9 @@
 package ilmarse.mobile.services;
 import ilmarse.mobile.model.api.Category;
-import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.api.Product;
 import ilmarse.mobile.model.api.Subcategory;
 import ilmarse.mobile.model.impl.CategoryImpl;
-import ilmarse.mobile.model.impl.CategoryProviderImpl;
+import ilmarse.mobile.model.impl.ProductImpl;
 import ilmarse.mobile.model.impl.SubcategoryImpl;
 
 import java.io.IOException;
@@ -22,12 +21,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -44,6 +40,7 @@ public class CatalogService extends IntentService {
 
 	public static final String GET_CAT_CMD = "GetCategories";
 	public static final String GET_SUBCAT_CMD = "GetSubCategories";
+	public static final String GET_PRODUCTS_CMD = "GetProducts";
 
 	  // names of the XML category tags
     static final String CODE = "code";
@@ -87,6 +84,8 @@ public class CatalogService extends IntentService {
 				getCategories(receiver, b);
 			}else if ( command.equals(GET_SUBCAT_CMD)){
 				getSubCategories(receiver, b);
+			}else if ( command.equals(GET_PRODUCTS_CMD)){
+				getProductsSub(receiver, b);
 			}
 		} catch (SocketTimeoutException e) {
 			Log.e(TAG, e.getMessage());
@@ -146,6 +145,23 @@ public class CatalogService extends IntentService {
 		receiver.send(STATUS_OK, b);
 		
 	}
+	
+	private void getProductsSub(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
+		Log.d(TAG, "OK in getProducts ");
+		final DefaultHttpClient client = new DefaultHttpClient();
+		final HttpResponse response = client.execute(new HttpGet("http://eiffel.itba.edu.ar/hci/service/Catalog.groovy" +
+				"?method=GetProductListBySubcategory&language_id=1&category_id=1&subcategory_id=1"));
+		if ( response.getStatusLine().getStatusCode() != 200 ) {
+			throw new IllegalArgumentException(response.getStatusLine().toString());
+		}
+		
+		final String xmlToParse = EntityUtils.toString(response.getEntity());
+
+		b.putSerializable("return", (Serializable)fromXMLtoProduct(xmlToParse));
+		receiver.send(STATUS_OK, b);
+	}
+	
+
 	
 	private List<Category> fromXMLtoCategories(String xmlToParse) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -222,7 +238,7 @@ public class CatalogService extends IntentService {
                     } else if (name.equalsIgnoreCase(NAME)){
                     	subcategory.setName(property.getFirstChild().getNodeValue());
                     }else if (name.equalsIgnoreCase("category_id")){
-                    	subcategory.setCategory_id(Integer.parseInt(property.getFirstChild().getNodeValue()));
+                    	subcategory.setSubCategory_id(Integer.parseInt(property.getFirstChild().getNodeValue()));
                     }
                 }
                 Log.d("TAG",subcategory.toString());
@@ -237,5 +253,60 @@ public class CatalogService extends IntentService {
         Log.d(TAG, retSubcategories.toString());
         return retSubcategories;
 	}
+	
+	
+	private List<Product> fromXMLtoProduct(String xmlToParse) {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<Product> retProduct = new ArrayList<Product>();
+        try {
+        	DocumentBuilder builder = factory.newDocumentBuilder();
+            /*Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));*/
+    		InputSource inStream = new InputSource();
+    		inStream.setCharacterStream(new StringReader(xmlToParse));
+    		Document doc = builder.parse(inStream);
+            doc.getDocumentElement().normalize();
+            
+            NodeList nodeList = doc.getElementsByTagName("product");
+            for (int i=0;i<nodeList.getLength(); i++) {
+            	//TODO get the id and subcategories
+            	Product product = new ProductImpl();		
+                Node node = nodeList.item(i);
+                Element productE = (Element) node;
+                String id = productE.getAttribute("id");
+                System.out.println(id);
+                product.setId( Integer.parseInt( id ) );
+                Log.d("TAG","id=" + String.valueOf( product.getId() ));
+                NodeList properties = productE.getChildNodes();
+                for (int j=0;j<properties.getLength();j++){
+                    Node property = properties.item(j);
+                    String name = property.getNodeName();
+                    if (name.equalsIgnoreCase("category_id")){
+                    	product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+                    } else if (name.equalsIgnoreCase("subcategory_id")){
+                    	product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("name")){
+                    	product.setName(property.getFirstChild().getNodeValue());
+                    }else if (name.equalsIgnoreCase("sales_rank")){
+                    	product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("price")){
+                    	product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("image_url")){
+                    	product.setImage_url(property.getFirstChild().getNodeValue());
+                    }
+                }
+
+                retProduct.add(product);
+                Log.d("TAG","asd"+product.toString());
+           }
+        } catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+			Log.e(TAG, "here!");
+        } 
+        Log.d(TAG, "asddd2"+retProduct.toString());
+        return retProduct;
+	}
+	
+	
 }
 	

@@ -24,6 +24,9 @@ public class ProductImpl implements Product {
 		this.image_url = image_url;
 	}
 
+	public ProductImpl() {
+		super();
+	}
 
 	public int getId() {
 		return id;

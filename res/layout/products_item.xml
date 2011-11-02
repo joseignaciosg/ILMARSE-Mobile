@@ -3,13 +3,13 @@
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="vertical" android:padding="6dp">
 
-	<TextView android:id="@+id/code" android:textSize="16sp"
+	<TextView android:id="@+id/price" android:textSize="16sp"
 		android:textStyle="bold" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_toRightOf="@+id/name"/>
 	
 	<Button android:id="@+id/name" android:textSize="16sp"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_below="@+id/title"  
+		android:layout_below="@+id/title"
 		android:onClick="didclick">
 	</Button>
 	

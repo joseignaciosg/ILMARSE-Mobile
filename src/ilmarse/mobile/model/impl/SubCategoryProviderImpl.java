@@ -1,34 +1,34 @@
 package ilmarse.mobile.model.impl;
 
 import ilmarse.mobile.model.api.Category;
+import ilmarse.mobile.model.api.Subcategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryProviderImpl extends AbstractCategoryProvider{
+public class SubCategoryProviderImpl extends AbstractCategoryProvider{
 	
-	List<Category> categories;
+	List<Subcategory> subcategories;
 	
 
-	public CategoryProviderImpl(String categoriesUrl) {
-		super(categoriesUrl);
+	public SubCategoryProviderImpl(String subcategoriesUrl) {
+		super(subcategoriesUrl);
 	}
 	
-	public CategoryProviderImpl(List<Category> categories) {
+	public SubCategoryProviderImpl(List<Subcategory> subcategories) {
 		super();
-		if ( categories == null ) {
+		if ( subcategories == null ) {
 			throw new IllegalArgumentException("categories cannot be null");
 		}
 		
-		this.categories = categories; 
+		this.subcategories = subcategories; 
 	}
 	
 
-	@Override
-	public List<Category> getCategories() {
-        return categories;
+	public List<Subcategory> getSubCategories() {
+        return subcategories;
 	}
 	
 	//TODO add id and subcategories
@@ -36,13 +36,13 @@ public class CategoryProviderImpl extends AbstractCategoryProvider{
 
 	@Override
 	public List<? extends Map<String, ?>> getCategoriesAsMap() {
-		List<Category> categories = getCategories();
+		List<Subcategory> subcategories = getSubCategories();
 		List<Map<String, String>> transformedCats = new ArrayList<Map<String, String>>();
-		for (Category t : categories) {
+		for (Subcategory t : subcategories) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(fields[0], t.getCode().toString());
 			map.put(fields[1], t.getName().toString());
-			map.put(fields[2], t.getId().toString());
+			map.put(fields[2], String.valueOf(t.getId()));
 			transformedCats.add(map);
 		}
 		return transformedCats;
@@ -51,6 +51,12 @@ public class CategoryProviderImpl extends AbstractCategoryProvider{
 	@Override
 	public String[] getMapKeys() {
 		return fields;
+	}
+
+	@Override
+	public List<Category> getCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

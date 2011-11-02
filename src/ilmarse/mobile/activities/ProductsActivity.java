@@ -1,9 +1,9 @@
 package ilmarse.mobile.activities;
 
 
-import ilmarse.mobile.model.api.CategoryProvider;
-import ilmarse.mobile.model.api.Subcategory;
-import ilmarse.mobile.model.impl.SubCategoryProviderImpl;
+import ilmarse.mobile.model.api.Product;
+import ilmarse.mobile.model.api.ProductsProvider;
+import ilmarse.mobile.model.impl.ProductProviderImpl;
 import ilmarse.mobile.services.CatalogService;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 
-public class SubcategoriesActivity extends ListActivity {
+public class ProductsActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
 	
@@ -28,11 +28,11 @@ public class SubcategoriesActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		/* Asociamos la vista del search list con la activity */
-		setContentView(R.layout.categories);
+		setContentView(R.layout.products);
 
-		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,CatalogService.class);
+		Intent intent = new Intent(Intent.ACTION_SYNC, null, this, CatalogService.class);
 
-		intent.putExtra("command", CatalogService.GET_SUBCAT_CMD);
+		intent.putExtra("command", CatalogService.GET_PRODUCTS_CMD);
 		/* Se pasa un callback (ResultReceiver), con el cual se procesará la
 		 * respuesta del servicio. Si se le pasa null como parámetro del constructor
 		 * se usa uno de los threads disponibles del proceso. Dado que en el procesamiento
@@ -49,10 +49,10 @@ public class SubcategoriesActivity extends ListActivity {
 					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
-					List<Subcategory> list = (List<Subcategory>) resultData.getSerializable("return");
+					List<Product> list = (List<Product>) resultData.getSerializable("return");
 					Log.d(TAG,list.toString());
-					populateList( new SubCategoryProviderImpl(list) );
-					Log.d(TAG, "inside category receiver");
+					populateList( new ProductProviderImpl(list) );
+					Log.d(TAG, "inside product receiver");
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
 					Log.d(TAG, "Connection error.");
@@ -65,19 +65,19 @@ public class SubcategoriesActivity extends ListActivity {
 		startService(intent);
 	}
 	
-	private void populateList(CategoryProvider prov) {
+	private void populateList(ProductsProvider prov) {
 		Log.d(TAG, "OK  populating category list");
 		ListAdapter adapter = new SimpleAdapter(this,
-				prov.getCategoriesAsMap(), R.layout.categories_item,
+				prov.getProductsAsMap(), R.layout.products_item,
 				prov.getMapKeys(), new int[] {  R.id.code,R.id.name,R.id.id });
 		setListAdapter(adapter);	
 	}
 	
-	public void didclick(View v){
-        Log.d("asd","subcategoriasss");
-		Intent intent = new Intent( this, ProductsActivity.class );
-		startActivity(intent);
-	}
-	
-}
+	public void didclick(View v) {
 
+        Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
+		Intent intent = new Intent( ProductsActivity.this, SubcategoriesActivity.class );
+		startActivity(intent);
+    }
+
+}

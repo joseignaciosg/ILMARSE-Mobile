@@ -9,9 +9,9 @@ public interface Subcategory {
 
 	public void setId(int id);
 
-	public int getCategory_id();
+	public int getSubCategory_id();
 
-	public void setCategory_id(int category_id);
+	public void setSubCategory_id(int category_id);
 
 	public String getCode();
 
