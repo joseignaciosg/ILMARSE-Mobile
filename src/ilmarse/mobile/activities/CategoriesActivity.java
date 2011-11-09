@@ -75,7 +75,6 @@ public class CategoriesActivity extends ListActivity {
 	}
 	
 	public void didclick(View v) {
-
         Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
 		Intent intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class );
 		startActivity(intent);
