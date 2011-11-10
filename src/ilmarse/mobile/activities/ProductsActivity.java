@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
@@ -75,6 +76,7 @@ public class ProductsActivity extends ListActivity {
 	
 	public void didclick(View v) {
 
+		System.out.println(((Button)v).getId());
         Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
 		Intent intent = new Intent( ProductsActivity.this, SubcategoriesActivity.class );
 		startActivity(intent);

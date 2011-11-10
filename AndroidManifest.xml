@@ -22,9 +22,26 @@
             </intent-filter>
         </activity>
         <activity android:name=".CategoriesActivity"></activity>
-        <service android:name="ilmarse.mobile.services.CatalogService"></service>
+			<meta-data android:name="android.app.default_searchable"
+                   android:value=".SearchableActivity" />
         <activity android:name="SubcategoriesActivity"></activity>
+			<meta-data android:name="android.app.default_searchable"
+                   android:value=".SearchableActivity" />
         <activity android:name="ProductsActivity"></activity>
+			<meta-data android:name="android.app.default_searchable"
+                   android:value=".SearchableActivity" />
+        <activity android:name=".SearchableActivity" >
+        	<intent-filter>
+        	    <action android:name="android.intent.action.SEARCH" />
+        	</intent-filter>
+        	<meta-data android:name="android.app.searchable"
+        	           android:resource="@xml/searchable"/>
+    	</activity>
+    	
+            
+            
+        <service android:name="ilmarse.mobile.services.SearchService"></service>
+        <service android:name="ilmarse.mobile.services.CatalogService"></service>
     </application>
 
 </manifest>
