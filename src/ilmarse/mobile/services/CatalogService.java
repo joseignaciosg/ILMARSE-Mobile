@@ -90,6 +90,7 @@ public class CatalogService extends IntentService {
 			}else if ( command.equals(GET_PRODUCTS_CMD)){
 				catId = Integer.parseInt(intent.getStringExtra("catid"));
 				subcatId = Integer.parseInt(intent.getStringExtra("subcatid"));
+				Log.d("TAG", catId +"-"+subcatId);
 				b.putString("catid",catId+"");
 				b.putString("subcatid",subcatId+"");
 				getProductsSub(receiver, b);

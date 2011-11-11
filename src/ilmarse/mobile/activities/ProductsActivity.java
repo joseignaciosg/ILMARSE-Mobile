@@ -39,7 +39,7 @@ public class ProductsActivity extends ListActivity {
 		setContentView(R.layout.products);
 
 		int catId = new Integer(this.getIntent().getExtras().getString("catid"));
-		int subcatId = new Integer(this.getIntent().getExtras().getString("catid"));
+		int subcatId = new Integer(this.getIntent().getExtras().getString("subcatid"));
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this, CatalogService.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("catid", catId+"");
