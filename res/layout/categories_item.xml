@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+	android:textStyle="bold"
+   	android:textSize="25sp" >
+</TextView>
+
+
+<!--  <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="vertical" android:padding="6dp">
@@ -7,15 +17,9 @@
 		android:textStyle="bold" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_toRightOf="@+id/name"/>
 	
-	  <Button android:id="@+id/name" android:textSize="16sp"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_below="@+id/title"  
-		android:onClick="didclick">
-	</Button>
-	
 	<TextView android:id="@+id/id" android:textSize="16sp"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		 android:layout_toRightOf="@+id/name"/>
 	
 
-</RelativeLayout>
+</RelativeLayout>-->

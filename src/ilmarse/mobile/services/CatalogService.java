@@ -67,7 +67,7 @@ public class CatalogService extends IntentService {
 	 * servicio.
 	 */
 	public CatalogService() {
-		super("CategorySearchService");
+		super("CatalogService");
 	}
 
 	/*
@@ -78,14 +78,20 @@ public class CatalogService extends IntentService {
 	protected void onHandleIntent(final Intent intent) {
 		final ResultReceiver receiver = intent.getParcelableExtra("receiver");
 		final String command = intent.getStringExtra("command");
-
+		final int catId,subcatId;
 		final Bundle b = new Bundle();
 		try {
 			if (command.equals(GET_CAT_CMD)) { // command for receiving available categories
 				getCategories(receiver, b);
 			}else if ( command.equals(GET_SUBCAT_CMD)){
+				catId = Integer.parseInt(intent.getStringExtra("catid"));
+				b.putString("catid",catId+"");
 				getSubCategories(receiver, b);
 			}else if ( command.equals(GET_PRODUCTS_CMD)){
+				catId = Integer.parseInt(intent.getStringExtra("catid"));
+				subcatId = Integer.parseInt(intent.getStringExtra("subcatid"));
+				b.putString("catid",catId+"");
+				b.putString("subcatid",subcatId+"");
 				getProductsSub(receiver, b);
 			}
 		} catch (SocketTimeoutException e) {
@@ -142,6 +148,8 @@ public class CatalogService extends IntentService {
 
 	private void getSubCategories(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception{
 		Log.d(TAG, "OK in getSubCategories ");
+		int catId = new Integer(b.getString("catid"));
+		Log.d(TAG, "category id "+catId);
 		// TODO not hardcode
 		final DefaultHttpClient client = new DefaultHttpClient();
 		
@@ -149,10 +157,10 @@ public class CatalogService extends IntentService {
 		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
 		final HttpResponse response;
 		if(phoneLanguage.equals("en")){
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=1&category_id=1"));
+			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=1&category_id="+catId));
 		}
 		else{
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=2&category_id=1"));
+			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=2&category_id="+catId));
 		}
 				
 		
@@ -168,15 +176,19 @@ public class CatalogService extends IntentService {
 	}
 	
 	private void getProductsSub(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
-		Log.d(TAG, "OK in getProducts ");
+		int catId = new Integer(b.getString("catid"));
+		int subcatId = new Integer(b.getString("subcatid"));
+
+		Log.d(TAG, "OK in getProducts "+catId +"/"+subcatId);
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpResponse response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
-				"?method=GetProductListBySubcategory&language_id=1&category_id=1&subcategory_id=1"));
+				"?method=GetProductListBySubcategory&language_id=1&category_id="+catId+"&subcategory_id="+subcatId));
 		if ( response.getStatusLine().getStatusCode() != 200 ) {
 			throw new IllegalArgumentException(response.getStatusLine().toString());
 		}
 		
 		final String xmlToParse = EntityUtils.toString(response.getEntity());
+		Log.d(TAG, xmlToParse.toString());
 
 		b.putSerializable("return", (Serializable)fromXMLtoProduct(xmlToParse));
 		receiver.send(STATUS_OK, b);

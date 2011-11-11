@@ -6,6 +6,8 @@ import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.impl.CategoryProviderImpl;
 import ilmarse.mobile.services.CatalogService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -15,13 +17,19 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 
 public class CategoriesActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
+	HashMap<String, Category> categoriesMap = new HashMap<String, Category>();
+	List<String> catNames = new ArrayList<String>();
+
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,12 @@ public class CategoriesActivity extends ListActivity {
 					@SuppressWarnings("unchecked")
 					List<Category> list = (List<Category>) resultData.getSerializable("return");
 					Log.d(TAG,list.toString());
+					//populateList( new CategoryProviderImpl(list) );
+					/*change this TODO*/
+					for(Category c: list){
+						categoriesMap.put(c.getName(),c);
+						catNames.add(c.getName());
+					}
 					populateList( new CategoryProviderImpl(list) );
 					Log.d(TAG, "inside category receiver");
 
@@ -61,23 +75,50 @@ public class CategoriesActivity extends ListActivity {
 					Log.d(TAG, "Unknown error.");
 				}
 			}
-
 		});
 		startService(intent);
 	}
 	
 	private void populateList(CategoryProvider prov) {
 		Log.d(TAG, "OK  populating category list");
-		ListAdapter adapter = new SimpleAdapter(this,
+		CategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
+				CategoriesActivity.this,
+				R.layout.categories_item, catNames));
+		Log.d(TAG, catNames.toString());
+
+		/*ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+		lv.setCacheColorHint(0);*/
+		
+	/*	ListAdapter adapter = new SimpleAdapter(this,
 				prov.getCategoriesAsMap(), R.layout.categories_item,
 				prov.getMapKeys(), new int[] {  R.id.code,R.id.name,R.id.id });
-		setListAdapter(adapter);	
+		setListAdapter(adapter);	*/
 	}
 	
-	public void didclick(View v) {
+	/*public void didclick(View v) {
         Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
 		Intent intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class );
 		startActivity(intent);
-    }
+    }*/
+	
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.d(TAG, "Inside onListItemClick!.");
+		Object o = this.getListAdapter().getItem(position);
+		Log.d(TAG, "Leaving onListItemClick!.");
+		String cat = o.toString();
+		Bundle bundle = new Bundle();
+		bundle.putString("catid", categoriesMap.get(cat).getId() + "");
+		bundle.putString("catname", categoriesMap.get(cat).getName());
+		Intent newIntent = new Intent(CategoriesActivity.this,
+				SubcategoriesActivity.class);
+		newIntent.putExtras(bundle);
+		CategoriesActivity.this.startActivity(newIntent);
+
+	}
+
 
 }

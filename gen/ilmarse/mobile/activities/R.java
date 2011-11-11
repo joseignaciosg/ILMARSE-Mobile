@@ -14,10 +14,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int code=0x7f060000;
         public static final int id=0x7f060003;
         public static final int name=0x7f060001;
-        public static final int price=0x7f060004;
+        public static final int price=0x7f060000;
         public static final int title=0x7f060002;
     }
     public static final class layout {
