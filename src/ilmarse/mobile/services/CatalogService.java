@@ -42,6 +42,7 @@ public class CatalogService extends IntentService {
 	public static final String GET_CAT_CMD = "GetCategories";
 	public static final String GET_SUBCAT_CMD = "GetSubCategories";
 	public static final String GET_PRODUCTS_CMD = "GetProducts";
+	public static final String GET_PRODUCT_CMD = "GetProduct";
 
 	  // names of the XML category tags
     static final String CODE = "code";
@@ -87,13 +88,15 @@ public class CatalogService extends IntentService {
 				catId = Integer.parseInt(intent.getStringExtra("catid"));
 				b.putString("catid",catId+"");
 				getSubCategories(receiver, b);
-			}else if ( command.equals(GET_PRODUCTS_CMD)){
+			}else if ( command.equals(GET_PRODUCTS_CMD) ){
 				catId = Integer.parseInt(intent.getStringExtra("catid"));
 				subcatId = Integer.parseInt(intent.getStringExtra("subcatid"));
 				Log.d("TAG", catId +"-"+subcatId);
 				b.putString("catid",catId+"");
 				b.putString("subcatid",subcatId+"");
 				getProductsSub(receiver, b);
+			}else if ( command.equals(GET_PRODUCT_CMD)  ){
+				getProduct(receiver,b);
 			}
 		} catch (SocketTimeoutException e) {
 			Log.e(TAG, e.getMessage());
@@ -200,9 +203,23 @@ public class CatalogService extends IntentService {
 		final String xmlToParse = EntityUtils.toString(response.getEntity());
 		Log.d(TAG, xmlToParse.toString());
 
+		b.putSerializable("return", (Serializable)fromXMLtoProducts(xmlToParse));
+		receiver.send(STATUS_OK, b);
+	}
+	
+	private void getProduct(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
+		int prodId = new Integer(b.getString("catid"));
+		final DefaultHttpClient client = new DefaultHttpClient();
+		/*gets the phone current language*/
+		final HttpResponse response;
+		response = client.execute(new HttpGet(APIurl + "Catalog.groovy?method=GetProduct&product_id"+prodId));
+		final String xmlToParse = EntityUtils.toString(response.getEntity());
+		Log.d(TAG, xmlToParse.toString());
+
 		b.putSerializable("return", (Serializable)fromXMLtoProduct(xmlToParse));
 		receiver.send(STATUS_OK, b);
 	}
+	
 	
 
 	
@@ -298,6 +315,58 @@ public class CatalogService extends IntentService {
 	}
 	
 	
+	private List<Product> fromXMLtoProducts(String xmlToParse) {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<Product> retProduct = new ArrayList<Product>();
+        try {
+        	DocumentBuilder builder = factory.newDocumentBuilder();
+            /*Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));*/
+    		InputSource inStream = new InputSource();
+    		inStream.setCharacterStream(new StringReader(xmlToParse));
+    		Document doc = builder.parse(inStream);
+            doc.getDocumentElement().normalize();
+            
+            NodeList nodeList = doc.getElementsByTagName("product");
+            for (int i=0;i<nodeList.getLength(); i++) {
+            	//TODO get the id and subcategories
+            	Product product = new ProductImpl();		
+                Node node = nodeList.item(i);
+                Element productE = (Element) node;
+                String id = productE.getAttribute("id");
+                System.out.println(id);
+                product.setId( Integer.parseInt( id ) );
+                Log.d("TAG","id=" + String.valueOf( product.getId() ));
+                NodeList properties = productE.getChildNodes();
+                for (int j=0;j<properties.getLength();j++){
+                    Node property = properties.item(j);
+                    String name = property.getNodeName();
+                    if (name.equalsIgnoreCase("category_id")){
+                    	product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+                    } else if (name.equalsIgnoreCase("subcategory_id")){
+                    	product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("name")){
+                    	product.setName(property.getFirstChild().getNodeValue());
+                    }else if (name.equalsIgnoreCase("sales_rank")){
+                    	product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("price")){
+                    	product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+                    }else if (name.equalsIgnoreCase("image_url")){
+                    	product.setImage_url(property.getFirstChild().getNodeValue());
+                    }
+                }
+
+                retProduct.add(product);
+                Log.d("TAG","asd"+product.toString());
+           }
+        } catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+			Log.e(TAG, "here!");
+        } 
+        Log.d(TAG, "asddd2"+retProduct.toString());
+        return retProduct;
+	}
+	
 	private List<Product> fromXMLtoProduct(String xmlToParse) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         List<Product> retProduct = new ArrayList<Product>();
@@ -349,6 +418,7 @@ public class CatalogService extends IntentService {
         Log.d(TAG, "asddd2"+retProduct.toString());
         return retProduct;
 	}
+
 	
 	
 }
