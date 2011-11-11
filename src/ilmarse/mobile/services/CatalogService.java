@@ -182,8 +182,17 @@ public class CatalogService extends IntentService {
 
 		Log.d(TAG, "OK in getProducts "+catId +"/"+subcatId);
 		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpResponse response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
-				"?method=GetProductListBySubcategory&language_id=1&category_id="+catId+"&subcategory_id="+subcatId));
+		/*gets the phone current language*/
+		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
+		final HttpResponse response;
+		if(phoneLanguage.equals("en")){
+			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
+					"?method=GetProductListBySubcategory&language_id=1&category_id="+catId+"&subcategory_id="+subcatId));
+		}else{
+			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
+					"?method=GetProductListBySubcategory&language_id=2&category_id="+catId+"&subcategory_id="+subcatId));;
+		}
+		
 		if ( response.getStatusLine().getStatusCode() != 200 ) {
 			throw new IllegalArgumentException(response.getStatusLine().toString());
 		}
