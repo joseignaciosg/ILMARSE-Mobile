@@ -25,9 +25,9 @@ public class ProductActivity extends Activity {
    /** Called when the activity is first created. */ 
    @Override
    public void onCreate(Bundle icicle) {
-	   Log.d(TAG,"inside onCreate!!");
+	   Log.d(TAG,"inside onCreate");
        super.onCreate(icicle);
-       setContentView(R.layout.main);
+       setContentView(R.layout.image_test);
       
        Button bt3= (Button)findViewById(R.id.get_imagebt);
        bt3.setOnClickListener(getImgListener);
@@ -44,8 +44,8 @@ public class ProductActivity extends Activity {
               //i tried to randomize the file download, in my server i put 4 files with name like
                        //png0.png, png1.png, png2.png so different file is downloaded in button press
               int i =r.nextInt(4);
-              downloadFile(imageUrl+"png"+i+".png");
-              Log.i("im url",imageUrl+"png"+i+".png");
+              downloadFile(imageUrl);
+              Log.i("im url",imageUrl);
          }
     
    };
