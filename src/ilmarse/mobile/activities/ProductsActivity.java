@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 
@@ -98,5 +99,22 @@ public class ProductsActivity extends ListActivity {
 		Log.d(TAG, productNames.toString());
 	}
 	
+	
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.d(TAG, "Inside onListItemClick!.");
+		Object o = this.getListAdapter().getItem(position);
+		Log.d(TAG, "Leaving onListItemClick!.");
+		String productname = o.toString();
+		Bundle bundle = new Bundle();
+		
+		Intent newIntent = new Intent(ProductsActivity.this,
+				ProductActivity.class);
+		newIntent.putExtras(bundle);
+		ProductsActivity.this.startActivity(newIntent);
+
+	}
 
 }
