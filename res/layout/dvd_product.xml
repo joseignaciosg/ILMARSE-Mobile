@@ -36,38 +36,16 @@
      
      <TableRow>
          <TextView
-            android:text="@string/product_authors"
+            android:text="@string/product_actors"
             android:gravity="left"
             android:padding="3dip" />
           <TextView
-            android:id="@+id/product_authors"
+            android:id="@+id/product_actors"
             android:gravity="left"
             android:padding="3dip" />
      </TableRow>
      
      <TableRow>
-         <TextView
-            android:text="@string/product_publisher"
-            android:gravity="left"
-            android:padding="3dip" />
-          <TextView
-            android:id="@+id/product_publisher"
-            android:gravity="left"
-            android:padding="3dip" />
-     </TableRow>
-     
-      <TableRow>
-         <TextView
-            android:text="@string/product_published_date"
-            android:gravity="left"
-            android:padding="3dip" />
-          <TextView
-            android:id="@+id/product_published_date"
-            android:gravity="left"
-            android:padding="3dip" />
-     </TableRow>
-     
-      <TableRow>
          <TextView
             android:text="@string/product_language"
             android:gravity="left"
@@ -78,5 +56,59 @@
             android:padding="3dip" />
      </TableRow>
      
+     <TableRow>
+         <TextView
+            android:text="@string/product_subtitles"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_subtitles"
+            android:gravity="left"
+            android:padding="3dip" />
+     </TableRow>
+     
+     <TableRow>
+         <TextView
+            android:text="@string/product_region"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_region"
+            android:gravity="left"
+            android:padding="3dip" />
+     </TableRow>
+     
+     <TableRow>
+         <TextView
+            android:text="@string/product_runtime"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_runtime"
+            android:gravity="left"
+            android:padding="3dip" />
+     </TableRow>
+     
+     <TableRow>
+         <TextView
+            android:text="@string/product_release_date"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_release_date"
+            android:gravity="left"
+            android:padding="3dip" />
+     </TableRow>
+     
+    <TableRow>
+         <TextView
+            android:text="@string/product_aspect_ratio"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_aspect_ratio"
+            android:gravity="left"
+            android:padding="3dip" />
+     </TableRow>
      
 </TableLayout>

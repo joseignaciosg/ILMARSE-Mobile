@@ -111,7 +111,10 @@ public class ProductsActivity extends ListActivity {
 		Log.d(TAG, productname);
 
 		Bundle bundle = new Bundle();
-		
+		bundle.putString("prodid", productMap.get(productname).getId() + "");
+		bundle.putString("catid", productMap.get(productname).getCategory_id()+ "");
+		Log.d(TAG, "onListItemClick prodid:" + productMap.get(productname).getId());
+		Log.d(TAG, "onListItemClick catid:" + productMap.get(productname).getCategory_id());
 		Intent newIntent = new Intent(ProductsActivity.this,
 				ProductActivity.class);
 		newIntent.putExtras(bundle);

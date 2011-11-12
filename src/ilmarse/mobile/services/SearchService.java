@@ -1,6 +1,6 @@
 package ilmarse.mobile.services;
 import ilmarse.mobile.model.api.Product;
-import ilmarse.mobile.model.impl.ProductImpl;
+import ilmarse.mobile.model.impl.SimpleProduct;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -120,7 +120,7 @@ public class SearchService extends IntentService {
             
             NodeList nodeList = doc.getElementsByTagName("product");
             for (int i=0;i<nodeList.getLength(); i++) {
-            	Product product = new ProductImpl();		
+            	Product product = new SimpleProduct();		
                 Node node = nodeList.item(i);
                 Element productE = (Element) node;
                 String id = productE.getAttribute("id");

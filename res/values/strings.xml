@@ -9,4 +9,15 @@
     <string name="search_hint">Search...</string>
     <string name="product_name">Name: </string>
     <string name="product_price">Price:</string>
+    <string name="product_authors"> Authors:</string>
+    <string name="product_publisher"> Publisher:</string>
+    <string name="product_published_date">Published Date:</string>
+    <string name="product_language">Available Languages: </string>
+    <string name="product_actors">Actors: </string>
+    <string name="product_subtitles">Available Subtitles: </string>
+    <string name="product_region">Region: </string>
+    <string name="product_runtime">Run Time: </string>
+    <string name="product_release_date">Release Date: </string>
+    <string name="product_aspect_ratio">Aspect Ratio: </string>
+    
 </resources>

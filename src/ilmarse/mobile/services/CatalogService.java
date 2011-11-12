@@ -6,10 +6,12 @@ import ilmarse.mobile.model.api.ProductDetailProvider;
 import ilmarse.mobile.model.api.ProductsProvider;
 import ilmarse.mobile.model.api.Subcategory;
 import ilmarse.mobile.model.api.SubcategoryProvider;
+import ilmarse.mobile.model.impl.Book;
 import ilmarse.mobile.model.impl.CategoryImpl;
 import ilmarse.mobile.model.impl.CategoryProviderMock;
+import ilmarse.mobile.model.impl.Dvd;
 import ilmarse.mobile.model.impl.ProductDetailProviderMock;
-import ilmarse.mobile.model.impl.ProductImpl;
+import ilmarse.mobile.model.impl.AbstractProduct;
 import ilmarse.mobile.model.impl.ProductsProviderMock;
 import ilmarse.mobile.model.impl.SubcategoryImpl;
 import ilmarse.mobile.model.impl.SubcategoryProviderMock;
@@ -93,7 +95,7 @@ public class CatalogService extends IntentService {
 	protected void onHandleIntent(final Intent intent) {
 		final ResultReceiver receiver = intent.getParcelableExtra("receiver");
 		final String command = intent.getStringExtra("command");
-		final int catId,subcatId;
+		final int catId,subcatId,productId;
 		final Bundle b = new Bundle();
 		try {
 			if (command.equals(GET_CAT_CMD)) { // command for receiving available categories
@@ -111,6 +113,11 @@ public class CatalogService extends IntentService {
 				getProductsSub(receiver, b);
 			}else if ( command.equals(GET_PRODUCT_CMD)  ){
 				Log.d(TAG,"GET_PRODUCT_CMD");
+				catId = Integer.parseInt(intent.getStringExtra("categoryid"));
+				productId = Integer.parseInt(intent.getStringExtra("productid"));
+				Log.d(TAG, catId +"-"+productId);
+				b.putString("categoryid",catId+"");
+				b.putString("productid",productId+"");
 				getProduct(receiver,b);
 			}
 		} catch (SocketTimeoutException e) {
@@ -224,8 +231,8 @@ public class CatalogService extends IntentService {
 //		final String xmlToParse = EntityUtils.toString(response.getEntity());
 //		Log.d(TAG, xmlToParse.toString());
 		List<Product> list;
-		list = productsProvider.getProducts(subcatId);
-//		list = fromXMLtoProducts(xmlToParse);
+		list = productsProvider.getProducts(catId,subcatId);
+//		list = fromXMLtoProducts(xmlToParse,catId);
 
 		b.putSerializable("return", (Serializable)list);
 		receiver.send(STATUS_OK, b);
@@ -233,8 +240,12 @@ public class CatalogService extends IntentService {
 	
 	private void getProduct(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
 		Log.d(TAG, "inside getproduct");
-
-//		int prodId = new Integer(b.getString("catid"));
+		int prodId = new Integer(b.getString("productid"));
+		int catId = new Integer(b.getString("categoryid"));
+//		int prodId =1;
+//		int catId = 2;
+		Log.d(TAG, "inside getproduct / prodid="+prodId+ "/ catId=" +catId);
+		
 //		final DefaultHttpClient client = new DefaultHttpClient();
 //		/*gets the phone current language*/
 //		final HttpResponse response;
@@ -242,8 +253,8 @@ public class CatalogService extends IntentService {
 //		final String xmlToParse = EntityUtils.toString(response.getEntity());
 //		Log.d(TAG, xmlToParse.toString());
 		Product product; 
-//		product = fromXMLtoProduct(xmlToParse);
-		product = (Product) productDetailProvider.getProduct(1);
+//		product = fromXMLtoProduct(xmlToParse, catId);
+		product = (Product) productDetailProvider.getProduct(prodId,catId);
 		Log.d(TAG, "leaving getproduct");
 		List<Product> aux = new ArrayList<Product>();
 		aux.add(product);
@@ -346,7 +357,7 @@ public class CatalogService extends IntentService {
 	}
 	
 	
-	private List<Product> fromXMLtoProducts(String xmlToParse) {
+	private List<Product> fromXMLtoProducts(String xmlToParse, int catId) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         List<Product> retProduct = new ArrayList<Product>();
         try {
@@ -359,32 +370,85 @@ public class CatalogService extends IntentService {
             
             NodeList nodeList = doc.getElementsByTagName("product");
             for (int i=0;i<nodeList.getLength(); i++) {
-            	//TODO get the id and subcategories
-            	Product product = new ProductImpl();		
-                Node node = nodeList.item(i);
-                Element productE = (Element) node;
-                String id = productE.getAttribute("id");
-                System.out.println(id);
-                product.setId( Integer.parseInt( id ) );
-                Log.d("TAG","id=" + String.valueOf( product.getId() ));
-                NodeList properties = productE.getChildNodes();
-                for (int j=0;j<properties.getLength();j++){
-                    Node property = properties.item(j);
-                    String name = property.getNodeName();
-                    if (name.equalsIgnoreCase("category_id")){
-                    	product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
-                    } else if (name.equalsIgnoreCase("subcategory_id")){
-                    	product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("name")){
-                    	product.setName(property.getFirstChild().getNodeValue());
-                    }else if (name.equalsIgnoreCase("sales_rank")){
-                    	product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("price")){
-                    	product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("image_url")){
-                    	product.setImage_url(property.getFirstChild().getNodeValue());
-                    }
-                }
+            	Product product;
+            	Node node;
+            	Element productE;
+            	if ( catId == 1 ){ //book
+            		product = new Book();		
+            		node = nodeList.item(i);
+            		productE = (Element) node;
+            		String id = productE.getAttribute("id");
+            		System.out.println(id);
+            		product.setId( Integer.parseInt( id ) );
+            		Log.d("TAG","id=" + String.valueOf( product.getId() ));
+            		NodeList properties = productE.getChildNodes();
+            		for (int j=0;j<properties.getLength();j++){
+            			Node property = properties.item(j);
+            			String name = property.getNodeName();
+            			if (name.equalsIgnoreCase("category_id")){
+            				product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+            			} else if (name.equalsIgnoreCase("subcategory_id")){
+            				product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("name")){
+            				product.setName(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("sales_rank")){
+            				product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("price")){
+            				product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("image_url")){
+            				product.setImage_url(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("authors")){
+            				((Book)product).setAuthors(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("publisher")){
+            				((Book)product).setPublisher(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("published_date")){
+            				((Book)product).setPublished_date(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("language")){
+            				((Book)product).setLanguage(property.getFirstChild().getNodeValue());
+            			}
+            		}
+            	}else { //dvd
+            		product = new Dvd();		
+            		node = nodeList.item(i);
+            		productE = (Element) node;
+            		String id = productE.getAttribute("id");
+            		System.out.println(id);
+            		product.setId( Integer.parseInt( id ) );
+            		Log.d("TAG","id=" + String.valueOf( product.getId() ));
+            		NodeList properties = productE.getChildNodes();
+            		for (int j=0;j<properties.getLength();j++){
+            			Node property = properties.item(j);
+            			String name = property.getNodeName();
+            			if (name.equalsIgnoreCase("category_id")){
+            				product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+            			} else if (name.equalsIgnoreCase("subcategory_id")){
+            				product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("name")){
+            				product.setName(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("sales_rank")){
+            				product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("price")){
+            				product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+            			}else if (name.equalsIgnoreCase("image_url")){
+            				product.setImage_url(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("actors")){
+            				((Dvd)product).setActors(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("subtitles")){
+            				((Dvd)product).setSubtitles(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("region")){
+            				((Dvd)product).setRegion(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("language")){
+            				((Dvd)product).setLanguage(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("run_time")){
+            				((Dvd)product).setRun_time(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("release_date")){
+            				((Dvd)product).setRelease_date(property.getFirstChild().getNodeValue());
+            			}else if (name.equalsIgnoreCase("aspect_ratio")){
+            				((Dvd)product).setAspect_ratio(property.getFirstChild().getNodeValue());
+            			}
+            			
+            		}
+            	}
 
                 retProduct.add(product);
                 Log.d("TAG","asd"+product.toString());
@@ -398,7 +462,7 @@ public class CatalogService extends IntentService {
         return retProduct;
 	}
 	
-	private Product fromXMLtoProduct(String xmlToParse) {
+	private Product fromXMLtoProduct(String xmlToParse, int catId) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Product product=null;
         try {
@@ -410,30 +474,81 @@ public class CatalogService extends IntentService {
             doc.getDocumentElement().normalize();
             
             NodeList node = doc.getElementsByTagName("product");
-            product = new ProductImpl();		
-            Element productE = (Element) node;
-            String id = productE.getAttribute("id");
-            System.out.println(id);
-            product.setId( Integer.parseInt( id ) );
-            Log.d("TAG","id=" + String.valueOf( product.getId() ));
-            NodeList properties = productE.getChildNodes();
-            for (int j=0;j<properties.getLength();j++){
-                    Node property = properties.item(j);
-                    String name = property.getNodeName();
-                    if (name.equalsIgnoreCase("category_id")){
-                    	product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
-                    } else if (name.equalsIgnoreCase("subcategory_id")){
-                    	product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("name")){
-                    	product.setName(property.getFirstChild().getNodeValue());
-                    }else if (name.equalsIgnoreCase("sales_rank")){
-                    	product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("price")){
-                    	product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
-                    }else if (name.equalsIgnoreCase("image_url")){
-                    	product.setImage_url(property.getFirstChild().getNodeValue());
-                    }
-             }
+            Element productE;
+            if ( catId == 1 ){//book
+            	product = new Book();		
+        		productE = (Element) node;
+        		String id = productE.getAttribute("id");
+        		System.out.println(id);
+        		product.setId( Integer.parseInt( id ) );
+        		Log.d("TAG","id=" + String.valueOf( product.getId() ));
+        		NodeList properties = productE.getChildNodes();
+        		for (int j=0;j<properties.getLength();j++){
+        			Node property = properties.item(j);
+        			String name = property.getNodeName();
+        			if (name.equalsIgnoreCase("category_id")){
+        				product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+        			} else if (name.equalsIgnoreCase("subcategory_id")){
+        				product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("name")){
+        				product.setName(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("sales_rank")){
+        				product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("price")){
+        				product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("image_url")){
+        				product.setImage_url(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("authors")){
+        				((Book)product).setAuthors(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("publisher")){
+        				((Book)product).setPublisher(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("published_date")){
+        				((Book)product).setPublished_date(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("language")){
+        				((Book)product).setLanguage(property.getFirstChild().getNodeValue());
+        			}
+        		}
+            }else{//dvd
+            	product = new Dvd();		
+        		productE = (Element) node;
+        		String id = productE.getAttribute("id");
+        		System.out.println(id);
+        		product.setId( Integer.parseInt( id ) );
+        		Log.d("TAG","id=" + String.valueOf( product.getId() ));
+        		NodeList properties = productE.getChildNodes();
+        		for (int j=0;j<properties.getLength();j++){
+        			Node property = properties.item(j);
+        			String name = property.getNodeName();
+        			if (name.equalsIgnoreCase("category_id")){
+        				product.setCategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+        			} else if (name.equalsIgnoreCase("subcategory_id")){
+        				product.setSubcategory_id(Integer.valueOf(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("name")){
+        				product.setName(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("sales_rank")){
+        				product.setSales_rank(Integer.parseInt(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("price")){
+        				product.setPrice(Double.valueOf(property.getFirstChild().getNodeValue()));
+        			}else if (name.equalsIgnoreCase("image_url")){
+        				product.setImage_url(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("actors")){
+        				((Dvd)product).setActors(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("subtitles")){
+        				((Dvd)product).setSubtitles(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("region")){
+        				((Dvd)product).setRegion(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("language")){
+        				((Dvd)product).setLanguage(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("run_time")){
+        				((Dvd)product).setRun_time(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("release_date")){
+        				((Dvd)product).setRelease_date(property.getFirstChild().getNodeValue());
+        			}else if (name.equalsIgnoreCase("aspect_ratio")){
+        				((Dvd)product).setAspect_ratio(property.getFirstChild().getNodeValue());
+        			}
+        			
+        		}
+            }
              Log.d("TAG","Product: "+product.toString());
         } catch (Exception e) {
 			Log.e(TAG, e.getMessage());

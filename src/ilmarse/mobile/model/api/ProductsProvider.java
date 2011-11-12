@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface ProductsProvider {
 
-	List<Product> getProducts(int subcatid);
+	List<Product> getProducts(int catid, int subcatid);
 	
 	public List<? extends Map<String, ?>> getProductsAsMap();
 
