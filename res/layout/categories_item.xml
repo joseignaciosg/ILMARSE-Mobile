@@ -4,22 +4,17 @@
     android:layout_height="fill_parent"
     android:padding="10dp"
 	android:textStyle="bold"
-   	android:textSize="25sp" >
+   	android:textSize="25sp" 
+   	android:textColor="@color/black">
 </TextView>
 
+<!-- <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="10dip"
+        android:paddingTop="15dip"
+        android:src="@drawable/arrow" />
 
-<!--  <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="vertical" android:padding="6dp">
+<LinearLayout/>-->
 
-	<TextView android:id="@+id/code" android:textSize="16sp"
-		android:textStyle="bold" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_toRightOf="@+id/name"/>
-	
-	<TextView android:id="@+id/id" android:textSize="16sp"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		 android:layout_toRightOf="@+id/name"/>
-	
-
-</RelativeLayout>-->

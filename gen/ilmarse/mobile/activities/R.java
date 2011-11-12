@@ -28,27 +28,32 @@ public final class R {
     }
     public static final class drawable {
         public static final int aboutmicon=0x7f020000;
-        public static final int bookicon=0x7f020001;
-        public static final int clockicon=0x7f020002;
-        public static final int dvdicon=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int icon=0x7f020005;
-        public static final int ilmarselogo=0x7f020006;
-        public static final int newsicon=0x7f020007;
-        public static final int order_icon=0x7f020008;
-        public static final int producticon=0x7f020009;
-        public static final int settings=0x7f02000a;
-        public static final int settingsmicon=0x7f02000b;
-        public static final int twittericon=0x7f02000c;
-        public static final int usericon=0x7f02000d;
+        public static final int arrow=0x7f020001;
+        public static final int bookicon=0x7f020002;
+        public static final int clockicon=0x7f020003;
+        public static final int dvdicon=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int ilmarselogo=0x7f020007;
+        public static final int newsicon=0x7f020008;
+        public static final int order_icon=0x7f020009;
+        public static final int producticon=0x7f02000a;
+        public static final int settings=0x7f02000b;
+        public static final int settingsmicon=0x7f02000c;
+        public static final int twittericon=0x7f02000d;
+        public static final int usericon=0x7f02000e;
     }
     public static final class id {
         public static final int get_imagebt=0x7f070010;
-        public static final int id=0x7f070014;
+        public static final int id=0x7f070018;
         public static final int imview=0x7f070000;
-        public static final int name=0x7f070012;
+        public static final int name=0x7f070016;
         public static final int ordersButton=0x7f07000e;
-        public static final int price=0x7f070011;
+        public static final int price=0x7f070015;
+        public static final int prod_image=0x7f070011;
+        public static final int prod_price=0x7f070014;
+        public static final int prod_ranking=0x7f070013;
+        public static final int prod_title=0x7f070012;
         public static final int product_actors=0x7f070007;
         public static final int product_aspect_ratio=0x7f07000c;
         public static final int product_authors=0x7f070003;
@@ -63,7 +68,7 @@ public final class R {
         public static final int product_subtitles=0x7f070008;
         public static final int productsButton=0x7f07000d;
         public static final int settings=0x7f07000f;
-        public static final int title=0x7f070013;
+        public static final int title=0x7f070017;
     }
     public static final class layout {
         public static final int book_product=0x7f030000;
@@ -74,8 +79,9 @@ public final class R {
         public static final int first_screen=0x7f030005;
         public static final int image_test=0x7f030006;
         public static final int main=0x7f030007;
-        public static final int products=0x7f030008;
-        public static final int products_item=0x7f030009;
+        public static final int product_list_item=0x7f030008;
+        public static final int products=0x7f030009;
+        public static final int products_item=0x7f03000a;
     }
     public static final class string {
         public static final int app_label=0x7f060006;

@@ -4,7 +4,8 @@
          android:layout_width="fill_parent"
          android:layout_height="fill_parent"
          android:paddingLeft="8dp"
-         android:paddingRight="8dp">
+         android:paddingRight="8dp"
+         android:background="@color/white">
 
 	<!--  Vista cuando haya elementos en la lista -->
      <ListView android:id="@android:id/list"
@@ -16,5 +17,6 @@
      <TextView android:id="@android:id/empty"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
-               android:text="@string/no_data"/>
+               android:text="@string/no_data"
+               android:textColor="@color/black"/>
 </LinearLayout>
