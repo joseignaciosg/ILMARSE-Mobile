@@ -27,57 +27,64 @@ public final class R {
         public static final int white=0x7f050004;
     }
     public static final class drawable {
-        public static final int aboutmicon=0x7f020000;
-        public static final int arrow=0x7f020001;
-        public static final int bookicon=0x7f020002;
-        public static final int clockicon=0x7f020003;
-        public static final int dvdicon=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int icon=0x7f020006;
-        public static final int ilmarselogo=0x7f020007;
-        public static final int newsicon=0x7f020008;
-        public static final int order_icon=0x7f020009;
-        public static final int pb1=0x7f02000a;
-        public static final int pb2=0x7f02000b;
-        public static final int pb3=0x7f02000c;
-        public static final int pb4=0x7f02000d;
-        public static final int producticon=0x7f02000e;
-        public static final int settings=0x7f02000f;
-        public static final int settingsmicon=0x7f020010;
-        public static final int twittericon=0x7f020011;
-        public static final int usericon=0x7f020012;
+        public static final int abouticon=0x7f020000;
+        public static final int aboutmicon=0x7f020001;
+        public static final int arrow=0x7f020002;
+        public static final int bookicon=0x7f020003;
+        public static final int clockicon=0x7f020004;
+        public static final int dvdicon=0x7f020005;
+        public static final int homeicon=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int icon=0x7f020008;
+        public static final int ilmarselogo=0x7f020009;
+        public static final int logouticon=0x7f02000a;
+        public static final int newsicon=0x7f02000b;
+        public static final int order_icon=0x7f02000c;
+        public static final int pb1=0x7f02000d;
+        public static final int pb2=0x7f02000e;
+        public static final int pb3=0x7f02000f;
+        public static final int pb4=0x7f020010;
+        public static final int producticon=0x7f020011;
+        public static final int settings=0x7f020012;
+        public static final int settingsicon=0x7f020013;
+        public static final int settingsmicon=0x7f020014;
+        public static final int twittericon=0x7f020015;
+        public static final int usericon=0x7f020016;
     }
     public static final class id {
-        public static final int cat_name=0x7f070007;
-        public static final int get_imagebt=0x7f070011;
-        public static final int id=0x7f07001d;
-        public static final int imview=0x7f070000;
-        public static final int name=0x7f07001b;
-        public static final int o_creation_date=0x7f070013;
-        public static final int o_image_status=0x7f070014;
-        public static final int o_order_id=0x7f070012;
-        public static final int o_order_status=0x7f070015;
-        public static final int ordersButton=0x7f07000f;
-        public static final int price=0x7f07001a;
-        public static final int prod_image=0x7f070016;
-        public static final int prod_price=0x7f070019;
-        public static final int prod_ranking=0x7f070018;
-        public static final int prod_title=0x7f070017;
-        public static final int product_actors=0x7f070008;
-        public static final int product_aspect_ratio=0x7f07000d;
-        public static final int product_authors=0x7f070003;
-        public static final int product_language=0x7f070006;
-        public static final int product_name=0x7f070001;
-        public static final int product_price=0x7f070002;
-        public static final int product_published_date=0x7f070005;
-        public static final int product_publisher=0x7f070004;
-        public static final int product_region=0x7f07000a;
-        public static final int product_release_date=0x7f07000c;
-        public static final int product_runtime=0x7f07000b;
-        public static final int product_subtitles=0x7f070009;
-        public static final int productsButton=0x7f07000e;
-        public static final int settings=0x7f070010;
-        public static final int title=0x7f07001c;
+        public static final int about_option_menu=0x7f08001f;
+        public static final int cat_name=0x7f080007;
+        public static final int get_imagebt=0x7f080011;
+        public static final int home_option_menu=0x7f080020;
+        public static final int id=0x7f08001d;
+        public static final int imview=0x7f080000;
+        public static final int name=0x7f08001b;
+        public static final int o_creation_date=0x7f080013;
+        public static final int o_image_status=0x7f080014;
+        public static final int o_order_id=0x7f080012;
+        public static final int o_order_status=0x7f080015;
+        public static final int ordersButton=0x7f08000f;
+        public static final int price=0x7f08001a;
+        public static final int prod_image=0x7f080016;
+        public static final int prod_price=0x7f080019;
+        public static final int prod_ranking=0x7f080018;
+        public static final int prod_title=0x7f080017;
+        public static final int product_actors=0x7f080008;
+        public static final int product_aspect_ratio=0x7f08000d;
+        public static final int product_authors=0x7f080003;
+        public static final int product_language=0x7f080006;
+        public static final int product_name=0x7f080001;
+        public static final int product_price=0x7f080002;
+        public static final int product_published_date=0x7f080005;
+        public static final int product_publisher=0x7f080004;
+        public static final int product_region=0x7f08000a;
+        public static final int product_release_date=0x7f08000c;
+        public static final int product_runtime=0x7f08000b;
+        public static final int product_subtitles=0x7f080009;
+        public static final int productsButton=0x7f08000e;
+        public static final int settings=0x7f080010;
+        public static final int settings_option_menu=0x7f08001e;
+        public static final int title=0x7f08001c;
     }
     public static final class layout {
         public static final int book_product=0x7f030000;
@@ -94,12 +101,18 @@ public final class R {
         public static final int products=0x7f03000b;
         public static final int products_item=0x7f03000c;
     }
+    public static final class menu {
+        public static final int option_menu=0x7f070000;
+    }
     public static final class string {
+        public static final int about_option_menu=0x7f06001b;
         public static final int app_label=0x7f060006;
         public static final int app_name=0x7f060002;
         public static final int creation_date=0x7f060018;
         public static final int hello=0x7f060005;
+        public static final int home_option_menu=0x7f06001d;
         public static final int loading=0x7f060001;
+        public static final int logout_option_menu=0x7f06001c;
         public static final int no_data=0x7f060004;
         public static final int order_id=0x7f060017;
         public static final int order_status=0x7f060019;
@@ -120,6 +133,7 @@ public final class R {
         public static final int search_activity=0x7f060003;
         public static final int search_hint=0x7f060007;
         public static final int settings=0x7f060016;
+        public static final int settings_option_menu=0x7f06001a;
         public static final int slogan=0x7f060000;
     }
     public static final class xml {

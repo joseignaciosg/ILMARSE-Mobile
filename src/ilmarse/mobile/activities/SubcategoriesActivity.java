@@ -20,6 +20,9 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -166,6 +169,38 @@ public class SubcategoriesActivity extends ListActivity {
 			}
 			return v;
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.option_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.settings_option_menu:
+			Intent showSettingsView = new Intent(SubcategoriesActivity.this,
+					SettingsActivity.class);
+			startActivity(showSettingsView);
+			break;
+			
+		case R.id.about_option_menu:
+//            new AlertDialog.Builder(this)
+//            .setTitle(getString(R.string.about_option_menu))
+//            .setMessage(getString(R.string.about_us_dialog))
+//            .setPositiveButton(android.R.string.ok, null)
+//            .show();
+			break;
+		case R.id.home_option_menu:
+			Intent showHomeView = new Intent(SubcategoriesActivity.this,
+					MainActivity.class);
+			startActivity(showHomeView);
+			break;
+		}
+		return true;
 	}
 
 	
