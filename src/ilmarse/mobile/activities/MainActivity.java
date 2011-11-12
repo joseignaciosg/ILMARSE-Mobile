@@ -20,6 +20,7 @@ public class MainActivity extends Activity{
 
 		setContentView(R.layout.first_screen);
 
+		//listener for products section
 		ImageButton productsButton = (ImageButton) findViewById(R.id.productsButton);
 		productsButton.setOnClickListener(new View.OnClickListener() {
 
@@ -28,6 +29,20 @@ public class MainActivity extends Activity{
 				Intent showProductsView = new Intent(MainActivity.this,
 						CategoriesActivity.class);
 				startActivity(showProductsView);
+
+			}
+
+		});
+		
+		//listener for orders section
+		ImageButton ordersButton = (ImageButton) findViewById(R.id.ordersButton);
+		ordersButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent showOrdersView = new Intent(MainActivity.this,
+						OrdersActivity.class);
+				startActivity(showOrdersView);
 
 			}
 

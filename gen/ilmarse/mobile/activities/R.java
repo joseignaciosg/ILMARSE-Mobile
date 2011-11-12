@@ -37,24 +37,32 @@ public final class R {
         public static final int ilmarselogo=0x7f020007;
         public static final int newsicon=0x7f020008;
         public static final int order_icon=0x7f020009;
-        public static final int producticon=0x7f02000a;
-        public static final int settings=0x7f02000b;
-        public static final int settingsmicon=0x7f02000c;
-        public static final int twittericon=0x7f02000d;
-        public static final int usericon=0x7f02000e;
+        public static final int pb1=0x7f02000a;
+        public static final int pb2=0x7f02000b;
+        public static final int pb3=0x7f02000c;
+        public static final int pb4=0x7f02000d;
+        public static final int producticon=0x7f02000e;
+        public static final int settings=0x7f02000f;
+        public static final int settingsmicon=0x7f020010;
+        public static final int twittericon=0x7f020011;
+        public static final int usericon=0x7f020012;
     }
     public static final class id {
         public static final int cat_name=0x7f070007;
         public static final int get_imagebt=0x7f070011;
-        public static final int id=0x7f070019;
+        public static final int id=0x7f07001d;
         public static final int imview=0x7f070000;
-        public static final int name=0x7f070017;
+        public static final int name=0x7f07001b;
+        public static final int o_creation_date=0x7f070013;
+        public static final int o_image_status=0x7f070014;
+        public static final int o_order_id=0x7f070012;
+        public static final int o_order_status=0x7f070015;
         public static final int ordersButton=0x7f07000f;
-        public static final int price=0x7f070016;
-        public static final int prod_image=0x7f070012;
-        public static final int prod_price=0x7f070015;
-        public static final int prod_ranking=0x7f070014;
-        public static final int prod_title=0x7f070013;
+        public static final int price=0x7f07001a;
+        public static final int prod_image=0x7f070016;
+        public static final int prod_price=0x7f070019;
+        public static final int prod_ranking=0x7f070018;
+        public static final int prod_title=0x7f070017;
         public static final int product_actors=0x7f070008;
         public static final int product_aspect_ratio=0x7f07000d;
         public static final int product_authors=0x7f070003;
@@ -69,7 +77,7 @@ public final class R {
         public static final int product_subtitles=0x7f070009;
         public static final int productsButton=0x7f07000e;
         public static final int settings=0x7f070010;
-        public static final int title=0x7f070018;
+        public static final int title=0x7f07001c;
     }
     public static final class layout {
         public static final int book_product=0x7f030000;
@@ -80,17 +88,21 @@ public final class R {
         public static final int first_screen=0x7f030005;
         public static final int image_test=0x7f030006;
         public static final int main=0x7f030007;
-        public static final int product_list_item=0x7f030008;
-        public static final int products=0x7f030009;
-        public static final int products_item=0x7f03000a;
+        public static final int order_list_item=0x7f030008;
+        public static final int orders=0x7f030009;
+        public static final int product_list_item=0x7f03000a;
+        public static final int products=0x7f03000b;
+        public static final int products_item=0x7f03000c;
     }
     public static final class string {
         public static final int app_label=0x7f060006;
         public static final int app_name=0x7f060002;
+        public static final int creation_date=0x7f060018;
         public static final int hello=0x7f060005;
         public static final int loading=0x7f060001;
-        public static final int newsbutton_label=0x7f060017;
         public static final int no_data=0x7f060004;
+        public static final int order_id=0x7f060017;
+        public static final int order_status=0x7f060019;
         public static final int ordersbutton=0x7f060015;
         public static final int product_actors=0x7f06000e;
         public static final int product_aspect_ratio=0x7f060013;

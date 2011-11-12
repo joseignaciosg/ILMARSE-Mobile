@@ -141,16 +141,13 @@ public class ProductsActivity extends ListActivity {
 	}
 	
 	private class ProductAdapter extends ArrayAdapter<Product> {
-
 		private List<Product> items;
-//	    public ImageLoader imageLoader; 
 
 
 		public ProductAdapter(Context context, int textViewResourceId,
 				List<Product> items) {
 			super(context, textViewResourceId, items);
 			this.items = items;
-//	        imageLoader=new ImageLoader(ProductsActivity.this.getApplicationContext());
 
 		}
 

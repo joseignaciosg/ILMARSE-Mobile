@@ -23,7 +23,11 @@
     <string name="productsbutton">Products </string>
     <string name="ordersbutton">Orders </string>
     <string name="settings">Settings </string>
-    <string name="newsbutton_label">PEorn </string>
+    
+      
+    <string name="order_id">Order Id: </string>
+    <string name="creation_date">Creation Date: </string>
+    <string name="order_status">Order Status: </string>
         
         
         

@@ -44,6 +44,8 @@
         <service android:name="ilmarse.mobile.services.CatalogService"></service>
         <activity android:name="ProductActivity"></activity>
         <activity android:name="MainActivity"></activity>
+        <activity android:name="OrdersActivity"></activity>
+        <service android:name="ilmarse.mobile.services.OrderService"></service>
     </application>
 
 </manifest>
