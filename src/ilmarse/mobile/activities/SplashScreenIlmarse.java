@@ -21,7 +21,9 @@ public class SplashScreenIlmarse extends Activity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case SplashScreenIlmarse.STOP:
-					Intent intent = new Intent(SplashScreenIlmarse.this, CategoriesActivity.class);
+//					Intent intent = new Intent(SplashScreenIlmarse.this, CategoriesActivity.class);
+					Intent intent = new Intent(SplashScreenIlmarse.this, MainActivity.class);
+
 					startActivity(intent);
 					SplashScreenIlmarse.this.finish();
 					Log.d(TAG, "DIYING");

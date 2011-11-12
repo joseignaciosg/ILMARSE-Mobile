@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="slogan">The stuff you´ve always wanted, everywhere</string>
     <string name="loading">Loading</string>
     <string name="app_name">ILmarse mobile</string>
     <string name="search_activity">Categories Search</string>
@@ -19,5 +20,15 @@
     <string name="product_runtime">Run Time: </string>
     <string name="product_release_date">Release Date: </string>
     <string name="product_aspect_ratio">Aspect Ratio: </string>
+    <string name="productsbutton">Products </string>
+    <string name="ordersbutton">Orders </string>
+    <string name="settings">Settings </string>
+    <string name="newsbutton_label">PEorn </string>
+        
+        
+        
+        
+    
+        
     
 </resources>

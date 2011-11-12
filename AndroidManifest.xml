@@ -43,6 +43,7 @@
         <service android:name="ilmarse.mobile.services.SearchService"></service>
         <service android:name="ilmarse.mobile.services.CatalogService"></service>
         <activity android:name="ProductActivity"></activity>
+        <activity android:name="MainActivity"></activity>
     </application>
 
 </manifest>
