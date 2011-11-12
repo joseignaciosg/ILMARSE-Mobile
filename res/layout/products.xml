@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+<ListView
+    android:id="@+id/android:list"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    />
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+       	android:textSize="15sp"
+        android:layout_centerVertical="true"
+		android:textColor="@color/black" />
+</LinearLayout>
+
+
+<!--  <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
          android:orientation="vertical"
          android:layout_width="fill_parent"
          android:layout_height="fill_parent"
@@ -7,16 +27,15 @@
          android:paddingRight="8dp"
          android:background="@color/white">
 
-	<!--  Vista cuando haya elementos en la lista -->
      <ListView android:id="@android:id/list"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
                android:drawSelectorOnTop="false"/>
 
-	<!--  Vista se va a mostrar cuando la lista esté vacía -->
      <TextView android:id="@android:id/empty"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
                android:text="@string/no_data"
                android:textColor="@color/black"/>
-</LinearLayout>
+</LinearLayout>-->
+
