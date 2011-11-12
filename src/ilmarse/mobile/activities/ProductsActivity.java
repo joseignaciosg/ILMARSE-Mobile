@@ -108,6 +108,8 @@ public class ProductsActivity extends ListActivity {
 		Object o = this.getListAdapter().getItem(position);
 		Log.d(TAG, "Leaving onListItemClick!.");
 		String productname = o.toString();
+		Log.d(TAG, productname);
+
 		Bundle bundle = new Bundle();
 		
 		Intent newIntent = new Intent(ProductsActivity.this,

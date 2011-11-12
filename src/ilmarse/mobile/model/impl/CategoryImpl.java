@@ -13,14 +13,12 @@ public class CategoryImpl implements Category {
 	private Integer id;
 	private String code;
 	private String name;
-	private List<Subcategory> subcategories;
 	
 	public CategoryImpl() {
 		super();
 		this.id = -1;
 		this.code = null;
 		this.name = null;
-		this.subcategories = null;
 	}
 	
 	public CategoryImpl(int id, String code, String name) {
@@ -28,7 +26,6 @@ public class CategoryImpl implements Category {
 		this.id = id;
 		this.code = code;
 		this.name = name;
-		this.subcategories = new ArrayList<Subcategory>();
 	}
 	
 	public CategoryImpl(int id, String code, String name, List<Subcategory> subcategories) {
@@ -36,7 +33,6 @@ public class CategoryImpl implements Category {
 		this.id = id;
 		this.code = code;
 		this.name = name;
-		this.subcategories = subcategories;
 	}
 
 	public Integer getId() {
@@ -63,13 +59,6 @@ public class CategoryImpl implements Category {
 		this.name = name;
 	}
 
-	public List<Subcategory> getSubcategories() {
-		return subcategories;
-	}
-
-	public void setSubcategories(List<Subcategory> subcategories) {
-		this.subcategories = subcategories;
-	}
 
 	@Override
 	public int hashCode() {
@@ -78,8 +67,6 @@ public class CategoryImpl implements Category {
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((subcategories == null) ? 0 : subcategories.hashCode());
 		return result;
 	}
 
@@ -103,11 +90,6 @@ public class CategoryImpl implements Category {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (subcategories == null) {
-			if (other.subcategories != null)
-				return false;
-		} else if (!subcategories.equals(other.subcategories))
 			return false;
 		return true;
 	}

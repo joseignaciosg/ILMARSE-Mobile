@@ -4,6 +4,7 @@ package ilmarse.mobile.activities;
 import ilmarse.mobile.model.api.Category;
 import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.impl.CategoryProviderImpl;
+import ilmarse.mobile.model.impl.CategoryProviderMock;
 import ilmarse.mobile.services.CatalogService;
 
 import java.util.ArrayList;
@@ -18,16 +19,17 @@ import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 
 public class CategoriesActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
+	
+	//remove this
 	HashMap<String, Category> categoriesMap = new HashMap<String, Category>();
 	List<String> catNames = new ArrayList<String>();
+	
 
 
 	

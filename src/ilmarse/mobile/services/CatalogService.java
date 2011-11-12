@@ -1,10 +1,16 @@
 package ilmarse.mobile.services;
 import ilmarse.mobile.model.api.Category;
+import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.api.Product;
+import ilmarse.mobile.model.api.ProductsProvider;
 import ilmarse.mobile.model.api.Subcategory;
+import ilmarse.mobile.model.api.SubcategoryProvider;
 import ilmarse.mobile.model.impl.CategoryImpl;
+import ilmarse.mobile.model.impl.CategoryProviderMock;
 import ilmarse.mobile.model.impl.ProductImpl;
+import ilmarse.mobile.model.impl.ProductsProviderMock;
 import ilmarse.mobile.model.impl.SubcategoryImpl;
+import ilmarse.mobile.model.impl.SubcategoryProviderMock;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -35,6 +41,11 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 public class CatalogService extends IntentService {
+	
+	private CategoryProvider categoryProvider = new CategoryProviderMock();
+	private SubcategoryProvider subcategoryProvider = new SubcategoryProviderMock();
+	private ProductsProvider productProvider = new ProductsProviderMock();
+
 
 	private final String TAG = getClass().getSimpleName();
 	private final String APIurl = "http://eiffel.itba.edu.ar/hci/service/";
@@ -124,26 +135,30 @@ public class CatalogService extends IntentService {
 
 	private void getCategories(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
 		Log.d(TAG, "OK in getCategories ");
-		final DefaultHttpClient client = new DefaultHttpClient();
-		
-		/*gets the phone current language*/
-		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
-		final HttpResponse response;
-		if(phoneLanguage.equals("en")){
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=1"));
-		}
-		else{
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
-		}
-		
-		
-		if ( response.getStatusLine().getStatusCode() != 200 ) {
-			throw new IllegalArgumentException(response.getStatusLine().toString());
-		}
-		
-		final String xmlToParse = EntityUtils.toString(response.getEntity());
-
-		b.putSerializable("return", (Serializable)fromXMLtoCategories(xmlToParse));
+		List<Category> list;
+//		final DefaultHttpClient client = new DefaultHttpClient();
+//		
+//		/*gets the phone current language*/
+//		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
+//		final HttpResponse response;
+//		if(phoneLanguage.equals("en")){
+//			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=1"));
+//		}
+//		else{
+//			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
+//		}
+//		
+//		
+//		if ( response.getStatusLine().getStatusCode() != 200 ) {
+//			throw new IllegalArgumentException(response.getStatusLine().toString());
+//		}else {
+//			final String xmlToParse = EntityUtils.toString(response.getEntity());
+//			list =  fromXMLtoCategories(xmlToParse);
+//			b.putSerializable("return", (Serializable)list);
+//		}
+//		
+		list = categoryProvider.getCategories();
+		b.putSerializable("return", (Serializable)list);
 		receiver.send(STATUS_OK, b);
 	}
 	
@@ -154,27 +169,29 @@ public class CatalogService extends IntentService {
 		Log.d(TAG, "OK in getSubCategories ");
 		int catId = new Integer(b.getString("catid"));
 		Log.d(TAG, "category id "+catId);
-		// TODO not hardcode
-		final DefaultHttpClient client = new DefaultHttpClient();
+//		final DefaultHttpClient client = new DefaultHttpClient();
+//		
+//		/*gets the phone current language*/
+//		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
+//		final HttpResponse response;
+//		if(phoneLanguage.equals("en")){
+//			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=1&category_id="+catId));
+//		}
+//		else{
+//			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=2&category_id="+catId));
+//		}
+//				
+//		
+//		if ( response.getStatusLine().getStatusCode() != 200 ) {
+//			throw new IllegalArgumentException(response.getStatusLine().toString());
+//		}
+//		
+//		final String xmlToParse = EntityUtils.toString(response.getEntity());
+		List<Subcategory> list;
+//		list =fromXMLtoSubCategories(xmlToParse);
+		list =  subcategoryProvider.getSubcategories(catId);
 		
-		/*gets the phone current language*/
-		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
-		final HttpResponse response;
-		if(phoneLanguage.equals("en")){
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=1&category_id="+catId));
-		}
-		else{
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetSubcategoryList&language_id=2&category_id="+catId));
-		}
-				
-		
-		if ( response.getStatusLine().getStatusCode() != 200 ) {
-			throw new IllegalArgumentException(response.getStatusLine().toString());
-		}
-		
-		final String xmlToParse = EntityUtils.toString(response.getEntity());
-		
-		b.putSerializable("return", (Serializable)fromXMLtoSubCategories(xmlToParse));
+		b.putSerializable("return", (Serializable)list);
 		receiver.send(STATUS_OK, b);
 		
 	}
@@ -184,26 +201,29 @@ public class CatalogService extends IntentService {
 		int subcatId = new Integer(b.getString("subcatid"));
 
 		Log.d(TAG, "OK in getProducts "+catId +"/"+subcatId);
-		final DefaultHttpClient client = new DefaultHttpClient();
-		/*gets the phone current language*/
-		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
-		final HttpResponse response;
-		if(phoneLanguage.equals("en")){
-			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
-					"?method=GetProductListBySubcategory&language_id=1&category_id="+catId+"&subcategory_id="+subcatId));
-		}else{
-			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
-					"?method=GetProductListBySubcategory&language_id=2&category_id="+catId+"&subcategory_id="+subcatId));;
-		}
-		
-		if ( response.getStatusLine().getStatusCode() != 200 ) {
-			throw new IllegalArgumentException(response.getStatusLine().toString());
-		}
-		
-		final String xmlToParse = EntityUtils.toString(response.getEntity());
-		Log.d(TAG, xmlToParse.toString());
+//		final DefaultHttpClient client = new DefaultHttpClient();
+//		/*gets the phone current language*/
+//		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
+//		final HttpResponse response;
+//		if(phoneLanguage.equals("en")){
+//			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
+//					"?method=GetProductListBySubcategory&language_id=1&category_id="+catId+"&subcategory_id="+subcatId));
+//		}else{
+//			response = client.execute(new HttpGet(APIurl + "Catalog.groovy" +
+//					"?method=GetProductListBySubcategory&language_id=2&category_id="+catId+"&subcategory_id="+subcatId));;
+//		}
+//		
+//		if ( response.getStatusLine().getStatusCode() != 200 ) {
+//			throw new IllegalArgumentException(response.getStatusLine().toString());
+//		}
+//		
+//		final String xmlToParse = EntityUtils.toString(response.getEntity());
+//		Log.d(TAG, xmlToParse.toString());
+		List<Product> list;
+		list = productProvider.getProducts(subcatId);
+//		list = fromXMLtoProducts(xmlToParse);
 
-		b.putSerializable("return", (Serializable)fromXMLtoProducts(xmlToParse));
+		b.putSerializable("return", (Serializable)list);
 		receiver.send(STATUS_OK, b);
 	}
 	
@@ -367,9 +387,9 @@ public class CatalogService extends IntentService {
         return retProduct;
 	}
 	
-	private List<Product> fromXMLtoProduct(String xmlToParse) {
+	private Product fromXMLtoProduct(String xmlToParse) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<Product> retProduct = new ArrayList<Product>();
+		Product product=null;
         try {
         	DocumentBuilder builder = factory.newDocumentBuilder();
             /*Document doc = builder.parse(new InputSource(new StringReader(xmlToParse)));*/
@@ -378,18 +398,15 @@ public class CatalogService extends IntentService {
     		Document doc = builder.parse(inStream);
             doc.getDocumentElement().normalize();
             
-            NodeList nodeList = doc.getElementsByTagName("product");
-            for (int i=0;i<nodeList.getLength(); i++) {
-            	//TODO get the id and subcategories
-            	Product product = new ProductImpl();		
-                Node node = nodeList.item(i);
-                Element productE = (Element) node;
-                String id = productE.getAttribute("id");
-                System.out.println(id);
-                product.setId( Integer.parseInt( id ) );
-                Log.d("TAG","id=" + String.valueOf( product.getId() ));
-                NodeList properties = productE.getChildNodes();
-                for (int j=0;j<properties.getLength();j++){
+            NodeList node = doc.getElementsByTagName("product");
+            product = new ProductImpl();		
+            Element productE = (Element) node;
+            String id = productE.getAttribute("id");
+            System.out.println(id);
+            product.setId( Integer.parseInt( id ) );
+            Log.d("TAG","id=" + String.valueOf( product.getId() ));
+            NodeList properties = productE.getChildNodes();
+            for (int j=0;j<properties.getLength();j++){
                     Node property = properties.item(j);
                     String name = property.getNodeName();
                     if (name.equalsIgnoreCase("category_id")){
@@ -405,18 +422,14 @@ public class CatalogService extends IntentService {
                     }else if (name.equalsIgnoreCase("image_url")){
                     	product.setImage_url(property.getFirstChild().getNodeValue());
                     }
-                }
-
-                retProduct.add(product);
-                Log.d("TAG","asd"+product.toString());
-           }
+             }
+             Log.d("TAG","Product: "+product.toString());
         } catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 			Log.e(TAG, "here!");
         } 
-        Log.d(TAG, "asddd2"+retProduct.toString());
-        return retProduct;
+        return product;
 	}
 
 	

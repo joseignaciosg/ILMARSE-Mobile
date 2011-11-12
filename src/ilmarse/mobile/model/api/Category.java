@@ -17,9 +17,6 @@ public interface Category {
 
 	public void setName(String name);
 
-	public List<Subcategory> getSubcategories();
-
-	public void setSubcategories(List<Subcategory> subcategories);
 
 	public int hashCode();
 

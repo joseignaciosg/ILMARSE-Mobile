@@ -7,4 +7,6 @@
     <string name="hello">Welcome to ILmarse mobile</string>
     <string name="app_label">iLMarse</string>
     <string name="search_hint">Search...</string>
+    <string name="cable1">Product name </string>
+    <string name="cable2">Product description</string>
 </resources>
