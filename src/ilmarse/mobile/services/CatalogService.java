@@ -2,11 +2,13 @@ package ilmarse.mobile.services;
 import ilmarse.mobile.model.api.Category;
 import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.api.Product;
+import ilmarse.mobile.model.api.ProductDetailProvider;
 import ilmarse.mobile.model.api.ProductsProvider;
 import ilmarse.mobile.model.api.Subcategory;
 import ilmarse.mobile.model.api.SubcategoryProvider;
 import ilmarse.mobile.model.impl.CategoryImpl;
 import ilmarse.mobile.model.impl.CategoryProviderMock;
+import ilmarse.mobile.model.impl.ProductDetailProviderMock;
 import ilmarse.mobile.model.impl.ProductImpl;
 import ilmarse.mobile.model.impl.ProductsProviderMock;
 import ilmarse.mobile.model.impl.SubcategoryImpl;
@@ -44,7 +46,8 @@ public class CatalogService extends IntentService {
 	
 	private CategoryProvider categoryProvider = new CategoryProviderMock();
 	private SubcategoryProvider subcategoryProvider = new SubcategoryProviderMock();
-	private ProductsProvider productProvider = new ProductsProviderMock();
+	private ProductsProvider productsProvider = new ProductsProviderMock();
+	private ProductDetailProvider productDetailProvider = new ProductDetailProviderMock();
 
 
 	private final String TAG = getClass().getSimpleName();
@@ -102,11 +105,12 @@ public class CatalogService extends IntentService {
 			}else if ( command.equals(GET_PRODUCTS_CMD) ){
 				catId = Integer.parseInt(intent.getStringExtra("catid"));
 				subcatId = Integer.parseInt(intent.getStringExtra("subcatid"));
-				Log.d("TAG", catId +"-"+subcatId);
+				Log.d(TAG, catId +"-"+subcatId);
 				b.putString("catid",catId+"");
 				b.putString("subcatid",subcatId+"");
 				getProductsSub(receiver, b);
 			}else if ( command.equals(GET_PRODUCT_CMD)  ){
+				Log.d(TAG,"GET_PRODUCT_CMD");
 				getProduct(receiver,b);
 			}
 		} catch (SocketTimeoutException e) {
@@ -220,7 +224,7 @@ public class CatalogService extends IntentService {
 //		final String xmlToParse = EntityUtils.toString(response.getEntity());
 //		Log.d(TAG, xmlToParse.toString());
 		List<Product> list;
-		list = productProvider.getProducts(subcatId);
+		list = productsProvider.getProducts(subcatId);
 //		list = fromXMLtoProducts(xmlToParse);
 
 		b.putSerializable("return", (Serializable)list);
@@ -228,15 +232,22 @@ public class CatalogService extends IntentService {
 	}
 	
 	private void getProduct(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
-		int prodId = new Integer(b.getString("catid"));
-		final DefaultHttpClient client = new DefaultHttpClient();
-		/*gets the phone current language*/
-		final HttpResponse response;
-		response = client.execute(new HttpGet(APIurl + "Catalog.groovy?method=GetProduct&product_id"+prodId));
-		final String xmlToParse = EntityUtils.toString(response.getEntity());
-		Log.d(TAG, xmlToParse.toString());
+		Log.d(TAG, "inside getproduct");
 
-		b.putSerializable("return", (Serializable)fromXMLtoProduct(xmlToParse));
+//		int prodId = new Integer(b.getString("catid"));
+//		final DefaultHttpClient client = new DefaultHttpClient();
+//		/*gets the phone current language*/
+//		final HttpResponse response;
+//		response = client.execute(new HttpGet(APIurl + "Catalog.groovy?method=GetProduct&product_id"+prodId));
+//		final String xmlToParse = EntityUtils.toString(response.getEntity());
+//		Log.d(TAG, xmlToParse.toString());
+		Product product; 
+//		product = fromXMLtoProduct(xmlToParse);
+		product = (Product) productDetailProvider.getProduct(1);
+		Log.d(TAG, "leaving getproduct");
+		List<Product> aux = new ArrayList<Product>();
+		aux.add(product);
+		b.putSerializable("return", (Serializable)aux);
 		receiver.send(STATUS_OK, b);
 	}
 	

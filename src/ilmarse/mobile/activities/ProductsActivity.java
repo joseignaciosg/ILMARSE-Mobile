@@ -4,7 +4,7 @@ package ilmarse.mobile.activities;
 import ilmarse.mobile.model.api.Product;
 import ilmarse.mobile.model.api.ProductsProvider;
 import ilmarse.mobile.model.api.Subcategory;
-import ilmarse.mobile.model.impl.ProductProviderImpl;
+import ilmarse.mobile.model.impl.ProductsProviderImpl;
 import ilmarse.mobile.model.impl.SubCategoryProviderImpl;
 import ilmarse.mobile.services.CatalogService;
 
@@ -73,7 +73,7 @@ public class ProductsActivity extends ListActivity {
 						productMap.put(c.getName(),c);
 						productNames.add(c.getName());
 					}
-					populateList( new ProductProviderImpl(list) );
+					populateList( new ProductsProviderImpl(list) );
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
 					Log.d(TAG, "Connection error.");

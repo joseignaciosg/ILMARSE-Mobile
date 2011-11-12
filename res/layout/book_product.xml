@@ -4,21 +4,33 @@
     android:layout_height="fill_parent"
     android:stretchColumns="1">
     <TableRow>
-         <ImageView 
-		    android:id="@+id/imview"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center"
-		    />
+	         <ImageView 
+			    android:id="@+id/imview"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    />
     </TableRow>
 
     <TableRow>
         <TextView
-            android:text="@string/cable1"
+            android:text="@string/product_name"
+            android:gravity="left"
             android:padding="3dip" />
         <TextView
-            android:text="@string/cable2"
+            android:id="@+id/product_name"
             android:gravity="right"
             android:padding="3dip" />
     </TableRow>
+    
+     <TableRow>
+         <TextView
+            android:text="@string/product_price"
+            android:gravity="left"
+            android:padding="3dip" />
+          <TextView
+            android:id="@+id/product_price"
+            android:gravity="right"
+            android:padding="3dip" />
+     </TableRow>
 </TableLayout>

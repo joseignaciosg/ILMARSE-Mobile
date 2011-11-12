@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
@@ -19,13 +20,15 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ProductActivity extends Activity {
 	private String TAG = getClass().getSimpleName();
 
-    ImageView imView;
     String imageUrl="http://1.bp.blogspot.com/_mbWThvBk2kA/S43ftG3N6MI/AAAAAAAANws/FmT_6iWv8iE/s320/books+2.gif";
-
+    ImageView imView;
+    TextView prodnameView;
+    TextView prodpriceView ;
     Random r= new Random();
     
     @Override
@@ -56,7 +59,8 @@ public class ProductActivity extends Activity {
 				if (resultCode == CatalogService.STATUS_OK) {
 					Log.d(TAG, "OK received info");
 					@SuppressWarnings("unchecked")
-					Product product = (Product)resultData.getSerializable("return");
+					List<Product> list = (List<Product>)resultData.getSerializable("return");
+					Product product = list.get(0);
 					Log.d(TAG,product.toString());
 					Log.d(TAG, "inside product receiver");
 //					populateList( new ProductProviderImpl(list) );
@@ -71,19 +75,38 @@ public class ProductActivity extends Activity {
 
 		});
 		/* wait until iol is working*/
-//		startService(intent);
+		startService(intent);
 		
     }
     
     private void populateProduct(Product prod){
     	Log.d(TAG,"inside populateProduct: product: "+prod.toString() );
     	String imageUrl = prod.getImage_url();
-    	imView = (ImageView)findViewById(R.id.imview);
+        imView = (ImageView)findViewById(R.id.imview);
+        prodnameView = (TextView)findViewById(R.id.product_name);
+        prodpriceView = (TextView)findViewById(R.id.product_price);
+
+        
     	downloadFile(imageUrl);
-    	Log.i("im url",imageUrl);
+    	setAttributes(prod);
     }
     
     
+private void setAttributes(Product prod) {
+		Log.d(TAG,"inside setATTR");
+		if ( prodnameView != null)
+			prodnameView.setText(prod.getName());
+		else 
+			Log.e(TAG,"prodname is null");
+		
+		if ( prodpriceView != null)
+			prodpriceView.setText(prod.getPrice()+"");
+		else 
+			Log.e(TAG,"prodprice is null");
+		
+	}
+
+
 //   @Override
 //   public void onCreate(Bundle icicle) {
 //	   Log.d(TAG,"inside onCreate");
@@ -114,9 +137,11 @@ public class ProductActivity extends Activity {
 //  
    Bitmap bmImg;
    void downloadFile(String fileUrl){
-         URL myFileUrl =null;          
+         URL myFileUrl =null;        
+         Log.d(TAG,fileUrl);
          try {
               myFileUrl= new URL(fileUrl);
+              Log.d(TAG,fileUrl);
          } catch (MalformedURLException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
