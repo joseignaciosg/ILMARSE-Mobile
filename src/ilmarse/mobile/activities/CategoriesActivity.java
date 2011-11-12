@@ -1,38 +1,47 @@
 package ilmarse.mobile.activities;
 
-
 import ilmarse.mobile.model.api.Category;
 import ilmarse.mobile.model.api.CategoryProvider;
+import ilmarse.mobile.model.api.Product;
 import ilmarse.mobile.model.impl.CategoryProviderImpl;
 import ilmarse.mobile.model.impl.CategoryProviderMock;
 import ilmarse.mobile.services.CatalogService;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-
+import android.widget.TextView;
 
 public class CategoriesActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
-	
-	//remove this
+
+	// remove this
 	HashMap<String, Category> categoriesMap = new HashMap<String, Category>();
 	List<String> catNames = new ArrayList<String>();
-	
+	List<Category> categories;
 
-
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,12 +53,14 @@ public class CategoriesActivity extends ListActivity {
 				CatalogService.class);
 
 		intent.putExtra("command", CatalogService.GET_CAT_CMD);
-		/* Se pasa un callback (ResultReceiver), con el cual se procesará la
-		 * respuesta del servicio. Si se le pasa null como parámetro del constructor
-		 * se usa uno de los threads disponibles del proceso. Dado que en el procesamiento
-		 * del mismo se debe modificar la UI, es necesario que ejecute con el thread de UI.
-		 * Es por eso que se lo instancia con un objeto Handler (usando el el thread de UI
-		 * para ejecutarlo).
+		/*
+		 * Se pasa un callback (ResultReceiver), con el cual se procesará la
+		 * respuesta del servicio. Si se le pasa null como parámetro del
+		 * constructor se usa uno de los threads disponibles del proceso. Dado
+		 * que en el procesamiento del mismo se debe modificar la UI, es
+		 * necesario que ejecute con el thread de UI. Es por eso que se lo
+		 * instancia con un objeto Handler (usando el el thread de UI para
+		 * ejecutarlo).
 		 */
 		intent.putExtra("receiver", new ResultReceiver(new Handler()) {
 			@Override
@@ -60,15 +71,17 @@ public class CategoriesActivity extends ListActivity {
 					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
-					List<Category> list = (List<Category>) resultData.getSerializable("return");
-					Log.d(TAG,list.toString());
-					//populateList( new CategoryProviderImpl(list) );
-					/*change this TODO*/
-					for(Category c: list){
-						categoriesMap.put(c.getName(),c);
+					List<Category> list = (List<Category>) resultData
+							.getSerializable("return");
+					categories = list;
+					Log.d(TAG, list.toString());
+					// populateList( new CategoryProviderImpl(list) );
+					/* change this TODO */
+					for (Category c : list) {
+						categoriesMap.put(c.getName(), c);
 						catNames.add(c.getName());
 					}
-					populateList( new CategoryProviderImpl(list) );
+					populateList();
 					Log.d(TAG, "inside category receiver");
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
@@ -80,39 +93,47 @@ public class CategoriesActivity extends ListActivity {
 		});
 		startService(intent);
 	}
-	
-	private void populateList(CategoryProvider prov) {
-		Log.d(TAG, "OK  populating category list");
-		CategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
-				CategoriesActivity.this,
-				R.layout.categories_item, catNames));
-		Log.d(TAG, catNames.toString());
 
-		/*ListView lv = getListView();
-		lv.setTextFilterEnabled(true);
-		lv.setCacheColorHint(0);*/
-		
-	/*	ListAdapter adapter = new SimpleAdapter(this,
-				prov.getCategoriesAsMap(), R.layout.categories_item,
-				prov.getMapKeys(), new int[] {  R.id.code,R.id.name,R.id.id });
-		setListAdapter(adapter);	*/
+	private void populateList() {
+		Log.d(TAG, "OK  populating category list");
+//		CategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
+//				CategoriesActivity.this, R.layout.categories_item, catNames));
+		CategoryAdapter c_adapter = new CategoryAdapter(CategoriesActivity.this,
+				R.layout.categories_item, categories);
+		setListAdapter(c_adapter);
+		Log.d(TAG, catNames.toString());
+	
+
+		/*
+		 * ListView lv = getListView(); lv.setTextFilterEnabled(true);
+		 * lv.setCacheColorHint(0);
+		 */
+
+		/*
+		 * ListAdapter adapter = new SimpleAdapter(this,
+		 * prov.getCategoriesAsMap(), R.layout.categories_item,
+		 * prov.getMapKeys(), new int[] { R.id.code,R.id.name,R.id.id });
+		 * setListAdapter(adapter);
+		 */
 	}
-	
-	/*public void didclick(View v) {
-        Log.d("asd","You clicked btn2 - uses an anonymouse inner class");
-		Intent intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class );
-		startActivity(intent);
-    }*/
-	
-	
+
+	/*
+	 * public void didclick(View v) {
+	 * Log.d("asd","You clicked btn2 - uses an anonymouse inner class"); Intent
+	 * intent = new Intent( CategoriesActivity.this, SubcategoriesActivity.class
+	 * ); startActivity(intent); }
+	 */
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Log.d(TAG, "Inside onListItemClick!.");
 		Object o = this.getListAdapter().getItem(position);
 		Log.d(TAG, "Leaving onListItemClick!.");
-		String cat = o.toString();
+		String cat = ((Category)o).getName().toString();
+
 		Bundle bundle = new Bundle();
+		
 		bundle.putString("catid", categoriesMap.get(cat).getId() + "");
 		bundle.putString("catname", categoriesMap.get(cat).getName());
 		Intent newIntent = new Intent(CategoriesActivity.this,
@@ -122,5 +143,36 @@ public class CategoriesActivity extends ListActivity {
 
 	}
 
+	private class CategoryAdapter extends ArrayAdapter<Category> {
+
+		private List<Category> cats;
+//	    public ImageLoader imageLoader; 
+
+
+		public CategoryAdapter(Context context, int textViewResourceId,
+				List<Category> cats) {
+			super(context, textViewResourceId, cats);
+			this.cats = cats;
+
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(R.layout.categories_item, null);
+			}
+			Category o =  cats.get(position);
+			if (o != null) {
+				TextView name_place = (TextView) v.findViewById(R.id.cat_name);
+
+				if (name_place != null) {
+					name_place.setText(catNames.get(position).toString());
+				}
+			}
+			return v;
+		}
+	}
 
 }

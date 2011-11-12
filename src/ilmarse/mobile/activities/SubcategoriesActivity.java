@@ -13,16 +13,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 
 public class SubcategoriesActivity extends ListActivity {
@@ -30,6 +34,7 @@ public class SubcategoriesActivity extends ListActivity {
 	private String TAG = getClass().getSimpleName();
 	HashMap<String, Subcategory> subcategoriesMap = new HashMap<String, Subcategory>();
 	List<String> subcatNames = new ArrayList<String>();
+	List<Subcategory> subcategories;
 	int catId;
 
 	
@@ -74,6 +79,7 @@ public class SubcategoriesActivity extends ListActivity {
 					Log.d(TAG,list.toString());
 //					populateList( new SubCategoryProviderImpl(list) );
 					/*change this TODO*/
+					subcategories = list;
 					for(Subcategory c: list){
 						subcategoriesMap.put(c.getName(),c);
 						subcatNames.add(c.getName());
@@ -94,10 +100,13 @@ public class SubcategoriesActivity extends ListActivity {
 	
 	private void populateList(CategoryProvider prov) {
 		Log.d(TAG, "OK  populating subcategory list");
-		SubcategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
-				SubcategoriesActivity.this,
-				R.layout.categories_item, subcatNames));
+//		SubcategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
+//				SubcategoriesActivity.this,
+//				R.layout.categories_item, subcatNames));
 		Log.d(TAG, subcatNames.toString());
+		SubcategoryAdapter sc_adapter = new SubcategoryAdapter(SubcategoriesActivity.this,
+				R.layout.categories_item, subcategories);
+		setListAdapter(sc_adapter);
 
 		/*ListAdapter adapter = new SimpleAdapter(this,
 				prov.getCategoriesAsMap(), R.layout.categories_item,
@@ -110,8 +119,9 @@ public class SubcategoriesActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		Log.d(TAG, "Inside onListItemClick!.");
 		Object o = this.getListAdapter().getItem(position);
+		String cat = ((Subcategory)o).getName().toString();
 		Log.d(TAG, "Leaving onListItemClick!.");
-		String cat = o.toString();
+
 		Bundle bundle = new Bundle();
 		bundle.putString("catid", catId+"");
 		bundle.putString("subcatid", subcategoriesMap.get(cat).getId() + "");
@@ -120,8 +130,44 @@ public class SubcategoriesActivity extends ListActivity {
 				ProductsActivity.class);
 		newIntent.putExtras(bundle);
 		SubcategoriesActivity.this.startActivity(newIntent);
+		
+		
+		
 
 	}
+	
+	private class SubcategoryAdapter extends ArrayAdapter<Subcategory> {
+
+		private List<Subcategory> subcats;
+//	    public ImageLoader imageLoader; 
+
+
+		public SubcategoryAdapter(Context context, int textViewResourceId,
+				List<Subcategory> subcats) {
+			super(context, textViewResourceId, subcats);
+			this.subcats = subcats;
+
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(R.layout.categories_item, null);
+			}
+			Subcategory o =  subcats.get(position);
+			if (o != null) {
+				TextView name_place = (TextView) v.findViewById(R.id.cat_name);
+
+				if (name_place != null) {
+					name_place.setText(subcatNames.get(position).toString());
+				}
+			}
+			return v;
+		}
+	}
+
 	
 }
 
