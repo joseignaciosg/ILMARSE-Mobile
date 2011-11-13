@@ -59,10 +59,11 @@ public final class R {
         public static final int about_option_menu=0x7f080026;
         public static final int cat_name=0x7f080007;
         public static final int get_imagebt=0x7f080011;
-        public static final int home_option_menu=0x7f080027;
+        public static final int home_option_menu=0x7f080028;
         public static final int id=0x7f080024;
         public static final int imview=0x7f080000;
         public static final int login_button=0x7f080016;
+        public static final int logout_option_menu=0x7f080027;
         public static final int name=0x7f080022;
         public static final int o_creation_date=0x7f08001a;
         public static final int o_image_status=0x7f08001b;
@@ -114,6 +115,7 @@ public final class R {
     }
     public static final class string {
         public static final int about_option_menu=0x7f06001b;
+        public static final int about_us_dialog=0x7f060023;
         public static final int app_label=0x7f060006;
         public static final int app_name=0x7f060002;
         public static final int badlogin=0x7f060020;
@@ -122,6 +124,8 @@ public final class R {
         public static final int home_option_menu=0x7f06001d;
         public static final int loading=0x7f060001;
         public static final int log_in_validation=0x7f06001e;
+        public static final int log_out_msg=0x7f060022;
+        public static final int log_out_validation=0x7f060021;
         public static final int logout_option_menu=0x7f06001c;
         public static final int no_data=0x7f060004;
         public static final int order_id=0x7f060017;

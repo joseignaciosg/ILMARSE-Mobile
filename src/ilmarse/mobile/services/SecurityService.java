@@ -1,6 +1,5 @@
 package ilmarse.mobile.services;
 
-import ilmarse.mobile.model.api.Product;
 import ilmarse.mobile.model.api.User;
 import ilmarse.mobile.model.api.UserProvider;
 import ilmarse.mobile.model.impl.UserProviderMock;
@@ -10,12 +9,15 @@ import java.io.Serializable;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
@@ -26,6 +28,8 @@ public class SecurityService extends IntentService {
 	private final String APIurl = "http://eiffel.itba.edu.ar/hci/service/";
 	
 	public static final String LOGIN_CMD = "LogIn";
+	public static final String LOGOUT_CMD = "LogOut";
+
 	public static final int STATUS_CONNECTION_ERROR = -1;
 	public static final int STATUS_ERROR = -2;
 	public static final int STATUS_ILLEGAL_ARGUMENT = -3;
@@ -55,6 +59,9 @@ public class SecurityService extends IntentService {
 				b.putString("username",username);
 				b.putString("password", password);
 				validate(receiver, b);
+			}else if(command.equals(LOGOUT_CMD)){
+				Log.d(TAG, "LOGOUT_CMD");
+				logout(receiver, b);
 			}
 		} catch (SocketTimeoutException e) {
 			Log.e(TAG, e.getMessage());
@@ -79,6 +86,28 @@ public class SecurityService extends IntentService {
 	}
 
 
+	private void logout(ResultReceiver receiver, Bundle b) {
+		SharedPreferences settings  = getSharedPreferences("LOGIN",0);
+		Map<String, ?> map = settings.getAll();
+		String username = (String)map.get("user");
+		String token = (String)map.get("token");
+		Editor edit = settings.edit();
+		edit.remove("LOGIN");
+		edit.commit();		
+//		final DefaultHttpClient client = new DefaultHttpClient();
+//		final HttpResponse response;
+//		response = client.execute(new HttpGet(APIurl + "Security.groovy?method=SingOut&username"+username+"&token="+token));
+//		final String xmlToParse = EntityUtils.toString(response.getEntity());
+//		Log.d(TAG, xmlToParse.toString());
+		String response; 
+//		response = fromXMLtoResponce(xmlToParse, catId);
+		response ="OK";
+		
+		b.putSerializable("return", (Serializable)response);
+		receiver.send(STATUS_OK, b);
+		
+	}
+
 	@SuppressWarnings("unused")
 	private void validate(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
 		//eiffel petition
@@ -102,6 +131,7 @@ public class SecurityService extends IntentService {
 			return;
 		}
 		Log.d(TAG, user.toString());
+		
 		
 		List<User> aux = new ArrayList<User>();
 		aux.add(user);

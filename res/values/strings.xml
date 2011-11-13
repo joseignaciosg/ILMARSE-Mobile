@@ -35,8 +35,9 @@
     <string name="log_in_validation">Validating</string>
     <string name="welcome">Willkommen</string>
     <string name="badlogin">Invalid username - password combination.</string>
-        
-    
+    <string name="log_out_validation">Logging out</string>    
+    <string name="log_out_msg">Successfully logged out.</string>
+    <string name="about_us_dialog">We Are The Best</string>
         
         
         
