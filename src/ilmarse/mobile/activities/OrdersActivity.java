@@ -40,8 +40,8 @@ public class OrdersActivity extends ListActivity {
 	private String TAG = getClass().getSimpleName();
 	HashMap<String, Order> orderMap = new HashMap<String, Order>();
 	List<String> ordersIds = new ArrayList<String>();
-	private List<Order> orders = null;
-	private OrderAdapter o_adapter;
+	private List<Order> m_orders = null;
+	private OrderAdapter m_adapter;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,8 +73,8 @@ public class OrdersActivity extends ListActivity {
 
 					@SuppressWarnings("unchecked")
 					List<Order> list = (List<Order>) resultData.getSerializable("return");
-					orders = list;
-					Log.d(TAG, orders.toString());
+					m_orders = list;
+					Log.d(TAG, m_orders.toString());
 					Log.d(TAG, "inside receiver");
 					Log.d(TAG,list.toString());
 //					populateList( new ProductProviderImpl(list) );
@@ -83,10 +83,9 @@ public class OrdersActivity extends ListActivity {
 						orderMap.put(c.getId()+"",c);
 						ordersIds.add(c.getId()+"");
 					}
-					o_adapter = new OrderAdapter(OrdersActivity.this,
-							R.layout.order_list_item, orders);
+					m_adapter = new OrderAdapter(OrdersActivity.this, R.layout.order_list_item, m_orders);
 					Log.d(TAG, "inside onCreate");
-					setListAdapter(o_adapter);
+					setListAdapter(m_adapter);
 					Log.d(TAG, "setListAdapter");
 					
 
@@ -128,25 +127,25 @@ public class OrdersActivity extends ListActivity {
 			}
 			Order o =  order_items.get(position);
 			if (o != null) {
-//				TextView order_idView = (TextView) v.findViewById(R.id.o_order_id);
-//				TextView creation_dateView = (TextView) v.findViewById(R.id.o_creation_date);
-//				TextView order_statusView = (TextView) v.findViewById(R.id.o_order_status);
-//		        ImageView image_statusView = (ImageView) v.findViewById(R.id.o_image_status);
-//
-//
-//				if (order_idView != null) {
-//					order_idView.setText(o.getId());
-//				}
-//				if (creation_dateView != null) {
-//					creation_dateView.setText( o.getCreated_date());
-//				}
-//				if (order_statusView != null) {
-//					order_statusView.setText( o.getStatus());
-//				}
-//				if(image_statusView != null){
-//					Log.d(TAG, "inside getView " + o.getStatus());
-//					downloadFile(image_statusView,o.getStatus());
-//				}
+				TextView order_idView = (TextView) v.findViewById(R.id.o_order_id);
+				TextView creation_dateView = (TextView) v.findViewById(R.id.o_creation_date);
+				TextView order_statusView = (TextView) v.findViewById(R.id.o_order_status);
+		        ImageView image_statusView = (ImageView) v.findViewById(R.id.o_image_status);
+
+
+				if (order_idView != null) {
+					order_idView.setText(o.getId()+"");
+				}
+				if (creation_dateView != null) {
+					creation_dateView.setText( o.getCreated_date());
+				}
+				if (order_statusView != null) {
+					order_statusView.setText( o.getStatus());
+				}
+				if(image_statusView != null){
+					Log.d(TAG, "inside getView " + o.getStatus());
+					downloadFile(image_statusView,o.getStatus());
+				}
 			}
 			return v;
 		}

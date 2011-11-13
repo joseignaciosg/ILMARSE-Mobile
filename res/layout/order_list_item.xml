@@ -44,6 +44,7 @@
                     android:textColor="@color/black"
                     android:textSize="20dip"
                     android:textStyle="bold" />
+                
             </TableRow>
 
             <TableRow

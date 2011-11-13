@@ -2,61 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip">
+    android:padding="6dip" >
+
     <ImageView
         android:id="@+id/prod_image"
         android:layout_width="100px"
         android:layout_height="100px"
         android:layout_marginRight="6dip"
         android:src="@drawable/icon" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dip"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:layout_height="fill_parent"> 
+        android:orientation="vertical" >
+
         <TextView
             android:id="@+id/prod_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dip"
-            android:textColor="@color/prod_list_title"
             android:gravity="center_vertical"
-        />
-        <TableLayout 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:paddingTop="5dip"
-	    android:layout_gravity="center"
-		android:layout_weight="1"
-	>
-	<TableRow
-		android:layout_weight="1"
-		android:gravity="center"
-	android:layout_height="wrap_content" android:layout_width="wrap_content">
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1" 
-	            android:id="@+id/prod_ranking"
-	            android:textColor="@color/red"
-	            android:singleLine="true"
-	            android:ellipsize="marquee"
-	        />
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1" 
-	            android:id="@+id/prod_price"
-	            android:textColor="@color/black"
-	            android:singleLine="true"
-	            android:textSize="20dip"
-			  	android:textStyle="bold"
-			  	android:gravity="right"
-	            android:ellipsize="marquee"
-	        />
-	 </TableRow>
-	</TableLayout>
+            android:textColor="@color/prod_list_title"
+            android:textSize="20dip" />
+
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="5dip" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/prod_ranking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    android:id="@+id/prod_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="20dip"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
+
 </LinearLayout>
