@@ -27,7 +27,7 @@ public class ProductProviderImpl extends AbstractProductProvider{
 	
 
 	@Override
-	public List<Product> getProducts(int subcatid) {
+	public List<Product> getProducts(int catid, int subcatid) {
         return products;
 	}
 	
@@ -36,7 +36,7 @@ public class ProductProviderImpl extends AbstractProductProvider{
 
 	@Override
 	public List<? extends Map<String, ?>> getProductsAsMap() {
-		List<Product> products = getProducts(1);//TODO remove parameter
+		List<Product> products = getProducts(1,1);//TODO remove parameter
 		List<Map<String, String>> transformedProds = new ArrayList<Map<String, String>>();
 		for (Product t : products) {
 			HashMap<String, String> map = new HashMap<String, String>();
