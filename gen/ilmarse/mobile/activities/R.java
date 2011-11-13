@@ -52,25 +52,24 @@ public final class R {
         public static final int usericon=0x7f020016;
     }
     public static final class id {
-        public static final int AutoLoginBox=0x7f080017;
-        public static final int IntranetLogo=0x7f080012;
-        public static final int LoginButton=0x7f080015;
-        public static final int Password=0x7f080014;
-        public static final int RememberLoginBox=0x7f080016;
-        public static final int Username=0x7f080013;
+        public static final int LoginButton=0x7f080014;
+        public static final int Password=0x7f080013;
+        public static final int RememberLoginBox=0x7f080018;
+        public static final int Username=0x7f080017;
         public static final int about_option_menu=0x7f080026;
         public static final int cat_name=0x7f080007;
         public static final int get_imagebt=0x7f080011;
         public static final int home_option_menu=0x7f080027;
         public static final int id=0x7f080024;
         public static final int imview=0x7f080000;
-        public static final int login_button=0x7f080018;
+        public static final int login_button=0x7f080016;
         public static final int name=0x7f080022;
         public static final int o_creation_date=0x7f08001a;
         public static final int o_image_status=0x7f08001b;
         public static final int o_order_id=0x7f080019;
         public static final int o_order_status=0x7f08001c;
         public static final int ordersButton=0x7f08000f;
+        public static final int password=0x7f080015;
         public static final int price=0x7f080021;
         public static final int prod_image=0x7f08001d;
         public static final int prod_price=0x7f080020;
@@ -92,6 +91,7 @@ public final class R {
         public static final int settings=0x7f080010;
         public static final int settings_option_menu=0x7f080025;
         public static final int title=0x7f080023;
+        public static final int username=0x7f080012;
     }
     public static final class layout {
         public static final int book_product=0x7f030000;
@@ -116,10 +116,12 @@ public final class R {
         public static final int about_option_menu=0x7f06001b;
         public static final int app_label=0x7f060006;
         public static final int app_name=0x7f060002;
+        public static final int badlogin=0x7f060020;
         public static final int creation_date=0x7f060018;
         public static final int hello=0x7f060005;
         public static final int home_option_menu=0x7f06001d;
         public static final int loading=0x7f060001;
+        public static final int log_in_validation=0x7f06001e;
         public static final int logout_option_menu=0x7f06001c;
         public static final int no_data=0x7f060004;
         public static final int order_id=0x7f060017;
@@ -143,6 +145,7 @@ public final class R {
         public static final int settings=0x7f060016;
         public static final int settings_option_menu=0x7f06001a;
         public static final int slogan=0x7f060000;
+        public static final int welcome=0x7f06001f;
     }
     public static final class xml {
         public static final int searchable=0x7f040000;

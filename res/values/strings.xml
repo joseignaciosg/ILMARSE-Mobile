@@ -32,7 +32,9 @@
     <string name="about_option_menu">About </string>
     <string name="logout_option_menu">Logout </string>
     <string name="home_option_menu">Home </string>
-    
+    <string name="log_in_validation">Validating</string>
+    <string name="welcome">Willkommen</string>
+    <string name="badlogin">Invalid username - password combination.</string>
         
     
         
