@@ -3,22 +3,16 @@ package ilmarse.mobile.activities;
 import ilmarse.mobile.model.api.Order;
 import ilmarse.mobile.services.OrderService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -132,7 +126,6 @@ public class OrdersActivity extends ListActivity {
 				TextView order_statusView = (TextView) v.findViewById(R.id.o_order_status);
 		        ImageView image_statusView = (ImageView) v.findViewById(R.id.o_image_status);
 
-
 				if (order_idView != null) {
 					order_idView.setText(o.getId()+"");
 				}
@@ -152,42 +145,18 @@ public class OrdersActivity extends ListActivity {
 	}
 
 	void downloadFile(ImageView image_place,String status) {
-		URL myFileUrl = null;
-		String progressbar1 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar2 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar3 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar4 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String fileUrl =null;
+		
 		
 		if (status == "created"){
-			fileUrl = progressbar1;
+			image_place.setImageResource(R.drawable.pb1);
 		}else if(status == "confirmed"){
-			fileUrl = progressbar2;
+			image_place.setImageResource(R.drawable.pb2);
 		}else if(status == "shipped"){
-			fileUrl = progressbar3;
+			image_place.setImageResource(R.drawable.pb3);
 		}else {
-			fileUrl = progressbar4;
+			image_place.setImageResource(R.drawable.pb4);
 		}
 		
-		try {
-			myFileUrl = new URL(fileUrl);
-			Log.d(TAG, fileUrl);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			Bitmap bmImg = BitmapFactory.decodeStream(is);
-			image_place.setImageBitmap(bmImg);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
