@@ -22,7 +22,7 @@ public class SplashScreenIlmarse extends Activity {
 			switch (msg.what) {
 				case SplashScreenIlmarse.STOP:
 //					Intent intent = new Intent(SplashScreenIlmarse.this, CategoriesActivity.class);
-					Intent intent = new Intent(SplashScreenIlmarse.this, MainActivity.class);
+					Intent intent = new Intent(SplashScreenIlmarse.this, LoginActivity.class);
 
 					startActivity(intent);
 					SplashScreenIlmarse.this.finish();
