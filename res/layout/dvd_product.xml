@@ -2,132 +2,169 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:stretchColumns="1"
-    android:background="@color/white">
-    <TableRow>
-	         <ImageView 
-			    android:id="@+id/imview"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center"
-			    />
-    </TableRow>
+    android:background="@color/white"
+    android:stretchColumns="1" >
 
-    <TableRow>
+    <ImageView
+        android:id="@+id/imview"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_gravity="center" />
+
+    <TableRow >
+
         <TextView
-            android:text="@string/product_name"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
+            android:padding="3dip"
+            android:text="@string/product_name"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/product_name"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
     </TableRow>
-    
-     <TableRow>
-         <TextView
-            android:text="@string/product_price"
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_price"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_price"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-     <TableRow>
-         <TextView
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
+            android:gravity="left"
+            android:padding="3dip"
             android:text="@string/product_actors"
-            android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:textColor="@color/black"
+            textMultiLine="true"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_actors"
+            android:layout_height="fill_parent"
+             android:layout_width="fill_parent"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-     <TableRow>
-         <TextView
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
+            android:gravity="left"
+            android:padding="3dip"
             android:text="@string/product_language"
-            android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_language"
             android:gravity="left"
             android:padding="3dip"
-            android:textColor="@color/black" />
-     </TableRow>
-     
-     <TableRow>
-         <TextView
-            android:text="@string/product_subtitles"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_subtitles"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_subtitles"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-     <TableRow>
-         <TextView
-            android:text="@string/product_region"
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_region"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_region"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-     <TableRow>
-         <TextView
-            android:text="@string/product_runtime"
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_runtime"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_runtime"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-     <TableRow>
-         <TextView
-            android:text="@string/product_release_date"
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_release_date"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_release_date"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
-    <TableRow>
-         <TextView
-            android:text="@string/product_aspect_ratio"
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow >
+
+        <TextView
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-          <TextView
+            android:padding="3dip"
+            android:text="@string/product_aspect_ratio"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/product_aspect_ratio"
             android:gravity="left"
-            android:padding="3dip" 
-            android:textColor="@color/black"/>
-     </TableRow>
-     
+            android:padding="3dip"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </TableRow>
+
 </TableLayout>

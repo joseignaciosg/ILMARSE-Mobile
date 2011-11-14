@@ -68,7 +68,7 @@ public class LoginActivity extends Activity {
 
 				loginIntent.putExtras(b);
 				loginIntent.putExtra("command",SecurityService.LOGIN_CMD);
-				loginIntent.putExtra("receiver", new ResultReceiver(		new Handler()) {
+				loginIntent.putExtra("receiver", new ResultReceiver(new Handler()) {
 					@Override
 					protected void onReceiveResult(int resultCode,	Bundle resultData) {
 						super.onReceiveResult(resultCode, resultData);
@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 									"LOGIN", 0);
 							Editor edit = settings.edit();
 							edit.putString("token", token);
-							edit.putString("user", user.getName());
+							edit.putString("username", user.getUsername());
 							edit.commit();
 							Intent loadHomeView = new Intent(
 									LoginActivity.this, MainActivity.class);
