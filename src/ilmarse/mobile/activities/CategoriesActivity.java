@@ -35,6 +35,7 @@ public class CategoriesActivity extends ListActivity {
 
 	private String TAG = getClass().getSimpleName();
 
+	public static ProgressDialog loadingCategories;
 	// remove this
 	HashMap<String, Category> categoriesMap = new HashMap<String, Category>();
 	List<String> catNames = new ArrayList<String>();
@@ -55,6 +56,10 @@ public class CategoriesActivity extends ListActivity {
 			setTitle("Categor’as");
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,
 				CatalogService.class);
+		
+		loadingCategories = ProgressDialog
+				.show(CategoriesActivity.this, "",
+						getString(R.string.loading), true);
 
 		intent.putExtra("command", CatalogService.GET_CAT_CMD);
 		/*
@@ -72,6 +77,7 @@ public class CategoriesActivity extends ListActivity {
 				super.onReceiveResult(resultCode, resultData);
 				if (resultCode == CatalogService.STATUS_OK) {
 
+					loadingCategories.dismiss();
 					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
@@ -89,9 +95,25 @@ public class CategoriesActivity extends ListActivity {
 					Log.d(TAG, "inside category receiver");
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
+					loadingCategories.dismiss();
+					Intent loadLogInView = new Intent(
+							CategoriesActivity.this, MainActivity.class);
+					startActivity(loadLogInView);
+					Toast.makeText(CategoriesActivity.this,
+							getString(R.string.internet_error),
+							Toast.LENGTH_SHORT / Toast.LENGTH_LONG)
+							.show();
 					Log.d(TAG, "Connection error.");
 				} else {
+					loadingCategories.dismiss();
 					Log.d(TAG, "Unknown error.");
+					Intent loadLogInView = new Intent(
+							CategoriesActivity.this, MainActivity.class);
+					startActivity(loadLogInView);
+					Toast.makeText(CategoriesActivity.this,
+							getString(R.string.internet_error),
+							Toast.LENGTH_SHORT / Toast.LENGTH_LONG)
+							.show();
 				}
 			}
 		});

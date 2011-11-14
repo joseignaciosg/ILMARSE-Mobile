@@ -11,7 +11,7 @@ public class HtmlDesEncoder {
 		if (s.contains("&#225;")){//a
 			s = replace(s, "&#225;", "‡");
 		}
-		if (s.contains("&#233")){//e
+		if (s.contains("&#233;")){//e
 			s = replace(s, "&#233","Ž");
 
 		}

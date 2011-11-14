@@ -46,5 +46,7 @@
 	<string name="position_change_notif">Permitir notificaciones al cambiar la localización de la orden</string>
 	<string name="status_change_notif">Permitir notificaciones al cambiar el estado de la orden</string>
 	<string name="updated_settings">Configuración actualizada</string>
+	<string name="internet_error">Error: Usted debe estar conectado a internet.</string>
+	    
 	
 </resources>

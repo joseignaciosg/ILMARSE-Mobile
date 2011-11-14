@@ -140,6 +140,7 @@ public final class R {
         public static final int frec_notif_title=0x7f060028;
         public static final int hello=0x7f060005;
         public static final int home_option_menu=0x7f06001d;
+        public static final int internet_error=0x7f06002c;
         public static final int loading=0x7f060001;
         public static final int log_in_validation=0x7f06001e;
         public static final int log_out_msg=0x7f060022;
