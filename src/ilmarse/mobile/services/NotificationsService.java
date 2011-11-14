@@ -205,40 +205,60 @@ public class NotificationsService extends IntentService {
 
 	private void checkForOrderChanges(List<Order> newOrders, List<Order> oldOrders,
 			String phoneLanguage) {
-		for( int i=0; i<newOrders.size();i++){
-			OrderImpl order = (OrderImpl)newOrders.get(i);
-			int orderID = order.getId();
-			for( int j=0; j<oldOrders.size();j++){
-				OrderImpl oldOrder = (OrderImpl)oldOrders.get(j);
-				if ( oldOrder.getId() == orderID 
-						&& !oldOrder.getStatus().equals(order.getStatus())) {
+		String tText, cTitle="hola", cText="hola";
+		Log.d(TAG,"newOrders"+newOrders.toString());
+		Log.d(TAG,"newOrders"+oldOrders.toString());
 
-					String tText, cTitle, cText;
-					if (phoneLanguage.equals("en")) {
-						tText = "An order has changed!";
-						cTitle = "Order " + order.getId()  + " has changed";
-						cText = "Order " + order.getId() + " ";
-						cText += "is now " + order.getStatus() +". ";
-						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
-							cText += "Lattitude: " + order.getLatitude() + "Longitude: "
-									+ order.getLongitude() + ".";
-						}
 
-					} else {
-						tText = "Una orden ha cambiado!";
-						cTitle = "La orden " + order.getId() + " ha cambiado";
-						cText = "La  orden " + order.getId() + " ";
-						cText += "ahora esta " + order.getStatus() + ". ";
-						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
-							cText += "Latitud: " + order.getLatitude() + "Longitud: "
-									+ order.getLongitude() + ".";
-						}
-					}
-					sendNotification(tText, cTitle, cText);
-				}
+		
+		Log.d(TAG,"inside checkForOrderChanges");
+		if (newOrders.size() != oldOrders.size() ){
+			tText = "An order has changed!";
+			Log.d(TAG,tText);
+//			cTitle = "Order " + order.getId()  + " has changed";
+//			cText = "Order " + order.getId() + " ";
+//			cText += "is now " + order.getStatus() +". ";
+//			if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
+//				cText += "Lattitude: " + order.getLatitude() + "Longitude: "
+//						+ order.getLongitude() + ".";
+			sendNotification(tText, cTitle, cText);
 			}
 		}
-	}
+		
+//		for( int i=0; i<newOrders.size();i++){
+//			OrderImpl order = (OrderImpl)newOrders.get(i);
+//			int orderID = order.getId();
+//			for( int j=0; j<oldOrders.size();j++){
+//				OrderImpl oldOrder = (OrderImpl)oldOrders.get(j);
+//				if ( oldOrder.getId() == orderID 
+//						&& !oldOrder.getStatus().equals(order.getStatus())) {
+//
+//					String tText, cTitle, cText;
+//					if (phoneLanguage.equals("en")) {
+//						tText = "An order has changed!";
+//						cTitle = "Order " + order.getId()  + " has changed";
+//						cText = "Order " + order.getId() + " ";
+//						cText += "is now " + order.getStatus() +". ";
+//						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
+//							cText += "Lattitude: " + order.getLatitude() + "Longitude: "
+//									+ order.getLongitude() + ".";
+//						}
+//
+//					} else {
+//						tText = "Una orden ha cambiado!";
+//						cTitle = "La orden " + order.getId() + " ha cambiado";
+//						cText = "La  orden " + order.getId() + " ";
+//						cText += "ahora esta " + order.getStatus() + ". ";
+//						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
+//							cText += "Latitud: " + order.getLatitude() + "Longitud: "
+//									+ order.getLongitude() + ".";
+//						}
+//					}
+//					sendNotification(tText, cTitle, cText);
+//				}
+//			}
+//		}
+//	}
 
 	private void sendNotification(String tText, String cTitle, String cText) {
 		String ns = Context.NOTIFICATION_SERVICE;
