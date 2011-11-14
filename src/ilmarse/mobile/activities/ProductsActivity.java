@@ -67,6 +67,12 @@ public class ProductsActivity extends ListActivity {
 		bundle.putString("subcatid", subcatId+"");
 		intent.putExtras(bundle);
 
+		String phoneLanguage = getResources().getConfiguration().locale
+				.getLanguage();
+		if (phoneLanguage.equals("en"))
+			setTitle("Products");
+		else
+			setTitle("Productos");
 		intent.putExtra("command", CatalogService.GET_PRODUCTS_CMD);
 		/* Se pasa un callback (ResultReceiver), con el cual se procesará la
 		 * respuesta del servicio. Si se le pasa null como parámetro del constructor

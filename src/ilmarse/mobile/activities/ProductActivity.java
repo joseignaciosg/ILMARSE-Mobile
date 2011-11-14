@@ -61,7 +61,6 @@ public class ProductActivity extends Activity {
 				.getString("catid"));
 		int productid = new Integer(this.getIntent().getExtras()
 				.getString("prodid"));
-
 		currCatId = categoryid;
 		switch (categoryid) {
 		case 2: // books
@@ -94,6 +93,8 @@ public class ProductActivity extends Activity {
 					List<Product> list = (List<Product>) resultData
 							.getSerializable("return");
 					Product product = list.get(0);
+
+					setTitle(product.getName());
 					Log.d(TAG, product.toString());
 					Log.d(TAG, "inside product receiver");
 					// populateList( new ProductProviderImpl(list) );

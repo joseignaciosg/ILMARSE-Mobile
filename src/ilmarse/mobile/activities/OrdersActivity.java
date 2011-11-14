@@ -51,7 +51,12 @@ public class OrdersActivity extends ListActivity {
 		Log.d(TAG, "inside onCreate");
 		
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this, OrderService.class);
-		
+		String phoneLanguage = getResources().getConfiguration().locale
+				.getLanguage();
+		if (phoneLanguage.equals("en"))
+			setTitle("Orders");
+		else
+			setTitle("Ordenes");
 		SharedPreferences settings  = getSharedPreferences("LOGIN",0);
 		Map<String, ?> map = settings.getAll();
 		String username = (String)map.get("username");

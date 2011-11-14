@@ -20,7 +20,12 @@ public class SettingsActivity extends Activity {
 		// Toast.makeText(SettingsActivity.this,"Bienvenido al �rea de Configuraci�n",
 		// Toast.LENGTH_SHORT/Toast.LENGTH_LONG).show();
 		setContentView(R.layout.settings);
-
+		String phoneLanguage = getResources().getConfiguration().locale
+				.getLanguage();
+		if (phoneLanguage.equals("en"))
+			setTitle("Settings");
+		else
+			setTitle("Ajustes");
 		LinearLayout changeCheckFrequency = (LinearLayout) findViewById(R.id.change_delay_settings);
 		changeCheckFrequency.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -30,6 +35,7 @@ public class SettingsActivity extends Activity {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						SettingsActivity.this);
 				builder.setTitle(getString(R.string.frec_notif_title));
+
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialogInterface,
 							int item) {

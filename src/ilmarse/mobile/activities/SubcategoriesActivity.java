@@ -64,7 +64,12 @@ public class SubcategoriesActivity extends ListActivity {
 		bundle.putString("catid", catId+"");
 		bundle.putString("catname", catName);
 		intent.putExtras(bundle);
-		
+		String phoneLanguage = getResources().getConfiguration().locale
+				.getLanguage();
+		if (phoneLanguage.equals("en"))
+			setTitle("Subcategories for " + catName);
+		else
+			setTitle("Subcategor’as de " + catName);
 //		setTitle(getString(R.string.products) + " > " + catName);
 
 		intent.putExtra("command", CatalogService.GET_SUBCAT_CMD);
