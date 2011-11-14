@@ -58,6 +58,20 @@ public class MainActivity extends Activity{
 			}
 
 		});
+		
+		//listener for settings section
+				ImageButton settingsButtons = (ImageButton) findViewById(R.id.settings);
+				settingsButtons.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						Intent showSettingsView = new Intent(MainActivity.this,
+								SettingsActivity.class);
+						startActivity(showSettingsView);
+
+					}
+
+		});
 	}
 
 	@Override

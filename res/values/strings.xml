@@ -41,6 +41,12 @@
     <string name="detail_orderid">Order Id:</string>
     <string name="detail_orderstatus">Status:</string>
     <string name="detail_created_date">Creation Date:</string>
+    <string name="frec_notif">Change Notification Frequency</string>
+    <string name="frec_notif_title">Notification Frequency</string>
+    <string name="position_change_notif">Allow Order Position Change Notifications</string>
+    <string name="status_change_notif">Allow Order Status Change Notification</string>
+    <string name="updated_settings">Settings Updated</string>   
+       
         
         
         
