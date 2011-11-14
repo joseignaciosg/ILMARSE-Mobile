@@ -76,14 +76,15 @@ public class NotificationsService extends IntentService {
 			editor.commit();
 		}
 
+		Log.d(TAG,"settings.getString:"+getOrders(settings.getString("Orders", "").toString()));
 		List<Order> oldOrders = getOrders(settings.getString("Orders", ""));
 		String phoneLanguage = this.getResources().getConfiguration().locale
 				.getLanguage();
 
 		while (true) {
 
-			// Toast.makeText(this, "This is a notification!",
-			// Toast.LENGTH_LONG).show();
+//			 Toast.makeText(this, "This is a notification!",
+//			 Toast.LENGTH_LONG).show();
 			Log.d(TAG, "Checking for orders updates");
 
 			String newOrdersStr = getOrdersAsString();
@@ -191,11 +192,12 @@ public class NotificationsService extends IntentService {
 		final HttpResponse response;
 		// Get the phone actual language
 		SharedPreferences settings = getSharedPreferences("LOGIN", 0);
-		String user = settings.getString("user", "NOUSER");
+		String username = settings.getString("username", "NOUSER");
 		String token = settings.getString("token", "NOTOKEN");
+		Log.d(TAG,"username:"+username+ "-" +"token:"+token);
 
 		String com = apiURL + "Order.groovy?method=GetOrderList";
-		com += "&username=" + user;
+		com += "&username=" + username;
 		com += "&authentication_token=" + token;
 		response = client.execute(new HttpGet(com));
 		final String xmlToParse = EntityUtils.toString(response.getEntity(),
@@ -207,7 +209,7 @@ public class NotificationsService extends IntentService {
 			String phoneLanguage) {
 		String tText, cTitle="hola", cText="hola";
 		Log.d(TAG,"newOrders"+newOrders.toString());
-		Log.d(TAG,"newOrders"+oldOrders.toString());
+		Log.d(TAG,"oldOrders"+oldOrders.toString());
 
 
 		
@@ -263,7 +265,7 @@ public class NotificationsService extends IntentService {
 	private void sendNotification(String tText, String cTitle, String cText) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-//		int icon = R.drawable.aboutmicon;
+//		int icon = R.drawable.homeicon;
 		int icon = 0x7f020000;
 		CharSequence tickerText = tText;
 		long when = System.currentTimeMillis();
