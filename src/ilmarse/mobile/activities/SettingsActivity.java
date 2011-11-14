@@ -39,10 +39,12 @@ public class SettingsActivity extends Activity {
 						Editor edit = settings.edit();
 						switch (item) {
 						case 0:
-							edit.putString("timeTillCheck", "60000");
+//							edit.putString("timeTillCheck", "60000");
+							edit.putString("timeTillCheck", "5000");
 							break;
 						case 1:
-							edit.putString("timeTillCheck", "300000");
+//							edit.putString("timeTillCheck", "300000");
+							edit.putString("timeTillCheck", "10000");
 							break;
 						case 2:
 							edit.putString("timeTillCheck", "1800000");

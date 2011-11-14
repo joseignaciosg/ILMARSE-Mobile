@@ -1,6 +1,5 @@
 package ilmarse.mobile.model.api;
 
-import ilmarse.mobile.model.impl.OrderImpl;
 
 public interface Order {
 	

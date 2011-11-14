@@ -50,6 +50,7 @@
         <activity android:name="LoginActivity"></activity>
         <service android:name="ilmarse.mobile.services.SecurityService"></service>
         <activity android:name="OrderDetailActivity"></activity>
+        <service android:name="ilmarse.mobile.services.NotificationsService"></service>
     </application>
 
 </manifest>

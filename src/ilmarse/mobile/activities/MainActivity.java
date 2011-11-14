@@ -1,5 +1,6 @@
 package ilmarse.mobile.activities;
 
+import ilmarse.mobile.services.NotificationsService;
 import ilmarse.mobile.services.SecurityService;
 
 import java.util.Map;
@@ -9,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -27,6 +29,24 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		SharedPreferences settings = getSharedPreferences("LOGIN", 0);
+		if (!settings.contains("username")) {
+			Log.d("username:", settings.getString("user", "NOUSER"));
+			Intent loginView = new Intent(MainActivity.this,
+					LoginActivity.class);
+			startActivity(loginView);
+			// in case login returns without setting, insist.
+		}
+		if (!settings.contains("timeTillCheck")) {
+			Editor edit = settings.edit();
+			edit.putString("timeTillCheck", "300000");
+			edit.commit();
+
+		}
+		Intent notif = new Intent(MainActivity.this, NotificationsService.class);
+		startService(notif);
+		
 		Log.d(TAG, "inside Oncreate");
 
 		setContentView(R.layout.first_screen);

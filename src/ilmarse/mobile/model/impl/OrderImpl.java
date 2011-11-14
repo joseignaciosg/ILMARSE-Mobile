@@ -2,7 +2,7 @@ package ilmarse.mobile.model.impl;
 
 import ilmarse.mobile.model.api.Order;
 
-public class OrderImpl implements Order {
+public class OrderImpl implements Order  {
 	
 	private String username;
 	private String token;
