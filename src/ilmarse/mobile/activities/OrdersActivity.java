@@ -51,8 +51,17 @@ public class OrdersActivity extends ListActivity {
 		Log.d(TAG, "inside onCreate");
 		
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this, OrderService.class);
-//		Bundle bundle = new Bundle();
-//		intent.putExtras(bundle);
+		
+		SharedPreferences settings  = getSharedPreferences("LOGIN",0);
+		Map<String, ?> map = settings.getAll();
+		String username = (String)map.get("username");
+		String token = (String)map.get("token");
+		Log.d(TAG, username +"-"+token);
+		Bundle bundle = new Bundle();
+		bundle.putString("username", username);
+		bundle.putString("token", token);
+		intent.putExtras(bundle);
+		
 
 		intent.putExtra("command", OrderService.GET_ORDERS_CMD);
 		/* Se pasa un callback (ResultReceiver), con el cual se procesará la
@@ -138,25 +147,35 @@ public class OrdersActivity extends ListActivity {
 					creation_dateView.setText( o.getCreated_date());
 				}
 				if (order_statusView != null) {
-					order_statusView.setText( o.getStatus());
+					String status = o.getStatus();
+					if (status.equals("1")){
+						order_statusView.setText("created");
+					}else if(status.equals("2")){
+						order_statusView.setText("confirmed");
+					}else if(status.equals("3")){
+						order_statusView.setText( "shipped");
+					}else {
+						order_statusView.setText( "delivered" );
+					}
+//					order_statusView.setText( o.getStatus());
 				}
 				if(image_statusView != null){
-					Log.d(TAG, "inside getView " + o.getStatus());
-					downloadFile(image_statusView,o.getStatus());
+					Log.d(TAG, "inside getView " + o.toString());
+					downloadFile(image_statusView,o);
 				}
 			}
 			return v;
 		}
 	}
 
-	void downloadFile(ImageView image_place,String status) {
+	void downloadFile(ImageView image_place,Order o) {
+		String status = o.getStatus();
 		
-		
-		if (status == "created"){
+		if (status.equals("1")){
 			image_place.setImageResource(R.drawable.pb1);
-		}else if(status == "confirmed"){
+		}else if(status.equals("2")){
 			image_place.setImageResource(R.drawable.pb2);
-		}else if(status == "shipped"){
+		}else if(status.equals("3")){
 			image_place.setImageResource(R.drawable.pb3);
 		}else {
 			image_place.setImageResource(R.drawable.pb4);
@@ -203,6 +222,8 @@ public class OrdersActivity extends ListActivity {
 			Map<String, ?> map = settings.getAll();
 			String username = (String)map.get("user");
 			String token = (String)map.get("token");
+			Log.d(TAG, username +"-"+token);
+
 			
 			Bundle b = new Bundle();
 			b.putString("username", username);

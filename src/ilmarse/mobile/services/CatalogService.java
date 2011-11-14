@@ -458,7 +458,6 @@ public class CatalogService extends IntentService {
 			e.printStackTrace();
 			Log.e(TAG, "here!");
         } 
-        Log.d(TAG, "asddd2"+retProduct.toString());
         return retProduct;
 	}
 	

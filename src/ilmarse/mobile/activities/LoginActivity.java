@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 									"LOGIN", 0);
 							Editor edit = settings.edit();
 							edit.putString("token", token);
-							edit.putString("user", user.getName());
+							edit.putString("username", user.getUsername());
 							edit.commit();
 							Intent loadHomeView = new Intent(
 									LoginActivity.this, MainActivity.class);
