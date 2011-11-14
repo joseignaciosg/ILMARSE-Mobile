@@ -64,7 +64,7 @@ public class ProductActivity extends Activity {
 
 		currCatId = categoryid;
 		switch (categoryid) {
-		case 1: // books
+		case 2: // books
 			setContentView(R.layout.book_product);
 			break;
 		default: // dvds
@@ -120,10 +120,10 @@ public class ProductActivity extends Activity {
     	downloadFile(imageUrl);
     	setBasicAttributes(prod);
     	switch( currCatId ){
-		case 1: //books
+		case 2: //books
 			setBookAttributes((Book)prod);
 			break;
-		case 2: //dvds
+		case 1: //dvds
 			setDvdAttributes((Dvd)prod);
 			break;
 		}
@@ -131,13 +131,14 @@ public class ProductActivity extends Activity {
 
 	private void setBasicAttributes(Product prod) {
 		Log.d(TAG, "inside setBasicAttributes");
+		Log.d(TAG,prod.getName() + "."+prod.getPrice());
 		if (prodnameView != null)
 			prodnameView.setText(prod.getName());
 		else
 			Log.e(TAG, "prodname is null");
 
 		if (prodpriceView != null)
-			prodpriceView.setText(prod.getPrice() + "");
+			prodpriceView.setText("$"+prod.getPrice() + "");
 		else
 			Log.e(TAG, "prodprice is null");
 	}
@@ -155,13 +156,14 @@ public class ProductActivity extends Activity {
 		languageView = (TextView)findViewById(R.id.product_language);
 
 		
-		if ( authorsView != null)
+		if ( authorsView != null){
 			authorsView.setText( prod.getAuthors());
-		else 
+		}else 
 			Log.e(TAG,"authorsView is null");
 		
-		if ( publisherView != null)
+		if ( publisherView != null){
 			publisherView.setText(prod.getPublisher());
+		}
 		else 
 			Log.e(TAG,"publisherView is null");
 		
