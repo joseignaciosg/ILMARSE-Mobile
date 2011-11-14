@@ -34,7 +34,7 @@ public class OrderDetailActivity extends Activity {
 
 		Log.d(TAG, "inside onCreate");
 
-		String orderid = this.getIntent().getExtras().getString("catid");
+		String orderid = this.getIntent().getExtras().getString("order_id");
 		String username = this.getIntent().getExtras().getString("username");
 		String token = this.getIntent().getExtras().getString("token");
 		String location = this.getIntent().getExtras().getString("location");
@@ -55,6 +55,7 @@ public class OrderDetailActivity extends Activity {
 		else
 			setTitle("Orden " + orderid);
 
+		Log.d("asd1", String.valueOf(orderid));
 		orderidView = (TextView) findViewById(R.id.detail_orderid);
 		statusView = (TextView) findViewById(R.id.detail_orderstatus);
 		created_dateView = (TextView) findViewById(R.id.detail_created_date);
