@@ -56,26 +56,30 @@ public final class R {
         public static final int Password=0x7f080013;
         public static final int RememberLoginBox=0x7f080018;
         public static final int Username=0x7f080017;
-        public static final int about_option_menu=0x7f080026;
+        public static final int about_option_menu=0x7f08002a;
         public static final int cat_name=0x7f080007;
+        public static final int detail_created_date=0x7f08001c;
+        public static final int detail_orderid=0x7f08001a;
+        public static final int detail_orderstatus=0x7f08001b;
         public static final int get_imagebt=0x7f080011;
-        public static final int home_option_menu=0x7f080028;
-        public static final int id=0x7f080024;
+        public static final int home_option_menu=0x7f08002c;
+        public static final int id=0x7f080028;
         public static final int imview=0x7f080000;
         public static final int login_button=0x7f080016;
-        public static final int logout_option_menu=0x7f080027;
-        public static final int name=0x7f080022;
-        public static final int o_creation_date=0x7f08001a;
-        public static final int o_image_status=0x7f08001b;
-        public static final int o_order_id=0x7f080019;
-        public static final int o_order_status=0x7f08001c;
+        public static final int logout_option_menu=0x7f08002b;
+        public static final int name=0x7f080026;
+        public static final int o_creation_date=0x7f08001e;
+        public static final int o_image_status=0x7f08001f;
+        public static final int o_order_id=0x7f08001d;
+        public static final int o_order_status=0x7f080020;
+        public static final int ordermap=0x7f080019;
         public static final int ordersButton=0x7f08000f;
         public static final int password=0x7f080015;
-        public static final int price=0x7f080021;
-        public static final int prod_image=0x7f08001d;
-        public static final int prod_price=0x7f080020;
-        public static final int prod_ranking=0x7f08001f;
-        public static final int prod_title=0x7f08001e;
+        public static final int price=0x7f080025;
+        public static final int prod_image=0x7f080021;
+        public static final int prod_price=0x7f080024;
+        public static final int prod_ranking=0x7f080023;
+        public static final int prod_title=0x7f080022;
         public static final int product_actors=0x7f080008;
         public static final int product_aspect_ratio=0x7f08000d;
         public static final int product_authors=0x7f080003;
@@ -90,8 +94,8 @@ public final class R {
         public static final int product_subtitles=0x7f080009;
         public static final int productsButton=0x7f08000e;
         public static final int settings=0x7f080010;
-        public static final int settings_option_menu=0x7f080025;
-        public static final int title=0x7f080023;
+        public static final int settings_option_menu=0x7f080029;
+        public static final int title=0x7f080027;
         public static final int username=0x7f080012;
     }
     public static final class layout {
@@ -104,11 +108,12 @@ public final class R {
         public static final int image_test=0x7f030006;
         public static final int login=0x7f030007;
         public static final int main=0x7f030008;
-        public static final int order_list_item=0x7f030009;
-        public static final int orders=0x7f03000a;
-        public static final int product_list_item=0x7f03000b;
-        public static final int products=0x7f03000c;
-        public static final int products_item=0x7f03000d;
+        public static final int order_detail=0x7f030009;
+        public static final int order_list_item=0x7f03000a;
+        public static final int orders=0x7f03000b;
+        public static final int product_list_item=0x7f03000c;
+        public static final int products=0x7f03000d;
+        public static final int products_item=0x7f03000e;
     }
     public static final class menu {
         public static final int option_menu=0x7f070000;
@@ -120,6 +125,9 @@ public final class R {
         public static final int app_name=0x7f060002;
         public static final int badlogin=0x7f060020;
         public static final int creation_date=0x7f060018;
+        public static final int detail_created_date=0x7f060026;
+        public static final int detail_orderid=0x7f060024;
+        public static final int detail_orderstatus=0x7f060025;
         public static final int hello=0x7f060005;
         public static final int home_option_menu=0x7f06001d;
         public static final int loading=0x7f060001;

@@ -28,13 +28,13 @@ public interface Order {
 	
 	public void setDelivered_date(String delivered_date);
 	
-	public int getLatitude();
+	public String getLatitude();
 
-	public void setLatitude(int latitude);
+	public void setLatitude(String latitude);
 
-	public int getLongitude();
+	public String getLongitude();
 
-	public void setLongitude(int longitude);
+	public void setLongitude(String longitude);
 
 	public String toString();
 

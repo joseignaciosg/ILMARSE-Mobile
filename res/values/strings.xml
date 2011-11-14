@@ -38,6 +38,9 @@
     <string name="log_out_validation">Logging out</string>    
     <string name="log_out_msg">Successfully logged out.</string>
     <string name="about_us_dialog">We Are The Best</string>
+    <string name="detail_orderid">Order Id:</string>
+    <string name="detail_orderstatus">Status:</string>
+    <string name="detail_created_date">Creation Date:</string>
         
         
         

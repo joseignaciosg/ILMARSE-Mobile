@@ -1,11 +1,10 @@
 package ilmarse.mobile.activities;
 
 import ilmarse.mobile.model.api.Order;
+import ilmarse.mobile.model.impl.OrderImpl;
 import ilmarse.mobile.services.OrderService;
 import ilmarse.mobile.services.SecurityService;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -30,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -246,6 +245,34 @@ public class OrdersActivity extends ListActivity {
 			break;
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.d(TAG, "Inside onListItemClick!.");
+		Object o = this.getListAdapter().getItem(position);
+		Log.d(TAG, "Leaving onListItemClick!.");
+		String orderid = ((OrderImpl)o).getId()+"";
+		String username = ((OrderImpl)o).getUsername();
+		String token = ((OrderImpl)o).getToken();
+		String location = ((OrderImpl)o).getLocation();
+		String created_date = ((OrderImpl)o).getCreated_date();
+		String status = ((OrderImpl)o).getStatus();
+		Bundle bundle = new Bundle();
+		bundle.putString("username",username);
+		bundle.putString("token",token);
+		bundle.putString("order_id",orderid);
+		bundle.putString("location",location);
+		bundle.putString("created_date",created_date);
+		bundle.putString("status",status);
+
+
+		Intent newIntent = new Intent(OrdersActivity.this,
+				OrderDetailActivity.class);
+		newIntent.putExtras(bundle);
+		OrdersActivity.this.startActivity(newIntent);
+
 	}
 	
 }
