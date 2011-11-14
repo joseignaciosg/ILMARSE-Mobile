@@ -47,6 +47,9 @@
         <activity android:name="OrdersActivity"></activity>
         <service android:name="ilmarse.mobile.services.OrderService"></service>
         <activity android:name="SettingsActivity"></activity>
+        <activity android:name="LoginActivity"></activity>
+        <service android:name="ilmarse.mobile.services.SecurityService"></service>
+        <activity android:name="OrderDetailActivity"></activity>
     </application>
 
 </manifest>

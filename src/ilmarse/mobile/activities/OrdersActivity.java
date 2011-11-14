@@ -1,24 +1,21 @@
 package ilmarse.mobile.activities;
 
 import ilmarse.mobile.model.api.Order;
+import ilmarse.mobile.model.impl.OrderImpl;
 import ilmarse.mobile.services.OrderService;
+import ilmarse.mobile.services.SecurityService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
-
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -31,7 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 
@@ -40,8 +39,8 @@ public class OrdersActivity extends ListActivity {
 	private String TAG = getClass().getSimpleName();
 	HashMap<String, Order> orderMap = new HashMap<String, Order>();
 	List<String> ordersIds = new ArrayList<String>();
-	private List<Order> orders = null;
-	private OrderAdapter o_adapter;
+	private List<Order> m_orders = null;
+	private OrderAdapter m_adapter;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,8 +72,8 @@ public class OrdersActivity extends ListActivity {
 
 					@SuppressWarnings("unchecked")
 					List<Order> list = (List<Order>) resultData.getSerializable("return");
-					orders = list;
-					Log.d(TAG, orders.toString());
+					m_orders = list;
+					Log.d(TAG, m_orders.toString());
 					Log.d(TAG, "inside receiver");
 					Log.d(TAG,list.toString());
 //					populateList( new ProductProviderImpl(list) );
@@ -83,10 +82,9 @@ public class OrdersActivity extends ListActivity {
 						orderMap.put(c.getId()+"",c);
 						ordersIds.add(c.getId()+"");
 					}
-					o_adapter = new OrderAdapter(OrdersActivity.this,
-							R.layout.order_list_item, orders);
+					m_adapter = new OrderAdapter(OrdersActivity.this, R.layout.order_list_item, m_orders);
 					Log.d(TAG, "inside onCreate");
-					setListAdapter(o_adapter);
+					setListAdapter(m_adapter);
 					Log.d(TAG, "setListAdapter");
 					
 
@@ -128,67 +126,42 @@ public class OrdersActivity extends ListActivity {
 			}
 			Order o =  order_items.get(position);
 			if (o != null) {
-//				TextView order_idView = (TextView) v.findViewById(R.id.o_order_id);
-//				TextView creation_dateView = (TextView) v.findViewById(R.id.o_creation_date);
-//				TextView order_statusView = (TextView) v.findViewById(R.id.o_order_status);
-//		        ImageView image_statusView = (ImageView) v.findViewById(R.id.o_image_status);
-//
-//
-//				if (order_idView != null) {
-//					order_idView.setText(o.getId());
-//				}
-//				if (creation_dateView != null) {
-//					creation_dateView.setText( o.getCreated_date());
-//				}
-//				if (order_statusView != null) {
-//					order_statusView.setText( o.getStatus());
-//				}
-//				if(image_statusView != null){
-//					Log.d(TAG, "inside getView " + o.getStatus());
-//					downloadFile(image_statusView,o.getStatus());
-//				}
+				TextView order_idView = (TextView) v.findViewById(R.id.o_order_id);
+				TextView creation_dateView = (TextView) v.findViewById(R.id.o_creation_date);
+				TextView order_statusView = (TextView) v.findViewById(R.id.o_order_status);
+		        ImageView image_statusView = (ImageView) v.findViewById(R.id.o_image_status);
+
+				if (order_idView != null) {
+					order_idView.setText(o.getId()+"");
+				}
+				if (creation_dateView != null) {
+					creation_dateView.setText( o.getCreated_date());
+				}
+				if (order_statusView != null) {
+					order_statusView.setText( o.getStatus());
+				}
+				if(image_statusView != null){
+					Log.d(TAG, "inside getView " + o.getStatus());
+					downloadFile(image_statusView,o.getStatus());
+				}
 			}
 			return v;
 		}
 	}
 
 	void downloadFile(ImageView image_place,String status) {
-		URL myFileUrl = null;
-		String progressbar1 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar2 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar3 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String progressbar4 = "http://i.ebayimg.com/t/20-Bar-Husqvarna-353-440E-444-445-450-UHLX20-58PJ-/04/!Bwjo3y!EGk~$(KGrHqIOKj4Ewg)g9yY7BMJiuFj5cw~~_35.GIF";
-		String fileUrl =null;
+		
 		
 		if (status == "created"){
-			fileUrl = progressbar1;
+			image_place.setImageResource(R.drawable.pb1);
 		}else if(status == "confirmed"){
-			fileUrl = progressbar2;
+			image_place.setImageResource(R.drawable.pb2);
 		}else if(status == "shipped"){
-			fileUrl = progressbar3;
+			image_place.setImageResource(R.drawable.pb3);
 		}else {
-			fileUrl = progressbar4;
+			image_place.setImageResource(R.drawable.pb4);
 		}
 		
-		try {
-			myFileUrl = new URL(fileUrl);
-			Log.d(TAG, fileUrl);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			Bitmap bmImg = BitmapFactory.decodeStream(is);
-			image_place.setImageBitmap(bmImg);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -208,12 +181,62 @@ public class OrdersActivity extends ListActivity {
 			break;
 			
 		case R.id.about_option_menu:
-//            new AlertDialog.Builder(this)
-//            .setTitle(getString(R.string.about_option_menu))
-//            .setMessage(getString(R.string.about_us_dialog))
-//            .setPositiveButton(android.R.string.ok, null)
-//            .show();
+            new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.about_option_menu))
+            .setMessage(getString(R.string.about_us_dialog))
+            .setPositiveButton(android.R.string.ok, null)
+            .show();
 			break;
+		case R.id.logout_option_menu:
+			Log.d(TAG, "logout_option_menu pressed");
+			/*intent for log out petition*/
+			Intent logoutIntent = new Intent(OrdersActivity.this,
+					SecurityService.class);
+			
+			/*log out progress dialog*/
+			final ProgressDialog logoutDialog = ProgressDialog
+					.show(OrdersActivity.this, "",
+							getString(R.string.log_out_validation), true);
+			
+			/*looking for current user and token*/
+			SharedPreferences settings  = getSharedPreferences("LOGIN",0);
+			Map<String, ?> map = settings.getAll();
+			String username = (String)map.get("user");
+			String token = (String)map.get("token");
+			
+			Bundle b = new Bundle();
+			b.putString("username", username);
+			b.putString("token", token);
+			
+			logoutIntent.putExtras(b);
+			logoutIntent.putExtra("command",SecurityService.LOGOUT_CMD);
+			logoutIntent.putExtra("receiver", new ResultReceiver(		new Handler()) {
+				@Override
+				protected void onReceiveResult(int resultCode,	Bundle resultData) {
+					
+					super.onReceiveResult(resultCode, resultData);
+
+					logoutDialog.dismiss();
+					if (resultCode == SecurityService.STATUS_OK) {
+
+						/*TODO REMOVE SharedPreferences settings*/
+						Intent loadLogInView = new Intent(
+								OrdersActivity.this, LoginActivity.class);
+						startActivity(loadLogInView);
+						Toast.makeText(OrdersActivity.this,
+								 getString(R.string.log_out_msg),
+								Toast.LENGTH_SHORT / Toast.LENGTH_LONG)
+								.show();
+
+
+					} else {
+						Log.d(TAG, "unknown error");
+					}
+				}
+				});
+			startService(logoutIntent);
+			break;
+		
 			
 		case R.id.home_option_menu:
 			Intent showHomeView = new Intent(OrdersActivity.this,
@@ -222,6 +245,34 @@ public class OrdersActivity extends ListActivity {
 			break;
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.d(TAG, "Inside onListItemClick!.");
+		Object o = this.getListAdapter().getItem(position);
+		Log.d(TAG, "Leaving onListItemClick!.");
+		String orderid = ((OrderImpl)o).getId()+"";
+		String username = ((OrderImpl)o).getUsername();
+		String token = ((OrderImpl)o).getToken();
+		String location = ((OrderImpl)o).getLocation();
+		String created_date = ((OrderImpl)o).getCreated_date();
+		String status = ((OrderImpl)o).getStatus();
+		Bundle bundle = new Bundle();
+		bundle.putString("username",username);
+		bundle.putString("token",token);
+		bundle.putString("order_id",orderid);
+		bundle.putString("location",location);
+		bundle.putString("created_date",created_date);
+		bundle.putString("status",status);
+
+
+		Intent newIntent = new Intent(OrdersActivity.this,
+				OrderDetailActivity.class);
+		newIntent.putExtras(bundle);
+		OrdersActivity.this.startActivity(newIntent);
+
 	}
 	
 }

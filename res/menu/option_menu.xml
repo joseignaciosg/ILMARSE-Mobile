@@ -5,7 +5,7 @@
      <item android:id="@+id/about_option_menu"
         android:title="@string/about_option_menu"
         android:icon="@drawable/abouticon" />
-      <item android:id="@+id/about_option_menu"
+      <item android:id="@+id/logout_option_menu"
         android:title="@string/logout_option_menu"
         android:icon="@drawable/logouticon" /> 
       <item android:id="@+id/home_option_menu"

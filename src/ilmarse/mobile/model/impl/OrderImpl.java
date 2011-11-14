@@ -4,31 +4,40 @@ import ilmarse.mobile.model.api.Order;
 
 public class OrderImpl implements Order {
 	
+	private String username;
+	private String token;
 	private int id;
 	private String status;
 	private String created_date;
 	private String confirmed_date;
 	private String shipped_date;
 	private String delivered_date;
-	private int latitude;
-	private int longitude;
+	private String latitude;
+	private String longitude;
+	private String location;
 	
+
 	public OrderImpl(){
 		super();
+		this.username=null;
+		this.token=null;
 		this.id = -1;
 		this.status = null;
 		this.created_date = null;
 		this.confirmed_date = null;
 		this.shipped_date = null;
 		this.delivered_date = null;
-		this.latitude = -1;
-		this.longitude = -1;
+		this.latitude = "-1.0";
+		this.longitude = "-1.0";
+		this.location = "http://maps.googleapis.com/maps/api/staticmap?&zoom=14&size=512x512&maptype=roadmap&markers=color:red%7Clabel:O%7C"+latitude+","+longitude+"&sensor=false";
 	}
 	
-	public OrderImpl(int id, String status, String created_date,
+	public OrderImpl(String username, String token, int id, String status, String created_date,
 			String confirmed_date, String shipped_date, String delivered_date,
-			int latitude, int longitude) {
+			String latitude, String longitude) {
 		super();
+		this.username = username;
+		this.token = token;
 		this.id = id;
 		this.status = status;
 		this.created_date = created_date;
@@ -37,6 +46,7 @@ public class OrderImpl implements Order {
 		this.delivered_date = delivered_date;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.location = "http://maps.googleapis.com/maps/api/staticmap?&zoom=14&size=512x512&maptype=roadmap&markers=color:red%7Clabel:O%7C"+latitude+","+longitude+"&sensor=false";
 	}
 	
 	public int getId() {
@@ -75,18 +85,43 @@ public class OrderImpl implements Order {
 	public void setDelivered_date(String delivered_date) {
 		this.delivered_date = delivered_date;
 	}
-	public int getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(int latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	public int getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
+	public String getLocation() {
+		this.location = "http://maps.googleapis.com/maps/api/staticmap?&zoom=14&size=512x512&maptype=roadmap&markers=color:red%7Clabel:O%7C"+this.latitude+","+this.longitude+"&sensor=false";
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderImpl [id=" + id + ", status=" + status + ", created_date="
@@ -106,8 +141,8 @@ public class OrderImpl implements Order {
 		result = prime * result
 				+ ((delivered_date == null) ? 0 : delivered_date.hashCode());
 		result = prime * result + id;
-		result = prime * result + latitude;
-		result = prime * result + longitude;
+		result = prime * result + Integer.valueOf(latitude);
+		result = prime * result + Integer.valueOf(longitude);
 		result = prime * result
 				+ ((shipped_date == null) ? 0 : shipped_date.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
