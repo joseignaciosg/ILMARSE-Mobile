@@ -5,6 +5,7 @@ import ilmarse.mobile.model.api.Category;
 import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.api.Subcategory;
 import ilmarse.mobile.model.impl.CategoryProviderImpl;
+import ilmarse.mobile.model.impl.HtmlDesEncoder;
 import ilmarse.mobile.model.impl.SubCategoryProviderImpl;
 import ilmarse.mobile.services.CatalogService;
 import ilmarse.mobile.services.SecurityService;
@@ -173,10 +174,12 @@ public class SubcategoriesActivity extends ListActivity {
 			Subcategory o =  subcats.get(position);
 			if (o != null) {
 				TextView name_place = (TextView) v.findViewById(R.id.cat_name);
-
+				String catname = subcatNames.get(position).toString();
+				HtmlDesEncoder enc = new HtmlDesEncoder();
 				if (name_place != null) {
-					name_place.setText(subcatNames.get(position).toString());
+					name_place.setText(enc.encodeString(catname));
 				}
+				
 			}
 			return v;
 		}

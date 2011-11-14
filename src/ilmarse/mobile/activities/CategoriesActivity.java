@@ -1,6 +1,7 @@
 package ilmarse.mobile.activities;
 
 import ilmarse.mobile.model.api.Category;
+import ilmarse.mobile.model.impl.HtmlDesEncoder;
 import ilmarse.mobile.services.CatalogService;
 import ilmarse.mobile.services.SecurityService;
 
@@ -168,9 +169,11 @@ public class CategoriesActivity extends ListActivity {
 			Category o = cats.get(position);
 			if (o != null) {
 				TextView name_place = (TextView) v.findViewById(R.id.cat_name);
-
+				String catname = catNames.get(position).toString();
+				HtmlDesEncoder enc = new HtmlDesEncoder();
+				
 				if (name_place != null) {
-					name_place.setText(catNames.get(position).toString());
+					name_place.setText(enc.encodeString(catname));
 				}
 			}
 			return v;
