@@ -142,7 +142,7 @@
         android:paddingBottom="5dip"
         android:paddingTop="12dip"
         android:text="   "
-        android:textColor="@color/footerTextColor" />
+        android:textColor="@color/white" />
 
 </LinearLayout><!--
 <?xml version="1.0" encoding="utf-8"?>

@@ -13,17 +13,8 @@ public final class R {
     public static final class color {
         public static final int black=0x7f050003;
         public static final int blue=0x7f050002;
-        public static final int categoriesHelpColor=0x7f05000d;
-        public static final int categoriesListColor=0x7f05000c;
-        public static final int footerTextColor=0x7f05000b;
         public static final int green=0x7f050001;
-        public static final int mainBackgroundColor=0x7f050005;
-        public static final int prod_list_title=0x7f050007;
-        public static final int productBackgroundColor=0x7f050006;
-        public static final int product_detail_color=0x7f050008;
-        public static final int product_detail_data_color=0x7f050009;
         public static final int red=0x7f050000;
-        public static final int settings_help_color=0x7f05000a;
         public static final int white=0x7f050004;
     }
     public static final class drawable {

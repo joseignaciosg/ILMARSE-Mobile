@@ -44,7 +44,7 @@ public class SettingsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				final CharSequence[] items = { "1 min", "5 min", "30 min" };
+				final CharSequence[] items = { "1 min", "5 min", "10 min" };
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						SettingsActivity.this);
 				builder.setTitle(getString(R.string.frec_notif_title));
@@ -58,15 +58,13 @@ public class SettingsActivity extends Activity {
 						Editor edit = settings.edit();
 						switch (item) {
 						case 0:
-//							edit.putString("timeTillCheck", "60000");
-							edit.putString("timeTillCheck", "5000");
+							edit.putString("timeTillCheck", "60000");
 							break;
 						case 1:
-//							edit.putString("timeTillCheck", "300000");
-							edit.putString("timeTillCheck", "10000");
+							edit.putString("timeTillCheck", "300000");
 							break;
 						case 2:
-							edit.putString("timeTillCheck", "1800000");
+							edit.putString("timeTillCheck", "600000");
 							break;
 						default:
 							edit.putString("timeTillCheck", "300000");

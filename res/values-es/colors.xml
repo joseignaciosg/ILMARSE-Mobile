@@ -8,19 +8,5 @@
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>
 	
-	<color name="mainBackgroundColor">#FFEEEEDD</color>
-	<color name="productBackgroundColor">#FFE2E4DD</color>
-	
-	<color name="prod_list_title">#FF6E81FF</color>
-	<color name="product_detail_color">#FF6681FF</color>
-	<color name="product_detail_data_color">#FF4481FF</color>
-
-	<color name="settings_help_color">#FF4422BB</color>
-	
-	
-	<color name="footerTextColor">#FF5C5758</color>
-	<color name="categoriesListColor">#FF4455CC</color>
-	<color name="categoriesHelpColor">#FF5C5758</color>
-	
 	
 </resources>
