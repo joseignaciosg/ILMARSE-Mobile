@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 public class ProductsActivity extends ListActivity {
 
+	final int MAX_STR = 20;
 	private String TAG = getClass().getSimpleName();
 	HashMap<String, Product> productMap = new HashMap<String, Product>();
 	List<String> productNames = new ArrayList<String>();
@@ -182,7 +183,11 @@ public class ProductsActivity extends ListActivity {
 
 
 				if (title_place != null) {
-					title_place.setText(o.getName());
+					if( o.getName().length() > MAX_STR )
+						title_place.setText(o.getName().substring(0, MAX_STR) + "...");
+					else
+						title_place.setText(o.getName());
+//					title_place.setText(o.getName());
 				}
 //				if (rank_place != null) {
 //					rank_place.setText("Ranking: " + o.getRank());
