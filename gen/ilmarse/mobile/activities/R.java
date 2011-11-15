@@ -19,30 +19,22 @@ public final class R {
     }
     public static final class drawable {
         public static final int abouticon=0x7f020000;
-        public static final int aboutmicon=0x7f020001;
-        public static final int arrow=0x7f020002;
-        public static final int bookicon=0x7f020003;
-        public static final int clock_icon=0x7f020004;
-        public static final int clockicon=0x7f020005;
-        public static final int dvdicon=0x7f020006;
-        public static final int homeicon=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
-        public static final int icon=0x7f020009;
-        public static final int ilmarselogo=0x7f02000a;
-        public static final int logouticon=0x7f02000b;
-        public static final int lupa=0x7f02000c;
-        public static final int newsicon=0x7f02000d;
-        public static final int order_icon=0x7f02000e;
-        public static final int pb1=0x7f02000f;
-        public static final int pb2=0x7f020010;
-        public static final int pb3=0x7f020011;
-        public static final int pb4=0x7f020012;
-        public static final int producticon=0x7f020013;
-        public static final int settings=0x7f020014;
-        public static final int settingsicon=0x7f020015;
-        public static final int settingsmicon=0x7f020016;
-        public static final int twittericon=0x7f020017;
-        public static final int usericon=0x7f020018;
+        public static final int arrow=0x7f020001;
+        public static final int clock_icon=0x7f020002;
+        public static final int homeicon=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int icon=0x7f020005;
+        public static final int ilmarselogo=0x7f020006;
+        public static final int logouticon=0x7f020007;
+        public static final int lupa=0x7f020008;
+        public static final int order_icon=0x7f020009;
+        public static final int pb1=0x7f02000a;
+        public static final int pb2=0x7f02000b;
+        public static final int pb3=0x7f02000c;
+        public static final int pb4=0x7f02000d;
+        public static final int producticon=0x7f02000e;
+        public static final int settings=0x7f02000f;
+        public static final int settingsicon=0x7f020010;
     }
     public static final class id {
         public static final int LoginButton=0x7f090015;
