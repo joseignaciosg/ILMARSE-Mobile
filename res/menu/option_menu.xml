@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/settings_option_menu"
-        android:title="@string/settings_option_menu"
+        android:title="@string/settings"
         android:icon="@drawable/settingsicon" />
      <item android:id="@+id/about_option_menu"
         android:title="@string/about_option_menu"
