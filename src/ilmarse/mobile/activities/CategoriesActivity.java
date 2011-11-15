@@ -57,9 +57,6 @@ public class CategoriesActivity extends ListActivity {
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,
 				CatalogService.class);
 		
-		loadingCategories = ProgressDialog
-				.show(CategoriesActivity.this, "",
-						getString(R.string.loading), true);
 
 		intent.putExtra("command", CatalogService.GET_CAT_CMD);
 		/*
@@ -77,7 +74,6 @@ public class CategoriesActivity extends ListActivity {
 				super.onReceiveResult(resultCode, resultData);
 				if (resultCode == CatalogService.STATUS_OK) {
 
-					loadingCategories.dismiss();
 					Log.d(TAG, "OK received info");
 
 					@SuppressWarnings("unchecked")
@@ -95,7 +91,6 @@ public class CategoriesActivity extends ListActivity {
 					Log.d(TAG, "inside category receiver");
 
 				} else if (resultCode == CatalogService.STATUS_CONNECTION_ERROR) {
-					loadingCategories.dismiss();
 					Intent loadLogInView = new Intent(
 							CategoriesActivity.this, MainActivity.class);
 					startActivity(loadLogInView);
@@ -105,7 +100,6 @@ public class CategoriesActivity extends ListActivity {
 							.show();
 					Log.d(TAG, "Connection error.");
 				} else {
-					loadingCategories.dismiss();
 					Log.d(TAG, "Unknown error.");
 					Intent loadLogInView = new Intent(
 							CategoriesActivity.this, MainActivity.class);
