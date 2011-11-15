@@ -1,18 +1,9 @@
 package ilmarse.mobile.activities;
 
 import ilmarse.mobile.model.api.Category;
-import ilmarse.mobile.model.api.CategoryProvider;
-import ilmarse.mobile.model.api.Product;
-import ilmarse.mobile.model.impl.CategoryProviderImpl;
-import ilmarse.mobile.model.impl.CategoryProviderMock;
 import ilmarse.mobile.services.CatalogService;
 import ilmarse.mobile.services.SecurityService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +15,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -37,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +46,12 @@ public class CategoriesActivity extends ListActivity {
 		/* Asociamos la vista del search list con la activity */
 		setContentView(R.layout.categories);
 
+		String phoneLanguage = getResources().getConfiguration().locale
+				.getLanguage();
+		if (phoneLanguage.equals("en"))
+			setTitle("Categories");
+		else
+			setTitle("Categor’as");
 		Intent intent = new Intent(Intent.ACTION_SYNC, null, this,
 				CatalogService.class);
 
@@ -105,13 +99,12 @@ public class CategoriesActivity extends ListActivity {
 
 	private void populateList() {
 		Log.d(TAG, "OK  populating category list");
-//		CategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
-//				CategoriesActivity.this, R.layout.categories_item, catNames));
-		CategoryAdapter c_adapter = new CategoryAdapter(CategoriesActivity.this,
-				R.layout.categories_item, categories);
+		// CategoriesActivity.this.setListAdapter(new ArrayAdapter<String>(
+		// CategoriesActivity.this, R.layout.categories_item, catNames));
+		CategoryAdapter c_adapter = new CategoryAdapter(
+				CategoriesActivity.this, R.layout.categories_item, categories);
 		setListAdapter(c_adapter);
 		Log.d(TAG, catNames.toString());
-	
 
 		/*
 		 * ListView lv = getListView(); lv.setTextFilterEnabled(true);
@@ -139,10 +132,10 @@ public class CategoriesActivity extends ListActivity {
 		Log.d(TAG, "Inside onListItemClick!.");
 		Object o = this.getListAdapter().getItem(position);
 		Log.d(TAG, "Leaving onListItemClick!.");
-		String cat = ((Category)o).getName().toString();
+		String cat = ((Category) o).getName().toString();
 
 		Bundle bundle = new Bundle();
-		
+
 		bundle.putString("catid", categoriesMap.get(cat).getId() + "");
 		bundle.putString("catname", categoriesMap.get(cat).getName());
 		Intent newIntent = new Intent(CategoriesActivity.this,
@@ -155,8 +148,8 @@ public class CategoriesActivity extends ListActivity {
 	private class CategoryAdapter extends ArrayAdapter<Category> {
 
 		private List<Category> cats;
-//	    public ImageLoader imageLoader; 
 
+		// public ImageLoader imageLoader;
 
 		public CategoryAdapter(Context context, int textViewResourceId,
 				List<Category> cats) {
@@ -172,7 +165,7 @@ public class CategoriesActivity extends ListActivity {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				v = vi.inflate(R.layout.categories_item, null);
 			}
-			Category o =  cats.get(position);
+			Category o = cats.get(position);
 			if (o != null) {
 				TextView name_place = (TextView) v.findViewById(R.id.cat_name);
 
@@ -183,7 +176,7 @@ public class CategoriesActivity extends ListActivity {
 			return v;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -199,72 +192,72 @@ public class CategoriesActivity extends ListActivity {
 					SettingsActivity.class);
 			startActivity(showSettingsView);
 			break;
-			
+
 		case R.id.about_option_menu:
-            new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.about_option_menu))
-            .setMessage(getString(R.string.about_us_dialog))
-            .setPositiveButton(android.R.string.ok, null)
-            .show();
+			new AlertDialog.Builder(this)
+					.setTitle(getString(R.string.about_option_menu))
+					.setMessage(getString(R.string.about_us_dialog))
+					.setPositiveButton(android.R.string.ok, null).show();
 			break;
 		case R.id.logout_option_menu:
 			Log.d(TAG, "logout_option_menu pressed");
-			/*intent for log out petition*/
+			/* intent for log out petition */
 			Intent logoutIntent = new Intent(CategoriesActivity.this,
 					SecurityService.class);
-			
-			/*log out progress dialog*/
-			final ProgressDialog logoutDialog = ProgressDialog
-					.show(CategoriesActivity.this, "",
-							getString(R.string.log_out_validation), true);
-			
-			/*looking for current user and token*/
-			SharedPreferences settings  = getSharedPreferences("LOGIN",0);
+
+			/* log out progress dialog */
+			final ProgressDialog logoutDialog = ProgressDialog.show(
+					CategoriesActivity.this, "",
+					getString(R.string.log_out_validation), true);
+
+			/* looking for current user and token */
+			SharedPreferences settings = getSharedPreferences("LOGIN", 0);
 			Map<String, ?> map = settings.getAll();
-			String username = (String)map.get("user");
-			String token = (String)map.get("token");
-			
+			String username = (String) map.get("user");
+			String token = (String) map.get("token");
+
 			Bundle b = new Bundle();
 			b.putString("username", username);
 			b.putString("token", token);
-			
+
 			logoutIntent.putExtras(b);
-			logoutIntent.putExtra("command",SecurityService.LOGOUT_CMD);
-			logoutIntent.putExtra("receiver", new ResultReceiver(		new Handler()) {
-				@Override
-				protected void onReceiveResult(int resultCode,	Bundle resultData) {
-					
-					super.onReceiveResult(resultCode, resultData);
+			logoutIntent.putExtra("command", SecurityService.LOGOUT_CMD);
+			logoutIntent.putExtra("receiver",
+					new ResultReceiver(new Handler()) {
+						@Override
+						protected void onReceiveResult(int resultCode,
+								Bundle resultData) {
 
-					logoutDialog.dismiss();
-					if (resultCode == SecurityService.STATUS_OK) {
+							super.onReceiveResult(resultCode, resultData);
 
-						/*TODO REMOVE SharedPreferences settings*/
-						Intent loadLogInView = new Intent(
-								CategoriesActivity.this, LoginActivity.class);
-						startActivity(loadLogInView);
-						Toast.makeText(CategoriesActivity.this,
-								 getString(R.string.log_out_msg),
-								Toast.LENGTH_SHORT / Toast.LENGTH_LONG)
-								.show();
+							logoutDialog.dismiss();
+							if (resultCode == SecurityService.STATUS_OK) {
 
+								/* TODO REMOVE SharedPreferences settings */
+								Intent loadLogInView = new Intent(
+										CategoriesActivity.this,
+										LoginActivity.class);
+								startActivity(loadLogInView);
+								Toast.makeText(CategoriesActivity.this,
+										getString(R.string.log_out_msg),
+										Toast.LENGTH_SHORT / Toast.LENGTH_LONG)
+										.show();
 
-					} else {
-						Log.d(TAG, "unknown error");
-					}
-				}
-				});
+							} else {
+								Log.d(TAG, "unknown error");
+							}
+						}
+					});
 			startService(logoutIntent);
 			break;
-		
-			
+
 		case R.id.home_option_menu:
 			Intent showHomeView = new Intent(CategoriesActivity.this,
 					MainActivity.class);
 			startActivity(showHomeView);
 			break;
 		}
-		
+
 		return true;
 	}
 

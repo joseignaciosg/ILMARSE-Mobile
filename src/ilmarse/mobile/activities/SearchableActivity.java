@@ -60,7 +60,12 @@ public class SearchableActivity extends ListActivity{
 	    Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	      String query = intent.getStringExtra(SearchManager.QUERY);
-	      
+	      String phoneLanguage = getResources().getConfiguration().locale
+					.getLanguage();
+			if (phoneLanguage.equals("en"))
+				setTitle("Search results for " + query);
+			else
+				setTitle("Resultados de la bœsqueda de " + query);
 
 			Intent i = new Intent(Intent.ACTION_SYNC, null, this, SearchService.class);
 
