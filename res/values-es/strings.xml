@@ -22,7 +22,7 @@
 	<string name="product_aspect_ratio">Relación de aspecto: </string>
 	<string name="productsbutton">Productos </string>
 	<string name="ordersbutton">Órdenes </string>
-	<string name="settings">Configuración </string>
+	<string name="settings">Ajustes </string>
 
 
 	<string name="order_id">Id de la orden: </string>
