@@ -1,4 +1,5 @@
 package ilmarse.mobile.services;
+import ilmarse.mobile.activities.CategoriesActivity;
 import ilmarse.mobile.model.api.Category;
 import ilmarse.mobile.model.api.CategoryProvider;
 import ilmarse.mobile.model.api.Product;
@@ -11,7 +12,6 @@ import ilmarse.mobile.model.impl.CategoryImpl;
 import ilmarse.mobile.model.impl.CategoryProviderMock;
 import ilmarse.mobile.model.impl.Dvd;
 import ilmarse.mobile.model.impl.ProductDetailProviderMock;
-import ilmarse.mobile.model.impl.AbstractProduct;
 import ilmarse.mobile.model.impl.ProductsProviderMock;
 import ilmarse.mobile.model.impl.SubcategoryImpl;
 import ilmarse.mobile.model.impl.SubcategoryProviderMock;
@@ -27,9 +27,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.w3c.dom.Document;
@@ -78,6 +82,8 @@ public class CatalogService extends IntentService {
 	public static final int STATUS_ERROR = -2;
 	public static final int STATUS_ILLEGAL_ARGUMENT = -3;
 	public static final int STATUS_OK = 0;
+	public static final int STATUS_FAIL = -1;
+
 
 	/*
 	 * Se debe crear un constructor sin parametros y asignarle un nombre al
@@ -144,28 +150,39 @@ public class CatalogService extends IntentService {
 	}
 
 
-	private void getCategories(ResultReceiver receiver, Bundle b) throws ClientProtocolException, IOException, Exception {
+	private void getCategories(ResultReceiver receiver, Bundle b) throws Exception  {
 		Log.d(TAG, "OK in getCategories ");
-		List<Category> list;
-		final DefaultHttpClient client = new DefaultHttpClient();
-		
+		List<Category> list=null;
+		HttpParams httpParameters = new BasicHttpParams();
+        int timeoutSocket = 3000;
+        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+        final DefaultHttpClient client = new DefaultHttpClient(httpParameters);
 		/*gets the phone current language*/
 		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
-		final HttpResponse response;
-		if(phoneLanguage.equals("en")){
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=1"));
-		}
-		else{
-			response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
+		HttpResponse response = null;
+		try{
+//			if(phoneLanguage.equals("en")){
+			System.out.println( "stuff");
+				response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=1"));
+//			}
+//			else{
+//				response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
+//			}
+		}catch(Exception e){
+//			CategoriesActivity.loadingCategories.dismiss();
+			Log.d(TAG, "Connection error.");
+			receiver.send(STATUS_FAIL, b);
 		}
 		
 		
 		if ( response.getStatusLine().getStatusCode() != 200 ) {
-			throw new IllegalArgumentException(response.getStatusLine().toString());
+//			throw new IllegalArgumentException(response.getStatusLine().toString());
+			CategoriesActivity.loadingCategories.dismiss();
+			Log.d(TAG, "Connection error.");
+			receiver.send(STATUS_FAIL, b);
 		}else {
 			final String xmlToParse = EntityUtils.toString(response.getEntity());
 			list =  fromXMLtoCategories(xmlToParse);
-			b.putSerializable("return", (Serializable)list);
 		}
 		
 //		list = categoryProvider.getCategories();
