@@ -41,6 +41,7 @@ import android.widget.Toast;
 public class ProductActivity extends Activity {
 	private String TAG = getClass().getSimpleName();
 
+	final int MAX_STR = 20;
 	String imageUrl = "http://1.bp.blogspot.com/_mbWThvBk2kA/S43ftG3N6MI/AAAAAAAANws/FmT_6iWv8iE/s320/books+2.gif";
 	ImageView imView;
 	TextView prodnameView;
@@ -133,9 +134,12 @@ public class ProductActivity extends Activity {
 	private void setBasicAttributes(Product prod) {
 		Log.d(TAG, "inside setBasicAttributes");
 		Log.d(TAG,prod.getName() + "."+prod.getPrice());
-		if (prodnameView != null)
-			prodnameView.setText(prod.getName());
-		else
+		if (prodnameView != null){
+			if( prod.getName().length() > MAX_STR )
+				prodnameView.setText(prod.getName().substring(0,MAX_STR) + "...");
+			else
+				prodnameView.setText(prod.getName());
+		}else
 			Log.e(TAG, "prodname is null");
 
 		if (prodpriceView != null)
