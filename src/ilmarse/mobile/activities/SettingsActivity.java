@@ -30,8 +30,6 @@ public class SettingsActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Toast.makeText(SettingsActivity.this,"Bienvenido al �rea de Configuraci�n",
-		// Toast.LENGTH_SHORT/Toast.LENGTH_LONG).show();
 		setContentView(R.layout.settings);
 		String phoneLanguage = getResources().getConfiguration().locale
 				.getLanguage();

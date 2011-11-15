@@ -24,7 +24,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import android.R;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -36,9 +35,7 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
 public class NotificationsService extends IntentService {
-
 	private final String TAG = getClass().getSimpleName();
-
 	private static final String apiURL = "http://eiffel.itba.edu.ar/hci/service/";
 	public static final int STATUS_OK = 0;
 	public static final String LOGIN = "Login";
@@ -59,9 +56,6 @@ public class NotificationsService extends IntentService {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		// Es importante terminar el servicio lo antes posible
-		// No se llega aca salvo que se interrumpa
 		this.stopSelf();
 	}
 
@@ -76,15 +70,11 @@ public class NotificationsService extends IntentService {
 			editor.commit();
 		}
 
-		Log.d(TAG,"settings.getString:"+getOrders(settings.getString("Orders", "").toString()));
 		List<Order> oldOrders = getOrders(settings.getString("Orders", ""));
 		String phoneLanguage = this.getResources().getConfiguration().locale
 				.getLanguage();
-
+		
 		while (true) {
-
-//			 Toast.makeText(this, "This is a notification!",
-//			 Toast.LENGTH_LONG).show();
 			Log.d(TAG, "Checking for orders updates");
 
 			String newOrdersStr = getOrdersAsString();
@@ -95,13 +85,13 @@ public class NotificationsService extends IntentService {
 			editor.commit();
 			oldOrders = newOrders;
 
-			int time = Integer.parseInt(settings.getString("timeTillCheck","30000"));//30seconds
-			Log.d(TAG, "timeTillCheck:"+time);
+			int time = Integer.parseInt(settings.getString("timeTillCheck",
+					"30000"));// 30seconds
+			Log.d(TAG, "timeTillCheck:" + time);
 
 			try {
 				Thread.sleep(time);
 			} catch (Exception e) {
-				// interrupted
 				Log.d(TAG, "interrupted");
 			}
 
@@ -113,7 +103,6 @@ public class NotificationsService extends IntentService {
 		Log.d(TAG, "inside getOrders");
 
 		List<Order> list = new ArrayList<Order>();
-		// list = ordersProvider.getOrders(username,token);
 		list = fromXMLtoOrders(xmlToParse);
 
 		return list;
@@ -171,9 +160,6 @@ public class NotificationsService extends IntentService {
 								.getNodeValue());
 					}
 				}
-				// Random
-				// order.setLatitude(latitude)
-				// order.serLo
 				ret.add(order);
 				Log.d("TAG", "asd" + order.toString());
 			}
@@ -190,12 +176,10 @@ public class NotificationsService extends IntentService {
 			ClientProtocolException {
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpResponse response;
-		// Get the phone actual language
 		SharedPreferences settings = getSharedPreferences("LOGIN", 0);
 		String username = settings.getString("username", "NOUSER");
 		String token = settings.getString("token", "NOTOKEN");
-		Log.d(TAG,"username:"+username+ "-" +"token:"+token);
-
+		Log.d(TAG, "username:" + username + "-" + "token:" + token);
 		String com = apiURL + "Order.groovy?method=GetOrderList";
 		com += "&username=" + username;
 		com += "&authentication_token=" + token;
@@ -205,67 +189,23 @@ public class NotificationsService extends IntentService {
 		return xmlToParse;
 	}
 
-	private void checkForOrderChanges(List<Order> newOrders, List<Order> oldOrders,
-			String phoneLanguage) {
-		String tText, cTitle="hola", cText="hola";
-		Log.d(TAG,"newOrders"+newOrders.toString());
-		Log.d(TAG,"oldOrders"+oldOrders.toString());
+	private void checkForOrderChanges(List<Order> newOrders,
+			List<Order> oldOrders, String phoneLanguage) {
+		String tText, cTitle = "notification", cText = "notification";
+		Log.d(TAG, "newOrders" + newOrders.toString());
+		Log.d(TAG, "oldOrders" + oldOrders.toString());
 
-
-		
-		Log.d(TAG,"inside checkForOrderChanges");
-		if (newOrders.size() != oldOrders.size() ){
+		Log.d(TAG, "inside checkForOrderChanges");
+		if (newOrders.size() != oldOrders.size()) {
 			tText = "An order has changed!";
-			Log.d(TAG,tText);
-//			cTitle = "Order " + order.getId()  + " has changed";
-//			cText = "Order " + order.getId() + " ";
-//			cText += "is now " + order.getStatus() +". ";
-//			if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
-//				cText += "Lattitude: " + order.getLatitude() + "Longitude: "
-//						+ order.getLongitude() + ".";
+			Log.d(TAG, tText);
 			sendNotification(tText, cTitle, cText);
-			}
 		}
-		
-//		for( int i=0; i<newOrders.size();i++){
-//			OrderImpl order = (OrderImpl)newOrders.get(i);
-//			int orderID = order.getId();
-//			for( int j=0; j<oldOrders.size();j++){
-//				OrderImpl oldOrder = (OrderImpl)oldOrders.get(j);
-//				if ( oldOrder.getId() == orderID 
-//						&& !oldOrder.getStatus().equals(order.getStatus())) {
-//
-//					String tText, cTitle, cText;
-//					if (phoneLanguage.equals("en")) {
-//						tText = "An order has changed!";
-//						cTitle = "Order " + order.getId()  + " has changed";
-//						cText = "Order " + order.getId() + " ";
-//						cText += "is now " + order.getStatus() +". ";
-//						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
-//							cText += "Lattitude: " + order.getLatitude() + "Longitude: "
-//									+ order.getLongitude() + ".";
-//						}
-//
-//					} else {
-//						tText = "Una orden ha cambiado!";
-//						cTitle = "La orden " + order.getId() + " ha cambiado";
-//						cText = "La  orden " + order.getId() + " ";
-//						cText += "ahora esta " + order.getStatus() + ". ";
-//						if (!(order.getLatitude().equals("") || order.getLongitude().equals(""))) {
-//							cText += "Latitud: " + order.getLatitude() + "Longitud: "
-//									+ order.getLongitude() + ".";
-//						}
-//					}
-//					sendNotification(tText, cTitle, cText);
-//				}
-//			}
-//		}
-//	}
+	}
 
 	private void sendNotification(String tText, String cTitle, String cText) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-//		int icon = R.drawable.homeicon;
 		int icon = 0x7f020000;
 		CharSequence tickerText = tText;
 		long when = System.currentTimeMillis();
