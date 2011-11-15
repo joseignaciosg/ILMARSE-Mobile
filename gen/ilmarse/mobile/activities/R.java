@@ -128,6 +128,9 @@ public final class R {
         public static final int log_in_validation=0x7f06001e;
         public static final int log_out_msg=0x7f060022;
         public static final int log_out_validation=0x7f060021;
+        public static final int loginlogin=0x7f06002f;
+        public static final int loginpassword=0x7f06002e;
+        public static final int loginusername=0x7f06002d;
         public static final int logout_option_menu=0x7f06001c;
         public static final int no_data=0x7f060004;
         public static final int order_id=0x7f060017;

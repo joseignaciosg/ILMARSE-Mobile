@@ -31,7 +31,7 @@
         android:id="@+id/username"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/loginusername"
         android:inputType="textNoSuggestions"
         android:nextFocusDown="@+id/Password"
         android:nextFocusUp="@+id/LoginButton" />
@@ -40,7 +40,7 @@
         android:id="@+id/password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/loginpassword"
         android:inputType="textPassword" />
 
     
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:nextFocusDown="@+id/Username"
         android:nextFocusUp="@+id/RememberLoginBox"
-        android:text="Login"
+        android:text="@string/loginlogin"
         android:textSize="20sp" >
     </Button>
 
