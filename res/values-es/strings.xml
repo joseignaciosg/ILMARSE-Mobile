@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="slogan">Todo lo que siempre buscaste, en un mismo lugar</string>
+	<string name="loading">Cargando</string>
+	<string name="app_name">ILmarse móvil</string>
+	<string name="search_activity">Búsqueda por Categorías</string>
+	<string name="no_data">No se encontraron Categorías</string>
+	<string name="hello">Bienvenido a ILmarse móvil</string>
+	<string name="app_label">iLMarse</string>
+	<string name="search_hint">Buscar...</string>
+	<string name="product_name">Nombre: </string>
+	<string name="product_price">Precio:</string>
+	<string name="product_authors"> Autores:</string>
+	<string name="product_publisher"> Editorial:</string>
+	<string name="product_published_date">Fecha de publicación:</string>
+	<string name="product_language">Idiomas disponibles: </string>
+	<string name="product_actors">Actores: </string>
+	<string name="product_subtitles">Subtitulos disponibles: </string>
+	<string name="product_region">Región: </string>
+	<string name="product_runtime">Duración: </string>
+	<string name="product_release_date">Fecha de lanzamiento: </string>
+	<string name="product_aspect_ratio">Relación de aspecto: </string>
+	<string name="productsbutton">Productos </string>
+	<string name="ordersbutton">Órdenes </string>
+	<string name="settings">Ajustes </string>
+
+
+	<string name="order_id">Id de la orden: </string>
+	<string name="creation_date">Fecha de creación: </string>
+	<string name="order_status">Estado de la orden: </string>
+	<string name="settings_option_menu">Configuración </string>
+	<string name="about_option_menu">Acerca de </string>
+	<string name="logout_option_menu">Cerrar sesión </string>
+	<string name="home_option_menu">Home </string>
+	<string name="log_in_validation">Validando</string>
+	<string name="welcome">Bienvenido</string>
+	<string name="badlogin">Nombre de usuario o contraseña incorrectos</string>
+	<string name="log_out_validation">Cerrando sesión</string>
+	<string name="log_out_msg">Sesión cerrada correctamente</string>
+	<string name="about_us_dialog">IlMarse Móvil. Galindo - Marseillan - Homovc. Cátedra de HCI. ITBA 2011</string>
+	<string name="detail_orderid">Id de la orden:</string>
+	<string name="detail_orderstatus">Estado:</string>
+	<string name="detail_created_date">Fecha de creación:</string>
+	<string name="frec_notif">Cambiar frecuencia de notificaciones</string>
+	<string name="frec_notif_title">Frequencia de notificaciones</string>
+	<string name="position_change_notif">Permitir notificaciones al cambiar la localización de la orden</string>
+	<string name="status_change_notif">Permitir notificaciones al cambiar el estado de la orden</string>
+	<string name="updated_settings">Configuración actualizada</string>
+	<string name="internet_error">Error: Usted debe estar conectado a internet.</string>
+	    
+	
+</resources>
