@@ -161,15 +161,14 @@ public class CatalogService extends IntentService {
 		String phoneLanguage = this.getResources().getConfiguration().locale.getLanguage();
 		HttpResponse response = null;
 		try{
-//			if(phoneLanguage.equals("en")){
+			if(phoneLanguage.equals("en")){
 			System.out.println( "stuff");
 				response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=1"));
-//			}
-//			else{
-//				response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
-//			}
+			}
+			else{
+				response = client.execute(new HttpGet( APIurl + "Catalog.groovy?method=GetCategoryList&language_id=2"));
+			}
 		}catch(Exception e){
-//			CategoriesActivity.loadingCategories.dismiss();
 			Log.d(TAG, "Connection error.");
 			receiver.send(STATUS_FAIL, b);
 		}
@@ -177,7 +176,6 @@ public class CatalogService extends IntentService {
 		
 		if ( response.getStatusLine().getStatusCode() != 200 ) {
 //			throw new IllegalArgumentException(response.getStatusLine().toString());
-			CategoriesActivity.loadingCategories.dismiss();
 			Log.d(TAG, "Connection error.");
 			receiver.send(STATUS_FAIL, b);
 		}else {

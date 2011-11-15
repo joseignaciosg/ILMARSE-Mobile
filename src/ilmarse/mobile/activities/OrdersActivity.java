@@ -151,18 +151,32 @@ public class OrdersActivity extends ListActivity {
 				if (creation_dateView != null) {
 					creation_dateView.setText( o.getCreated_date());
 				}
+				String phoneLanguage = getResources().getConfiguration().locale
+						.getLanguage();
+				
 				if (order_statusView != null) {
 					String status = o.getStatus();
 					if (status.equals("1")){
-						order_statusView.setText("created");
+						if (phoneLanguage.equals("es"))
+							order_statusView.setText("creada");
+						else
+							order_statusView.setText("created");
 					}else if(status.equals("2")){
-						order_statusView.setText("confirmed");
+						if (phoneLanguage.equals("es"))
+							order_statusView.setText("confirmada");
+						else
+							order_statusView.setText("confirmed");
 					}else if(status.equals("3")){
-						order_statusView.setText( "shipped");
+						if (phoneLanguage.equals("es"))
+							order_statusView.setText( "despachada");
+						else
+							order_statusView.setText( "shipped");
 					}else {
-						order_statusView.setText( "delivered" );
+						if (phoneLanguage.equals("es"))
+							order_statusView.setText( "entregada" );
+						else
+							order_statusView.setText( "delivered" );
 					}
-//					order_statusView.setText( o.getStatus());
 				}
 				if(image_statusView != null){
 					Log.d(TAG, "inside getView " + o.toString());
